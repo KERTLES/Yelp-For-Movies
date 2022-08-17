@@ -20,6 +20,8 @@ Output:
       "release_date": int,
       "runtime": int,
       "synopsis": string,
+      "actors": string,
+      "directors": string,
       "picture_url": string
     }
   ]
@@ -43,6 +45,8 @@ Output:
   "release_date": int,
   "runtime": int,
   "synopsis": string,
+  "actors": string,
+  "directors": string,
   "picture_url": string
 }
 ```

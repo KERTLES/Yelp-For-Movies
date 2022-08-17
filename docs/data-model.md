@@ -7,6 +7,8 @@
 | release_date | date | no | no |
 | runtime | int | no | no |
 | synopsis | text | no | no |
+| actors | text | no | no |
+| directors | text | no | no |
 | picture_url | string | no | no |
 
 
