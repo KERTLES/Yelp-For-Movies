@@ -15,11 +15,11 @@
 | Name | Type | Unique | Optional |
 |-|-|-|-|
 | name | string | no | no |
-| user_name | string | no | no |
+| user_name | string | yes | no |
 
 
 ## Reviews
 | Name | Type | Unique | Optional |
 |-|-|-|-|
 | title | string | no | no |
-| star_rating | string | no | no |
+| star_rating | number | no | no |
