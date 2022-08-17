@@ -4,7 +4,7 @@
 | Name | Type | Unique | Optional |
 |-|-|-|-|
 | name | string | no | no |
-| release_date | string | no | no |
+| release_date | date | no | no |
 | synopsis | text | no | no |
 | director(s) | text | no | no |
 | actor(s) | text| no | no |
@@ -15,7 +15,8 @@
 | Name | Type | Unique | Optional |
 |-|-|-|-|
 | name | string | no | no |
-| user_name | string | yes | no |
+| user_name | string | no | no |
+| password | string| no | no
 
 
 ## Reviews
@@ -23,3 +24,4 @@
 |-|-|-|-|
 | title | string | no | no |
 | star_rating | number | no | no |
+| description | string | no | no |

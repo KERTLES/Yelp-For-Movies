@@ -9,7 +9,7 @@ Input:
 
 ```json
 {
-  "movie_name": string,
+  None
 }
 ```
 
@@ -161,9 +161,7 @@ Input:
 
 ```json
 {
- "id":int,
- "username": string,
- "password": string,
+ None
 }
 ```
 
@@ -171,7 +169,9 @@ Output:
 
 ```json
 {
-  "id": int
+  "id": int,
+  "username": string,
+  "password": string,
 }
 ```
 
@@ -195,7 +195,9 @@ Output:
 
 ```json
 {
-  "id": int
+  "id": int,
+  "username": string,
+  "password" : string
 }
 ```
 
