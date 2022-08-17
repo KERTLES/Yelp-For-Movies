@@ -24,3 +24,10 @@ Movie connoisseurs, movie goers, film critics. People who need help selecting a 
 login Required 
 - Create user + profile
 - create review
+
+## Design
+
+* [API design](docs/apis.md)
+* [Data model](docs/data-model.md)
+* [GHI](docs/ghi.md)
+* [Integrations](docs/integrations.md)
