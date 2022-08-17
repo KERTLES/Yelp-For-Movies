@@ -62,7 +62,7 @@ Output:
 { 
   "reviews": [
     {
-      "user_id": {
+      "user": {
         "id": int,
         "username": string,
         "first_name": string,
@@ -101,8 +101,11 @@ Output:
 
 ```json
 {
-  "user_id": {
-    
+  "user": {
+    "id": int,
+    "username": string,
+    "first_name": string,
+    "last_name": string,
   },
   "review_context": string,
   "created_date": int,
@@ -113,10 +116,6 @@ Output:
   "rating": int
 }
 ```
-
-<!-- ## Update a movie review
-* **Method**: `PUT`
-* **Path**: /movies/review/<id> -->
 
 ## Delete a movie review
 * **Method**: `DELETE`
