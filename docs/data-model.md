@@ -3,25 +3,31 @@
 ## Movie
 | Name | Type | Unique | Optional |
 |-|-|-|-|
-| name | string | no | no |
+| movie_name | string | no | no |
 | release_date | date | no | no |
+| runtime | int | no | no |
 | synopsis | text | no | no |
-| director(s) | text | no | no |
-| actor(s) | text| no | no |
-| picture_url | string | no | yes |
+| actors | text | no | no |
+| directors | text | no | no |
+| picture_url | string | no | no |
 
 
-## Users
+## Review
 | Name | Type | Unique | Optional |
 |-|-|-|-|
-| name | string | no | no |
-| user_name | string | no | no |
-| password | string| no | no
+| user | reference to User entity | no | no |
+| review_context | text | no | no |
+| created_date | datetime | no | no |
+| movie | reference to Movie entity | no | no |
+| rating | int | no | no |
 
 
-## Reviews
+
+## User
 | Name | Type | Unique | Optional |
 |-|-|-|-|
-| title | string | no | no |
-| star_rating | number | no | no |
-| description | string | no | no |
+| username | string | yes | no |
+| email | string | yes | no |
+| password | string | no | no |
+| first_name | string | no | no |
+| last_name | string | no | no |

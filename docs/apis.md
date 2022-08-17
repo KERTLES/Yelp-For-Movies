@@ -3,37 +3,38 @@
 
 ## Get a list of movies
 * **Method**: `GET`
-* **Path**: /movies/
+* **Path**: api/movies/
 
 Input:
 
-```json
-{
-  None
-}
-```
+N/A
 
 Output:
 
 ```json
-{
-  "id": int,
-  "movie_name": string,
+{ 
+  "movies": [
+    {
+      "id": int,
+      "movie_name": string,
+      "release_date": int,
+      "runtime": int,
+      "synopsis": string,
+      "actors": string,
+      "directors": string,
+      "picture_url": string
+    }
+  ]
 }
 ```
-
 
 ## Get one specific movie - detail page
 * **Method**: `GET`
-* **Path**: /movies/<id>
+* **Path**: api/movies/:id/
 
 Input:
 
-```json
-{
- "id":int
-}
-```
+N/A
 
 Output:
 
@@ -41,53 +42,62 @@ Output:
 {
   "id": int,
   "movie_name": string,
+  "release_date": int,
+  "runtime": int,
   "synopsis": string,
-  "release_date": date,
-  "director": string,
-  "actors": sting,
+  "actors": string,
+  "directors": string,
   "picture_url": string
 }
 ```
 
 
-## Get a list of movie reviews for a movie
+## Get a list of reviews
 * **Method**: `GET`
-* **Path**: /movies/<id>/review
-
+* **Path**: api/reviews/
 
 Input:
 
-```json
-{
- "id":int
-}
-```
+N/A
 
 Output:
 
 ```json
-{
-  "rating": int,
-  "description": string
+{ 
+  "reviews": [
+    {
+      "user": {
+        "id": int,
+        "username": string,
+        "first_name": string,
+        "last_name": string,
+      },
+      "review_context": string,
+      "created_date": int,
+      "movie_id": {
+        "id": int,
+        "movie_name": string,
+      },
+      "rating": int
+    }
+  ]
 }
+
 ```
-
-
 
 ## Create a movie review
 * **Method**: `POST`
-* **Path**: /movies/<id>/review
-
+* **Path**: api/reviews/
 
 Input:
 
 ```json
 {
- "id":int,
- "rating": int,
- "description": string,
- "movie": int,
- "user": int
+  "user_id": int,
+  "review_context": string,
+  "created_date": int,
+  "movie_id": int,
+  "rating": int
 }
 ```
 
@@ -95,99 +105,76 @@ Output:
 
 ```json
 {
-  "rating": int,
-  "description": string,
-  "movie": int,
-  "user": int
+  "user": {
+    "id": int,
+    "username": string,
+    "first_name": string,
+    "last_name": string,
+  },
+  "review_context": string,
+  "created_date": int,
+  "movie_id": {
+    "id": int,
+    "movie_name": string,
+  },
+  "rating": int
 }
 ```
-
-
-## Update a movie review
-* **Method**: `PUT`
-* **Path**: /movies/review/<id>
-
-
-Input:
-
-```json
-{
- "id":int,
- "rating": int,
- "description": string
-}
-```
-
-Output:
-
-```json
-{
-"rating": int,
-"description": string
-}
-```
-
 
 ## Delete a movie review
 * **Method**: `DELETE`
-* **Path**: /movies/review/<id>
-
+* **Path**: api/reviews/:id/
 
 Input:
 
-```json
-{
- "id":int
-}
-```
+N/A
 
 Output:
 
 ```json
 {
-  "rating": int,
-  "description": string
+  "message": string
 }
 ```
-
-
 
 ## Get a list of users 
 * **Method**: `GET`
-* **Path**: /users/
-
+* **Path**: api/users/
 
 Input:
 
-```json
-{
- None
-}
-```
+N/A
 
 Output:
 
 ```json
-{
-  "id": int,
-  "username": string,
-  "password": string,
+{ 
+  "users": [
+    {
+      "id": int,
+      "username": string,
+      "email": string,
+      "password": string,
+      "first_name": string,
+      "last_name": string,
+    }
+  ]
 }
 ```
-
 
 ## Create a new users 
 * **Method**: `POST`
-* **Path**: /users/
-
+* **Path**: api/users/
 
 Input:
 
 ```json
 {
- "id":int,
- "username": string,
- "password": string,
+  "username": string,
+  "email": string,
+  "password": string,
+  "first_name": string,
+  "last_name": string,
 }
 ```
 
@@ -197,7 +184,8 @@ Output:
 {
   "id": int,
   "username": string,
-  "password" : string
+  "email": string,
+  "password": string,
+  "first_name": string,
+  "last_name": string,
 }
-```
-
