@@ -39,3 +39,17 @@ services:
         environment:
             DATABASE_URL: postgresql://user-name:password@postgres/db-name
             WAIT_HOSTS: postgres:5432
+    reviews-api:
+      build:
+          context: ./reviews/api
+          dockerfile: ./Dockerfile.dev
+      ports:
+          - "8090:8000"
+      volumes:
+          - ./reviews/api:/app
+      depends_on:
+          - database
+      environment:
+          DATABASE_URL: postgresql://user-name:password@postgres/db-name
+          WAIT_HOSTS: postgres:5432
+
