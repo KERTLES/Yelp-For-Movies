@@ -26,18 +26,18 @@ services:
         ports:
             - 15432:5432
     movie-api:
-      build:
-          context: ./movies/api
-          dockerfile: ./Dockerfile.dev
-      ports:
-          - "8100:8000"
-      volumes:
-          - ./movies/api:/app
-      depends_on:
-          - database
-      environment:
-          DATABASE_URL: postgresql://user-name:password@postgres/db-name
-          WAIT_HOSTS: postgres:5432
+        build:
+            context: ./movies/api
+            dockerfile: ./Dockerfile.dev
+        ports:
+            - "8100:8000"
+        volumes:
+            - ./movies/api:/app
+        depends_on:
+            - database
+        environment:
+            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            WAIT_HOSTS: postgres:5432
     account-api:
         build:
             context: ./accounts/api
@@ -46,6 +46,19 @@ services:
             - "8080:8000"
         volumes:
             - ./accounts/api:/app
+        depends_on:
+            - database
+        environment:
+            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            WAIT_HOSTS: postgres:5432
+    reviews-api:
+        build:
+            context: ./reviews/api
+            dockerfile: ./Dockerfile.dev
+        ports:
+            - "8090:8000"
+        volumes:
+            - ./reviews/api:/app
         depends_on:
             - database
         environment:
