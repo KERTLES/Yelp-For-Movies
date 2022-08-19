@@ -1,17 +1,30 @@
-# Yelp for Movies
+# Yovies
 
-# Team members 
-- Lander, Nikansha, Matthew, Myo, Kelly 
 
-# One sentence summary of what the application does
-Gathers official movie reviews from other websites and 
-also collects user feedback on movies. 
+### Team members 
+- Kelly Jiang
+- Lander Nunez
+- Matthew Oshimo
+- Myolin (Myo) Kha
+- Nikansha Maharaj
 
-# A paragraph to describe who the target market of people are that will use the application
-Movie connoisseurs, movie goers, film critics. People who need help selecting a new film to enjoy. 
 
-# functionality
+### Summary
+This site allows users to rate and share their movie reviews. 
 
+
+### Target Audience
+Our target audience are film lovers, people who want to share their personal reviews and recommendations or are looking for reviews and recomendations
+
+
+### Design
+* [API design](docs/apis.md)
+* [Data model](docs/data-model.md)
+* [GHI](docs/ghi.md)
+* [Integrations](docs/integrations.md)
+
+
+### Functionality
 - Show list of movies (name + picture)
 - detail page for each movie 
     * date created, directors, actors, synopsis, tags
@@ -25,9 +38,5 @@ login Required
 - Create user + profile
 - create review
 
-## Design
 
-* [API design](docs/apis.md)
-* [Data model](docs/data-model.md)
-* [GHI](docs/ghi.md)
-* [Integrations](docs/integrations.md)
+### Project Initialization
