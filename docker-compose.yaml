@@ -2,7 +2,7 @@ volumes:
     yovies-data:
         external: true
 services:
-    postgres:
+    database:
         build:
             context: ./relational-data
             dockerfile: ./Dockerfile.dev
@@ -14,24 +14,26 @@ services:
         ports:
             - 15432:5432
     movie-api:
-      build:
-          context: ./movies/api
-          dockerfile: ./Dockerfile.dev
-      ports:
-          - "8100:8000"
-      volumes:
-          - ./movies/api:/app
-      environment:
-          DATABASE_URL: postgresql://user-name:password@postgres/db-name
-          WAIT_HOSTS: postgres:5432
+        build:
+            context: ./movies/api
+            dockerfile: ./Dockerfile.dev
+        ports:
+            - "8100:8000"
+        volumes:
+            - ./movies/api:/app
+        environment:
+            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            WAIT_HOSTS: postgres:5432
     account-api:
-      build:
-          context: ./accounts/api
-          dockerfile: ./Dockerfile.dev
-      ports:
-          - "8080:8000"
-      volumes:
-          - ./accounts/api:/app
-      environment:
-          DATABASE_URL: postgresql://user-name:password@postgres/db-name
-          WAIT_HOSTS: postgres:5432
+        build:
+            context: ./accounts/api
+            dockerfile: ./Dockerfile.dev
+        ports:
+            - "8080:8000"
+        volumes:
+            - ./accounts/api:/app
+        depends_on:
+            - database
+        environment:
+            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            WAIT_HOSTS: postgres:5432
