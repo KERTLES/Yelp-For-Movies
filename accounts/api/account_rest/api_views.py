@@ -6,15 +6,15 @@ import json
 import pika
 
 from common.json import ModelEncoder
-from .models import User
+from .models import AccountVO
 
 class AccountModelEncoder(ModelEncoder):
-    model = User
+    model = AccountVO
     properties = ["email", "first_name", "last_name"]
 
 
 class AccountInfoModelEncoder(ModelEncoder):
-    model = User
+    model = AccountVO
     properties = ["email", "first_name", "last_name", "is_active"]
 
     def get_extra_data(self, o):
@@ -64,7 +64,7 @@ def create_user(json_content):
         return 400, response_content, None
 
     try:
-        account = User.objects.create_user(
+        account = AccountVO.objects.create_user(
             username=content["username"],
             email=content["email"],
             password=content["password"],
@@ -102,9 +102,9 @@ def api_list_accounts(request):
 @require_http_methods(["GET", "PUT", "DELETE"])
 def api_account_detail(request, email):
     try:
-        account = User.objects.filter(is_active=True).get(email=email)
-    except User.DoesNotExist:
-        print("User.DoesNotExist", email)
+        account = AccountVO.objects.filter(is_active=True).get(email=email)
+    except AccountVO.DoesNotExist:
+        print("AccoutVO.DoesNotExist", email)
         if request.method == "GET":
             response = JsonResponse({"message": email})
             response.status_code = 404
