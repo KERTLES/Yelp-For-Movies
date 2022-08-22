@@ -29,9 +29,9 @@ class AccountDetailEncoder(ModelEncoder):
 @require_http_methods(["GET", "POST"])
 def api_list_accounts(request, account_vo_id=None):
     if request.method == "GET":
-        attendees = AccountVO.objects.filter(id=account_vo_id)
+        attendees = AccountVO.objects.all()
         return JsonResponse(
-            {"attendees": attendees},
+            {"accounts": attendees},
             encoder=AccountListEncoder,
         )
     else:
