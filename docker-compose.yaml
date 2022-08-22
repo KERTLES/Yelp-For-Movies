@@ -2,7 +2,7 @@ volumes:
     yovies-data:
         external: true
 services:
-    react:
+    ghi:
         image: node:lts-bullseye
         command: /bin/bash run.sh
         working_dir: /app
