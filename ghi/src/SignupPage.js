@@ -4,19 +4,48 @@ class SignupPage extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+    first_name: '',
+    last_name: '',
       email: '',
       user_name: '',
       password: '',
       is_active: '',
       accounts: [],
     }
-  
+  this.handleFirst = this.handleFirst.bind(this)
+  this.handleLast = this.handleLast.bind(this)
   this.handleEmail = this.handleEmail.bind(this)
   this.handleUserName = this.handleUserName.bind(this)
   this.handlePassword = this.handlePassword.bind(this)
   this.handleIsActive = this.handleIsActive.bind(this)
   }
-  handleEmail(event){
+  async handleSubmit(event){
+    event.preventDefault();
+    const data = {...this.state};
+    delete data.accounts;
+
+    const accountUrl = `http://localhost:8080/api/accounts/`;
+    const fetchSoldConfig = {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        };
+        const Response = await fetch(accountUrl, fetchSoldConfig);
+        if (Response.ok) {
+            console.log("got it")
+            const cleared = {
+                first_name: '',
+                last_name: '',
+                email: '',
+                user_name: '',
+                is_active: '',
+              };
+            this.setState(cleared);
+        }
+    }
+handleEmail(event){
     const value = event.target.value
     this.setState({email: value})
 }
@@ -27,6 +56,14 @@ handleUserName(event){
 handlePassword(event){
     const value = event.target.value
     this.setState({password: value})
+}
+handleFirst(event){
+    const value = event.target.value
+    this.setState({first_name: value})
+}
+handleLast(event){
+    const value = event.target.value
+    this.setState({last_name: value})
 }
 handleIsActive(event){
     const value = event.target.value
@@ -56,7 +93,23 @@ render(){
 
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <form className="mx-1 mx-md-4">
+                <form onSubmit={this.handleSubmit} className="mx-1 mx-md-4">
+                
+                <div className="d-flex flex-row align-items-center mb-4">
+                    <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div className="form-outline flex-fill mb-0">
+                      <input onChange={this.handleFirst} value={this.state.first_name} type="text" id="form3Example1c" className="form-control" />
+                      <label className="form-label" htmlFor="form3Example1c">Your First name</label>
+                    </div>
+                  </div>
+
+                  <div className="d-flex flex-row align-items-center mb-4">
+                    <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div className="form-outline flex-fill mb-0">
+                      <input onChange={this.handleLast} value={this.state.last_name} type="text" id="form3Example1c" className="form-control" />
+                      <label className="form-label" htmlFor="form3Example1c">Your Last name</label>
+                    </div>
+                  </div>
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
