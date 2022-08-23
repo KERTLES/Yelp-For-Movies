@@ -14,7 +14,7 @@ import json
 
 class AccountListEncoder(ModelEncoder):
     model = AccountVO
-    properties = ["user_name"]
+    properties = ["user_name", "id"]
 
 
 class AccountDetailEncoder(ModelEncoder):
@@ -54,12 +54,6 @@ def api_list_accounts(request, account_vo_id=None):
             encoder=AccountDetailEncoder,
             safe=False,
         )
-
-@require_http_methods(["GET", "POST"])
-def api_list_users(request, account_vo_id=None):
-    if request.method == "GET":
-        attendees = User.objects.all()
-        print(attendees)
 
 @require_http_methods(["DELETE", "PUT", "GET"])
 def api_show_account(request, pk):
