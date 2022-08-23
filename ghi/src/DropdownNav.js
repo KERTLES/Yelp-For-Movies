@@ -17,6 +17,7 @@ function DropdownNav() {
               <NavDropdown.Item href="/action">Action</NavDropdown.Item>
               <NavDropdown.Item href="/comedy">Comedy</NavDropdown.Item>
               <NavDropdown.Item href="/Drama">Drama</NavDropdown.Item>
+              <NavDropdown.Item href="/SignupPage">Signup</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
