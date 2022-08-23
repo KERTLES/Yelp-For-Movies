@@ -36,7 +36,7 @@ function MoviesList() {
             <div className="row mt-5">
                 {movieColumns.map((column, col_idx) => {
                     return (
-                    MovieColumn(column, col_idx)
+                        MovieColumn(column, col_idx)
                     );
                 })}
         </div>
