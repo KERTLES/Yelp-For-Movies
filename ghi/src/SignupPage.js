@@ -9,7 +9,7 @@ class SignupPage extends React.Component {
       email: '',
       user_name: '',
       password: '',
-      is_active: '',
+      is_active: false,
       accounts: [],
     }
   this.handleFirst = this.handleFirst.bind(this)
@@ -23,7 +23,6 @@ class SignupPage extends React.Component {
     event.preventDefault();
     const data = {...this.state};
     delete data.accounts;
-
     const accountUrl = `http://localhost:8080/api/accounts/`;
     const fetchSoldConfig = {
         method: "post",
@@ -40,7 +39,7 @@ class SignupPage extends React.Component {
                 last_name: '',
                 email: '',
                 user_name: '',
-                is_active: '',
+                is_active: false,
               };
             this.setState(cleared);
         }
@@ -66,7 +65,7 @@ handleLast(event){
     this.setState({last_name: value})
 }
 handleIsActive(event){
-    const value = event.target.value
+    const value = event.target.checked
     this.setState({is_active: value})
 }
 async componentDidMount(){
@@ -144,7 +143,7 @@ render(){
                   </div>
 
                   <div className="form-check d-flex justify-content-center mb-5">
-                    <input onChange={this.handleIsActive} value={this.state.is_active}className="form-check-input me-2" type="checkbox" id="form2Example3c" />
+                    <input onChange={this.handleIsActive} value={this.state.is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
                       I agree all statements in <a href="#!">Terms of service</a>
                     </label>
