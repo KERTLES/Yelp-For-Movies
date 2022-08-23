@@ -7,18 +7,18 @@ from django.contrib.auth.models import User
 
 from django.http import JsonResponse
 
-from .models import AccountVO
+from .models import Account
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
 import json
 
 class AccountListEncoder(ModelEncoder):
-    model = AccountVO
+    model = Account
     properties = ["user_name", "id"]
 
 
 class AccountDetailEncoder(ModelEncoder):
-    model = AccountVO
+    model = Account
     properties = [
         "email",
         "first_name",
@@ -29,16 +29,16 @@ class AccountDetailEncoder(ModelEncoder):
     ]
 
 @require_http_methods(["GET", "POST"])
-def api_list_accounts(request, account_vo_id=None):
+def api_list_accounts(request):
     if request.method == "GET":
-        attendees = AccountVO.objects.all()
+        attendees = Account.objects.all()
         return JsonResponse(
             {"accounts": attendees},
             encoder=AccountListEncoder,
         )
     else:
         content = json.loads(request.body)
-        account = AccountVO.objects.create(**content)
+        account = Account.objects.create(**content)
         nusername = content["user_name"]
         npassword = content["password"]
         nfirstname = content["first_name"]
@@ -58,18 +58,18 @@ def api_list_accounts(request, account_vo_id=None):
 @require_http_methods(["DELETE", "PUT", "GET"])
 def api_show_account(request, pk):
     if request.method == "GET":
-        account = AccountVO.objects.get(id=pk)
+        account = Account.objects.get(id=pk)
         return JsonResponse(
             account, encoder=AccountDetailEncoder, safe=False
         )
     elif request.method == "DELETE":
-        count, _ = AccountVO.objects.filter(id=pk).delete()
+        count, _ = Account.objects.filter(id=pk).delete()
         return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-        AccountVO.objects.filter(id=pk).update(**content)
+        Account.objects.filter(id=pk).update(**content)
 
-        account = AccountVO.objects.get(id=pk)
+        account = Account.objects.get(id=pk)
         return JsonResponse(
             account,
             encoder=AccountDetailEncoder,
