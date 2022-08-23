@@ -16,9 +16,8 @@ class MovieVO(models.Model):
     imdbID = models.CharField(max_length=200, unique=TRUE)
     name = models.CharField(max_length=200)
     
-
-
-
+    def __str__(self):
+        return self.name
 
 
 class Rating(models.Model):
