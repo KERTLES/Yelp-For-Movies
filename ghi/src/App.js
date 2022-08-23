@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
-
+import SignupPage from './SignupPage';
 
 
 function App(props) {
@@ -15,6 +15,7 @@ function App(props) {
             <Route path="" element={<ManufacturersList />} />
             <Route path="new" element={<ManufacturerForm />} />
           </Route> */}
+        <Route path="SignupPage" element={<SignupPage/>}/>
         </Routes> 
       </div>
     </BrowserRouter>
