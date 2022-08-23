@@ -15,7 +15,7 @@ class AccountModelEncoder(ModelEncoder):
 
 class AccountInfoModelEncoder(ModelEncoder):
     model = AccountVO
-    properties = ["email", "first_name", "last_name", "is_active"]
+    properties = ["email", "user_name", "password", "is_active"]
 
     def get_extra_data(self, o):
         return {"updated": timezone.now()}
@@ -43,11 +43,10 @@ def create_user(json_content):
         return 400, {"message": "Bad JSON"}, None
 
     required_properties = [
-        "username",
         "email",
+        "user_name",
         "password",
-        "first_name",
-        "last_name",
+        "is_active",
     ]
     missing_properties = []
     for required_property in required_properties:
@@ -65,11 +64,10 @@ def create_user(json_content):
 
     try:
         account = AccountVO.objects.create_user(
-            username=content["username"],
+            username=content["user_name"],
             email=content["email"],
             password=content["password"],
-            first_name=content["first_name"],
-            last_name=content["last_name"],
+            is_active=content["is_active"],
         )
         return 200, account, account
     except IntegrityError as e:
@@ -81,7 +79,7 @@ def create_user(json_content):
 @require_http_methods(["GET", "POST"])
 def api_list_accounts(request):
     if request.method == "GET":
-        users = User.objects.exclude(email="").filter(is_active=True)
+        users = AccountVO.objects.exclude(email="").filter(is_active=True)
         return JsonResponse(
             {"accounts": users},
             encoder=AccountModelEncoder,
@@ -129,7 +127,7 @@ def api_account_detail(request, email):
         if "email" in content:
             del content["email"]
         if "username" in content:
-            del content["username"]
+            del content["user_name"]
         if account is not None:
             for property in content:
                 if property != "password" and hasattr(account, property):
@@ -157,3 +155,4 @@ def api_account_detail(request, email):
         response = HttpResponse()
         response.status_code = 204
         return response
+    
