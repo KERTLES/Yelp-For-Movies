@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
+import SignupPage from './SignupPage';
 
 
 
