@@ -1,7 +1,20 @@
 import React from 'react';
 
 class SignupPage extends React.Component {
-   
+  constructor (props) {
+    super(props)
+    this.state = {
+      email: '',
+      user_name: '',
+      password: '',
+      is_active: '',
+    }
+  
+  this.handleEmail = this.handleEmail.bind(this)
+  this.handleUserName = this.handleUserName.bind(this)
+  this.handlePassword = this.handlePassword.bind(this)
+  this.handleIsActive = this.handleIsActive.bind(this)
+  }
    
 
  {/* <section class="vh-100" style="background-color: #eee;">
