@@ -8,6 +8,7 @@ class SignupPage extends React.Component {
       user_name: '',
       password: '',
       is_active: '',
+      accounts: [],
     }
   
   this.handleEmail = this.handleEmail.bind(this)
@@ -38,7 +39,7 @@ async componentDidMount(){
     if(autoResponse.ok)
     {
         const autoData = await autoResponse.json()
-        this.setState({vins: autoData.autos})
+        this.setState({accounts: autoData.autos})
     }
 
 }
