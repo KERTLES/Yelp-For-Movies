@@ -1,5 +1,4 @@
 import React from 'react';
-
 class SignupPage extends React.Component {
   constructor (props) {
     super(props)
@@ -9,6 +8,7 @@ class SignupPage extends React.Component {
       email: '',
       user_name: '',
       password: '',
+      password2:'',
       is_active: false,
       accounts: [],
     }
@@ -17,12 +17,26 @@ class SignupPage extends React.Component {
   this.handleEmail = this.handleEmail.bind(this)
   this.handleUserName = this.handleUserName.bind(this)
   this.handlePassword = this.handlePassword.bind(this)
+  this.handlePassword2 = this.handlePassword2.bind(this)
   this.handleIsActive = this.handleIsActive.bind(this)
-  }
+    this.handleSubmit = this.handleSubmit.bind(this)
+}
+
+confirmedPassword()
+{
+    if(this.state.password === this.state.password2 && this.state.password != "")
+    {
+        return (     
+        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <button className="btn btn-primary btn-lg">Register</button>
+      </div>)
+    }
+}
   async handleSubmit(event){
     event.preventDefault();
     const data = {...this.state};
     delete data.accounts;
+    delete data.password2
     const accountUrl = `http://localhost:8080/api/accounts/`;
     const fetchSoldConfig = {
         method: "post",
@@ -39,6 +53,8 @@ class SignupPage extends React.Component {
                 last_name: '',
                 email: '',
                 user_name: '',
+                password: '',
+                password2: '',
                 is_active: false,
               };
             this.setState(cleared);
@@ -55,6 +71,10 @@ handleUserName(event){
 handlePassword(event){
     const value = event.target.value
     this.setState({password: value})
+}
+handlePassword2(event){
+    const value = event.target.value
+    this.setState({password2: value})
 }
 handleFirst(event){
     const value = event.target.value
@@ -97,16 +117,16 @@ render(){
                 <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleFirst} value={this.state.first_name} type="text" id="form3Example1c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example1c">Your First name</label>
+                      <input onChange={this.handleFirst} value={this.state.first_name} type="text" id="firstname" className="form-control" />
+                      <label className="form-label" htmlFor="firstname">Your First name</label>
                     </div>
                   </div>
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleLast} value={this.state.last_name} type="text" id="form3Example1c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example1c">Your Last name</label>
+                      <input onChange={this.handleLast} value={this.state.last_name} type="text" id="lastname" className="form-control" />
+                      <label className="form-label" htmlFor="lastname">Your Last name</label>
                     </div>
                   </div>
 
@@ -137,7 +157,7 @@ render(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handlePassword} value={this.state.password} type="password" id="form3Example4cd" className="form-control" />
+                      <input onChange={this.handlePassword2} value={this.state.password2} type="password" id="form3Example4cd" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4cd">Repeat your password</label>
                     </div>
                   </div>
@@ -148,10 +168,7 @@ render(){
                       I agree all statements in <a href="#!">Terms of service</a>
                     </label>
                   </div>
-
-                  <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" className="btn btn-primary btn-lg">Register</button>
-                  </div>
+                {this.confirmedPassword()}
 
                 </form>
 
