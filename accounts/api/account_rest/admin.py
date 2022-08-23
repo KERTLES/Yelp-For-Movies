@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Account
+from .models import AccountVO
 
-@admin.register(Account)
+@admin.register(AccountVO)
 class AccountAdmin(admin.ModelAdmin):
     pass
 
