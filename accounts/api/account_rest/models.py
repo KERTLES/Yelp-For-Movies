@@ -5,6 +5,8 @@ from datetime import datetime
 
 class AccountVO(models.Model):
     email = models.EmailField(unique=True)
-    user_name = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
+    user_name = models.CharField(max_length=100, unique=True)
+    password = models.CharField(max_length=100, unique=True)
     is_active= models.BooleanField(null=True)

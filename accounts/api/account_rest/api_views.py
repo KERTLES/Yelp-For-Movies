@@ -1,24 +1,27 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.utils import timezone
 import json
 import pika
 
 from common.json import ModelEncoder
 from .models import AccountVO
 
-class AccountModelEncoder(ModelEncoder):
+class AccountListEncoder(ModelEncoder):
     model = AccountVO
-    properties = ["email", "first_name", "last_name"]
+    properties = ["email", "id"]
 
 
 class AccountInfoModelEncoder(ModelEncoder):
     model = AccountVO
-    properties = ["email", "user_name", "password", "is_active"]
+    properties = [
+        "email",
+        "first_name",
+        "last_name",
+        "user_name",
+        "password",
+        "is_active"]
 
-    def get_extra_data(self, o):
-        return {"updated": timezone.now()}
 
 
 def send_account_data(account):
@@ -77,24 +80,35 @@ def create_user(json_content):
 
 
 @require_http_methods(["GET", "POST"])
-def api_list_accounts(request):
+def api_list_accounts(request, account_vo_id=None):
     if request.method == "GET":
-        users = AccountVO.objects.exclude(email="").filter(is_active=True)
+        users = AccountVO.objects.all()
         return JsonResponse(
             {"accounts": users},
-            encoder=AccountModelEncoder,
+            encoder=AccountListEncoder,
         )
     else:
-        status_code, response_content, _ = create_user(request.body)
-        if status_code >= 200 and status_code < 300:
-            send_account_data(response_content)
-        response = JsonResponse(
-            response_content,
-            encoder=AccountModelEncoder,
+        content = json.loads(request.body)
+        account = AccountVO.objects.create(**content)
+        nusername = content["user_name"]
+        npassword = content["password"]
+        nfirstname = content["first_name"]
+        nlastname= content["last_name"]
+        nemail = content["email"]
+        new_user = User.objects.create_user(
+            username=nusername,
+            password=npassword,
+            email=nemail,
+            first_name=nfirstname,
+            last_name=nlastname,
+        )
+        new_user.save()
+        login(request, new_user)
+        return JsonResponse(
+            account,
+            encoder=AccountInfoModelEncoder,
             safe=False,
         )
-        response.status_code = status_code
-        return response
 
 
 @require_http_methods(["GET", "PUT", "DELETE"])
@@ -113,7 +127,7 @@ def api_account_detail(request, email):
     if request.method == "GET":
         return JsonResponse(
             account,
-            encoder=AccountModelEncoder,
+            encoder=AccountListEncoder,
             safe=False,
         )
     elif request.method == "PUT":
@@ -143,7 +157,7 @@ def api_account_detail(request, email):
             send_account_data(account)
         response = JsonResponse(
             response_content,
-            encoder=AccountModelEncoder,
+            encoder=AccountListEncoder,
             safe=False,
         )
         response.status_code = status
