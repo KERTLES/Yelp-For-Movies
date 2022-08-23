@@ -116,7 +116,7 @@ def api_account_detail(request, email):
     try:
         account = AccountVO.objects.filter(is_active=True).get(email=email)
     except AccountVO.DoesNotExist:
-        print("AccoutVO.DoesNotExist", email)
+        print("AccountVO.DoesNotExist", email)
         if request.method == "GET":
             response = JsonResponse({"message": email})
             response.status_code = 404
