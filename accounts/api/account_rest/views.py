@@ -21,6 +21,8 @@ class AccountDetailEncoder(ModelEncoder):
     model = AccountVO
     properties = [
         "email",
+        "first_name",
+        "last_name",
         "user_name",
         "password",
         "is_active",
@@ -37,12 +39,27 @@ def api_list_accounts(request, account_vo_id=None):
     else:
         content = json.loads(request.body)
         account = AccountVO.objects.create(**content)
+        nusername = content["user_name"]
+        npassword = content["password"]
+        nfirstname = content["first_name"]
+        nlastname = content["last_name"]
+        nemail= content["email"]
+        new_user = User.objects.create_user(
+            username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname
+        )
+        new_user.save()
+        login(request, new_user)
         return JsonResponse(
             account,
             encoder=AccountDetailEncoder,
             safe=False,
         )
 
+@require_http_methods(["GET", "POST"])
+def api_list_users(request, account_vo_id=None):
+    if request.method == "GET":
+        attendees = User.objects.all()
+        print(attendees)
 
 @require_http_methods(["DELETE", "PUT", "GET"])
 def api_show_account(request, pk):
@@ -71,18 +88,17 @@ def SignUpForm(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            nusername = request.POST.get("username")
+            nusername = request.POST.get("user_name")
             npassword = request.POST.get("password")
             new_user = User.objects.create_user(
                 username=nusername, password=npassword
             )
             new_user.save()
             login(request, new_user)
-            return redirect("home")
     else:
         form = UserCreationForm()
-    context = {
-        "form": form,
-    }
-    return render(request, "registration/signup.html", context)
-
+    return JsonResponse(
+        request,
+        encoder=AccountDetailEncoder,
+        safe=False,
+    )
