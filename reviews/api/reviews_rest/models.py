@@ -9,17 +9,6 @@ class UserVO(models.Model):
     user_name = models.CharField(max_length=100, unique=True)
 
 
-class Review(models.Model):
-    title = models.CharField(max_length=200)
-    post = models.TextField(blank=True, null=True)
-    imdb_id = models.ForeignKey("Movie", on_delete=models.CASCADE) 
-    #if movie id is deleted, we want to delete all reviews associated with movie (?) 
-    rating = models.PositiveSmallIntegerField(blank=True, null=True,
-        validators=[MinValueValidator(1),MaxValueValidator(5)]
-    )
-    user = models.CharField(max_length=50, blank=True, null=True)
-
-
 class Movie(models.Model): 
     # imdb_id is from the API
     imdb_id = models.CharField(max_length=200, unique=True)
@@ -41,6 +30,19 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+class Review(models.Model):
+    title = models.CharField(max_length=200)
+    post = models.TextField(blank=True, null=True)
+    movie = models.ForeignKey("Movie", related_name= "Review", on_delete=models.CASCADE) 
+    #if movie id is deleted, we want to delete all reviews associated with movie (?) 
+    rating = models.PositiveSmallIntegerField(blank=True, null=True,
+        validators=[MinValueValidator(1),MaxValueValidator(5)]
+    )
+    user = models.CharField(max_length=50, blank=True, null=True)
+
+
+
     
     
 

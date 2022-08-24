@@ -1,7 +1,9 @@
 
-from django.shortcuts import render
+# from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
+
+import json
 
 
 from common.json import ModelEncoder
@@ -29,21 +31,19 @@ class MovieEncoder(ModelEncoder):
 
 class ReviewsEncoder(ModelEncoder):
     model = Review
-    properties = ["title", "post", "imdb_id"]
+    properties = ["title", "post", "movie"]
 
-    encoders =  {"imdb_id": MovieEncoder()}
-    
+    encoders = {"movie": MovieEncoder()}
 
 
 @require_http_methods(["GET", "POST"])
-def api_list_reviews(request, movie_id):
+def api_list_reviews(request, movieId=None):
     if request.method == "GET":
 
-        if movie_id != None:
+        if movieId != None:
             try:
-                
-                reviews = Review.objects.get(imdb_id=movie_id)
-                # movie = Movie.objects.get(imdb_id=reviews.imdb_id)
+
+                reviews = Review.objects.filter(movie=movieId)
 
             except Movie.DoesNotExist:
                 return JsonResponse(
@@ -57,25 +57,23 @@ def api_list_reviews(request, movie_id):
         else:
 
             reviews = Review.objects.all()
-        
-
             return JsonResponse({"reviews:": reviews}, encoder=ReviewsEncoder)
 
-    # else:
-    #     content = json.loads(request.body)
-    #     try:
-    #         movie = Movie.objects.get(imdb_id=movie_id)
-    #         content["imdb_id"] = movie
-    #     except Movie.DoesNotExist:
-    #         return JsonResponse(
-    #             {
-    #                 "message": "invalid movie id",
+    else:
+        content = json.loads(request.body)
+        try:
+            movie = Movie.objects.get(id=movieId)
 
-    #             },
-    #             status=400
-    #         )
+        except Movie.DoesNotExist:
+            return JsonResponse(
+                {
+                    "message": "invalid movie id",
 
-    #     review = Review.objects.create(**content)
-    #     return JsonResponse(
-    #         review, encoder=ReviewsEncoder, safe=False
-    #     )
+                },
+                status=400
+            )
+        content["movie"] = movie
+        review = Review.objects.create(**content)
+        return JsonResponse(
+            review, encoder=ReviewsEncoder, safe=False
+        )
