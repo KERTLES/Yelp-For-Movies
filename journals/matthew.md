@@ -8,3 +8,9 @@
     Made it so that it also creates new users within the Django authorization system.
     Tested it with Insomnia to be sure that the back-end works.
     Fixed some issues with docker not loading certain containers.
+
+## August 23, 2022
+    Today, we worked on the getting the sign up react page functional.
+    We made sure that submitting a form resulted in the proper creation of an account and User.
+    We also made it so that it tells a user that a password, email, or username has already been used and that they need to input new ones.
+    Also, we implemented a rudimentary double password authentication system that only shows the register button if the same password has been input twice.

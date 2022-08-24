@@ -37,23 +37,30 @@ def api_list_accounts(request):
             encoder=AccountListEncoder,
         )
     else:
-        content = json.loads(request.body)
-        account = Account.objects.create(**content)
-        nusername = content["user_name"]
-        npassword = content["password"]
-        nfirstname = content["first_name"]
-        nlastname = content["last_name"]
-        nemail= content["email"]
-        new_user = User.objects.create_user(
-            username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname
-        )
-        new_user.save()
-        login(request, new_user)
-        return JsonResponse(
-            account,
-            encoder=AccountDetailEncoder,
-            safe=False,
-        )
+        try:
+            content = json.loads(request.body)
+            account = Account.objects.create(**content)
+            nusername = content["user_name"]
+            npassword = content["password"]
+            nfirstname = content["first_name"]
+            nlastname = content["last_name"]
+            nemail= content["email"]
+            new_user = User.objects.create_user(
+                username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname
+            )
+            new_user.save()
+            login(request, new_user)
+            return JsonResponse(
+                account,
+                encoder=AccountDetailEncoder,
+                safe=False,
+            )
+        except:
+            response = JsonResponse(
+                {"message": "Some credentials are not unique. Please try again to place new credentials."}
+            )
+            response.status_code = 400
+            return response
 
 @require_http_methods(["DELETE", "PUT", "GET"])
 def api_show_account(request, pk):
