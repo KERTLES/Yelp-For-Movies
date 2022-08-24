@@ -1,4 +1,6 @@
 volumes:
+    ghi: 
+        external: true
     yovies-data:
         external: true
 services:
@@ -36,7 +38,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://movies:password@postgres/movies
             WAIT_HOSTS: database:5432
     account-api:
         build:
@@ -49,7 +51,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://accounts:password@postgres/accounts
             WAIT_HOSTS: database:5432
     reviews-api:
         build:
@@ -62,5 +64,5 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://reviews:password@postgres/reviews
             WAIT_HOSTS: database:5432
