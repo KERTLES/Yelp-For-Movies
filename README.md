@@ -34,9 +34,9 @@ Our target audience are film lovers, people who want to share their personal rev
 - top 10 movies over all categories 
 - search/filter any movie by tags or keywords 
 
-login Required 
-- Create user + profile
-- create review
+*  Login required
+* Create user/profile
+* Create review
 
 
 ### Project Initialization

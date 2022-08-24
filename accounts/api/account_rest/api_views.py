@@ -5,15 +5,15 @@ import json
 import pika
 
 from common.json import ModelEncoder
-from .models import AccountVO
+from .models import Account
 
 class AccountListEncoder(ModelEncoder):
-    model = AccountVO
+    model = Account
     properties = ["email", "id"]
 
 
 class AccountInfoModelEncoder(ModelEncoder):
-    model = AccountVO
+    model = Account
     properties = [
         "email",
         "first_name",
@@ -66,7 +66,7 @@ def create_user(json_content):
         return 400, response_content, None
 
     try:
-        account = AccountVO.objects.create_user(
+        account = Account.objects.create_user(
             username=content["user_name"],
             email=content["email"],
             password=content["password"],
@@ -82,14 +82,14 @@ def create_user(json_content):
 @require_http_methods(["GET", "POST"])
 def api_list_accounts(request, account_vo_id=None):
     if request.method == "GET":
-        users = AccountVO.objects.all()
+        users = Account.objects.all()
         return JsonResponse(
             {"accounts": users},
             encoder=AccountListEncoder,
         )
     else:
         content = json.loads(request.body)
-        account = AccountVO.objects.create(**content)
+        account = Account.objects.create(**content)
         nusername = content["user_name"]
         npassword = content["password"]
         nfirstname = content["first_name"]
@@ -114,9 +114,9 @@ def api_list_accounts(request, account_vo_id=None):
 @require_http_methods(["GET", "PUT", "DELETE"])
 def api_account_detail(request, email):
     try:
-        account = AccountVO.objects.filter(is_active=True).get(email=email)
-    except AccountVO.DoesNotExist:
-        print("AccountVO.DoesNotExist", email)
+        account = Account.objects.filter(is_active=True).get(email=email)
+    except Account.DoesNotExist:
+        print("Account.DoesNotExist", email)
         if request.method == "GET":
             response = JsonResponse({"message": email})
             response.status_code = 404
