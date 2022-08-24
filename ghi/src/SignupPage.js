@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React from 'react';
 class SignupPage extends React.Component {
   constructor (props) {
     super(props)
@@ -28,7 +28,7 @@ class SignupPage extends React.Component {
 
 confirmedPassword()
 {
-    if(this.state.password === this.state.password2 && this.state.password != "")
+    if(this.state.password === this.state.password2 && this.state.password !== "")
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -50,15 +50,15 @@ async checker()
             };
             const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
             const data = await newResponse.json()
-            if(this.state.user_name == data.user_name)
+            if(this.state.user_name === data.user_name)
             {
                 this.setState({failureu: true, user_name: ''})
             }
-            if(this.state.password == data.password)
+            if(this.state.password === data.password)
             {
                 this.setState({failurep: true, password: ''})
             }
-            if(this.state.email == data.email)
+            if(this.state.email === data.email)
             {
                 this.setState({failuree: true, email: ''})
             }
