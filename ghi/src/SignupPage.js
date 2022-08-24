@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 class SignupPage extends React.Component {
   constructor (props) {
     super(props)
@@ -10,15 +10,19 @@ class SignupPage extends React.Component {
       password: '',
       password2:'',
       is_active: false,
+      success: '',
+      failuree: false,
+      failurep: false,
+      failureu: false,
       accounts: [],
     }
-  this.handleFirst = this.handleFirst.bind(this)
-  this.handleLast = this.handleLast.bind(this)
-  this.handleEmail = this.handleEmail.bind(this)
-  this.handleUserName = this.handleUserName.bind(this)
-  this.handlePassword = this.handlePassword.bind(this)
-  this.handlePassword2 = this.handlePassword2.bind(this)
-  this.handleIsActive = this.handleIsActive.bind(this)
+    this.handleFirst = this.handleFirst.bind(this)
+    this.handleLast = this.handleLast.bind(this)
+    this.handleEmail = this.handleEmail.bind(this)
+    this.handleUserName = this.handleUserName.bind(this)
+    this.handlePassword = this.handlePassword.bind(this)
+    this.handlePassword2 = this.handlePassword2.bind(this)
+    this.handleIsActive = this.handleIsActive.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 }
 
@@ -32,11 +36,43 @@ confirmedPassword()
       </div>)
     }
 }
+
+async checker()
+{
+    for(let a of this.state.accounts)
+    {
+        const IndAccountUrl = `http://localhost:8080/api/accounts/${a.id}`
+        const fetchSoldConfig = {
+            method: "get",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            };
+            const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
+            const data = await newResponse.json()
+            if(this.state.user_name == data.user_name)
+            {
+                this.setState({failureu: true, user_name: ''})
+            }
+            if(this.state.password == data.password)
+            {
+                this.setState({failurep: true, password: ''})
+            }
+            if(this.state.email == data.email)
+            {
+                this.setState({failuree: true, email: ''})
+            }
+    }
+}
   async handleSubmit(event){
     event.preventDefault();
     const data = {...this.state};
     delete data.accounts;
+    delete data.failuree
+    delete data.failurep
+    delete data.failureu
     delete data.password2
+    delete data.success
     const accountUrl = `http://localhost:8080/api/accounts/`;
     const fetchSoldConfig = {
         method: "post",
@@ -55,9 +91,22 @@ confirmedPassword()
                 user_name: '',
                 password: '',
                 password2: '',
+                success: true,
+                failuree: false,
+                failurep: false,
+                failureu: false,
                 is_active: false,
               };
             this.setState(cleared);
+        }
+        else{
+            console.log("error")
+            this.checker()
+            const cleared = {
+                password2: '',
+                success: false,
+              };
+              this.setState(cleared);
         }
     }
 handleEmail(event){
@@ -100,6 +149,49 @@ async componentDidMount(){
 
 }
 render(){
+
+    let successful
+    let failure
+    let failureee
+    let failurepp
+    let failureuu
+
+    if(this.state.success === true)
+    {
+        successful = "alert alert-success mb-0"
+    }
+    else{
+        successful = "alert alert-success d-none mb-0"
+    }
+    if(this.state.success === false)
+    {
+        failure = "alert alert-danger mb-0"
+    }
+   else{
+        failure = "alert alert-danger d-none mb-0"
+    } 
+    if (this.state.failuree === true)
+    {
+        failureee = "alert alert-danger mb-0"
+    }
+    else{
+        failureee = "alert alert-danger d-none mb-0"
+    }
+    if (this.state.failurep === true)
+    {
+        failurepp = "alert alert-danger mb-0"
+    }
+    else{
+        failurepp = "alert alert-danger d-none mb-0"
+    }
+    if (this.state.failureu === true)
+    {
+        failureuu = "alert alert-danger mb-0"
+    }
+    else{
+        failureuu = "alert alert-danger d-none mb-0"
+    }
+
     return(
   <section className="vh-100" >
   <div className="container h-100">
@@ -135,6 +227,9 @@ render(){
                     <div className="form-outline flex-fill mb-0">
                       <input onChange={this.handleUserName} value={this.state.user_name} type="text" id="form3Example1c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example1c">Your Username</label>
+                      <div className={failureuu} id="failure-message">
+                      Username already used. Please insert a new Username
+                    </div>
                     </div>
                   </div>
 
@@ -143,6 +238,9 @@ render(){
                     <div className="form-outline flex-fill mb-0">
                       <input onChange={this.handleEmail} value={this.state.email}type="email" id="form3Example3c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example3c">Your Email</label>
+                      <div className={failureee} id="failure-message">
+                      Email already used. Please insert a new Email.
+                        </div>
                     </div>
                   </div>
 
@@ -151,6 +249,9 @@ render(){
                     <div className="form-outline flex-fill mb-0">
                       <input onChange={this.handlePassword} value={this.state.password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
+                      <div className={failurepp} id="failure-message">
+                      Password already used. Please insert a new Password
+                    </div>
                     </div>
                   </div>
 
@@ -171,7 +272,12 @@ render(){
                 {this.confirmedPassword()}
 
                 </form>
-
+                <div className={successful} id="success-message">
+                    Successfully Created Account
+                    </div>
+              <div className={failure} id="failure-message">
+                    Failed Creating Account
+                </div>
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
