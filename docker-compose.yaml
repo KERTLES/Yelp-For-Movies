@@ -14,6 +14,10 @@ services:
             HOST_OS: ${OS}
             NODE_ENV: development
             HOST: "0.0.0.0"
+            REACT_APP_TMDB_API_KEY: ${REACT_APP_TMDB_API_KEY}
+            REACT_APP_TMDB_URL: https://api.themoviedb.org/3
+            REACT_APP_OMDB_API_KEY: ${REACT_APP_OMDB_API_KEY}
+            REACT_APP_OMDB_URL: http://www.omdbapi.com
     database:
         build:
             context: ./relational-data

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react"
-import MovieColumn from "./MovieColumn"
+import MovieCardBody from "./MovieCardBody"
 
 
 function MoviesList() {
     const [movieColumns, setMovieColumns] = useState([[],[],[],[],[]]) //(Array(5).fill([]))
     const [movies, setMovies] = useState([])
+    const apiKey = process.env.REACT_APP_TMDB_API_KEY
+    const tmdbURL = process.env.REACT_APP_TMDB_URL
 
     useEffect(() => {
         (async () => {
-            const moviesResponse = await fetch('https://api.themoviedb.org/3/trending/movie/day?api_key=4b2db849ffe5144d7b9048b8762a2743')
+            const moviesResponse = await fetch(`${tmdbURL}/trending/movie/day?api_key=${apiKey}`)
             if (moviesResponse.ok) {
                 const moviesData = await moviesResponse.json()
                 setMovies(moviesData.results)
@@ -36,11 +38,10 @@ function MoviesList() {
             <div className="row mt-5">
                 {movieColumns.map((column, col_idx) => {
                     return (
-                        MovieColumn(column, col_idx)
+                        MovieCardBody(column, col_idx)
                     );
                 })}
-        </div>
-        
+            </div>
         </div>
     )
 }

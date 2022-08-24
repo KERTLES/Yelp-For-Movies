@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 
 
-function MovieColumn(column, col_idx) {
+function MovieCardBody(column, col_idx) {
     return (
       <div key={col_idx} className="col">
         {column.map(movie => {
@@ -21,4 +21,4 @@ function MovieColumn(column, col_idx) {
     );
   }
 
-export default MovieColumn;
+export default MovieCardBody;
