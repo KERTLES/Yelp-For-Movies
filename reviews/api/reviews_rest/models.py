@@ -1,34 +1,49 @@
-# from operator import truediv
-from pickle import TRUE
-# from pyexpat import model
 from django.db import models
+from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
+
+class UserVO(models.Model):
+    user_name = models.CharField(max_length=100, unique=True)
+
+
 class Review(models.Model):
     title = models.CharField(max_length=200)
-    post = models.TextField
-    imdbID = models.OneToOneField("MovieVO", related_name="+", on_delete=models.CASCADE) 
+    post = models.TextField(blank=True, null=True) 
     #if movie id is deleted, we want to delete all reviews associated with movie (?) 
-
-class MovieVO(models.Model): 
-    imdbID = models.CharField(max_length=200, unique=TRUE)
-    name = models.CharField(max_length=200)
-    
-    def __str__(self):
-        return self.name
-
-
-class Rating(models.Model):
-    value = models.PositiveSmallIntegerField(
+    rating = models.PositiveSmallIntegerField(blank=True, null=True,
         validators=[MinValueValidator(1),MaxValueValidator(5)]
     )
-    review = models.ForeignKey(
-        "Review",
-        related_name = "ratings",
-        on_delete=models.CASCADE,
+    user = models.CharField(max_length=50, blank=True, null=True)
+    movie = models.ForeignKey(
+        "Movie", 
+        on_delete=models.CASCADE
     )
+    
+    def __str__(self):
+        return (self.title)
+
+
+class Movie(models.Model): 
+    # imdb_id is from the API
+    imdb_id = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=100)
+    # plot = models.TextField()
+    # year = models.DateField()
+    # rated = models.CharField(max_length=100)
+    # released = models.DateTimeField(blank=True, null=True)
+    # runtime = models.CharField(max_length=50)
+    # genre = models.CharField(max_length=100)
+    # actors = models.TextField()
+    # director = models.CharField(max_length=100)
+    # source = models.CharField(max_length=200)
+
+    # value = models.CharField(max_length=50)
+    # value = models.FloatField(blank=True)
+
+    # poster = models.URLField(max_length=200)
 
     def __str__(self):
-        return str(self.review) + " rating:" + str(self.value)
+        return self.title
