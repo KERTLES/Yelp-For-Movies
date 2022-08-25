@@ -12,7 +12,7 @@ function App(props) {
       <div className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="minions:-the-rise-of-gru" element={<MovieDetail />} />
+          <Route path=":state" element={<MovieDetail />} />
           {/* <Route path="movie">
             <Route path="" element={<MovieDetail />} />
             <Route path="new" element={<ManufacturerForm />} />
@@ -24,3 +24,5 @@ function App(props) {
 }
 
 export default App;
+
+//movie={props.movie.id}
