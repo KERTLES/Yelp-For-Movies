@@ -14,3 +14,8 @@
     We made sure that submitting a form resulted in the proper creation of an account and User.
     We also made it so that it tells a user that a password, email, or username has already been used and that they need to input new ones.
     Also, we implemented a rudimentary double password authentication system that only shows the register button if the same password has been input twice.
+
+## August 24, 2022
+    Today, we fixed up the sign up page and made adjustments to make it work better.
+    We also began work on the Login page did extensive research trying to figure out Tokens.
+    We also discussed more plans for the projects over the next few weeks.
