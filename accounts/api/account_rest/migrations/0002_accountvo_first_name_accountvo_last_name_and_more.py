@@ -11,22 +11,22 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='accountvo',
+            model_name='account',
             name='first_name',
             field=models.CharField(max_length=100, null=True),
         ),
         migrations.AddField(
-            model_name='accountvo',
+            model_name='account',
             name='last_name',
             field=models.CharField(max_length=100, null=True),
         ),
         migrations.AlterField(
-            model_name='accountvo',
+            model_name='account',
             name='password',
             field=models.CharField(max_length=100, unique=True),
         ),
         migrations.AlterField(
-            model_name='accountvo',
+            model_name='account',
             name='user_name',
             field=models.CharField(max_length=100, unique=True),
         ),

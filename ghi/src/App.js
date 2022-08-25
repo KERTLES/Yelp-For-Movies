@@ -2,11 +2,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
 import SignupPage from './SignupPage';
+import { AuthProvider } from "login.js";
 
 
 
 function App(props) {
   return (
+    <AuthProvider>
     <BrowserRouter>
       <DropdownNav />
       <div className="container">
@@ -20,6 +22,7 @@ function App(props) {
         </Routes> 
       </div>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 
