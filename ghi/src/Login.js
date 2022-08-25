@@ -1,45 +1,36 @@
 import React from 'react';
-class SignupPage extends React.Component {
+class Login extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-    first_name: '',
-    last_name: '',
       email: '',
       user_name: '',
       password: '',
-      password2:'',
       is_active: false,
       success: '',
-      failuree: false,
-      failureu: false,
+      failure: false,
       accounts: [],
     }
-    this.handleFirst = this.handleFirst.bind(this)
-    this.handleLast = this.handleLast.bind(this)
     this.handleEmail = this.handleEmail.bind(this)
     this.handleUserName = this.handleUserName.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
-    this.handlePassword2 = this.handlePassword2.bind(this)
     this.handleIsActive = this.handleIsActive.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 }
-
 confirmedPassword()
 {
-    if(this.state.password === this.state.password2 && this.state.password !== "" && this.state.is_active == true)
+    if(this.state.password !== "" && this.state.is_active == true)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-        <button className="btn btn-primary btn-lg">Register</button>
+        <button className="btn btn-primary btn-lg">Sign In</button>
       </div>)
     }
 }
 
 async checker()
 {
-    let founde = false
-    let foundu = false
+    let found = false
     for(let a of this.state.accounts)
     {
         const IndAccountUrl = `http://localhost:8080/api/accounts/${a.id}`
@@ -51,109 +42,70 @@ async checker()
             };
             const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
             const data = await newResponse.json()
-            if(this.state.user_name === data.user_name)
+            if(this.state.user_name === data.user_name && this.state.email === data.email && this.state.password === data.password)
             {
-                this.setState({failureu: true, user_name: ''})
-                foundu = true
-            }   
-            if(this.state.email === data.email)
-            {
-                this.setState({failuree: true, email: ''})
-                founde = true
-            }
-            if(founde === false)
-            {
-              this.setState({failuree: false})
-            }
-            if(foundu === false)
-            {
-              this.setState({failureu: false})
+                this.setState({failure: true, user_name: ''})
+                found = true
             }
     }
 }
-  async handleSubmit(event){
+
+handleEmail(event){
+  const value = event.target.value
+  this.setState({email: value})
+}
+handleUserName(event){
+  const value = event.target.value
+  this.setState({user_name: value})
+}
+handlePassword(event){
+  const value = event.target.value
+  this.setState({password: value})
+}
+handleIsActive(event){
+  const value = event.target.checked
+  this.setState({is_active: value})
+}
+async componentDidMount(){
+  const Url = 'http://localhost:8080/api/accounts/'
+  const autoResponse = await fetch(Url)
+
+  if(autoResponse.ok)
+  {
+      const autoData = await autoResponse.json()
+      this.setState({accounts: autoData.accounts})
+  }
+
+}
+
+handleSubmit(event)
+ {
     event.preventDefault();
     const data = {...this.state};
     delete data.accounts;
-    delete data.failuree
-    delete data.failureu
-    delete data.password2
+    delete data.failure
     delete data.success
-    const accountUrl = `http://localhost:8080/api/accounts/`;
-    const fetchSoldConfig = {
-        method: "post",
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        };
-        const Response = await fetch(accountUrl, fetchSoldConfig);
-        if (Response.ok) {
-            console.log("got it")
-            const cleared = {
-                first_name: '',
-                last_name: '',
-                email: '',
-                user_name: '',
-                password: '',
-                password2: '',
-                success: true,
-                failuree: false,
-                failureu: false,
-                is_active: false,
-              };
-            this.setState(cleared);
-        }
-        else{
-            console.log("error")
-            this.checker()
-            const cleared = {
-                password2: '',
-                success: false,
-              };
-              this.setState(cleared);
-        }
+  
+//const data = Object.fromEntries(new FormData(form))
+    const fetchOptions = {
+      method: 'post',
+      body: new FormData(data),
+      credentials: 'include',
+       // headers: {
+//'Content-Type': 'application/json',
+       // }
+      };
+    const url = 'http://localhost:8080/accounts/';
+    const response = await fetch(url, fetchOptions);
+    if (response.ok) {
+      window.location.href = '/';
+    } else {
+      console.error(response);
     }
-handleEmail(event){
-    const value = event.target.value
-    this.setState({email: value})
-}
-handleUserName(event){
-    const value = event.target.value
-    this.setState({user_name: value})
-}
-handlePassword(event){
-    const value = event.target.value
-    this.setState({password: value})
-}
-handlePassword2(event){
-    const value = event.target.value
-    this.setState({password2: value})
-}
-handleFirst(event){
-    const value = event.target.value
-    this.setState({first_name: value})
-}
-handleLast(event){
-    const value = event.target.value
-    this.setState({last_name: value})
-}
-handleIsActive(event){
-    const value = event.target.checked
-    this.setState({is_active: value})
-}
-async componentDidMount(){
-    const Url = 'http://localhost:8080/api/accounts/'
-    const autoResponse = await fetch(Url)
+    };
+  
 
-    if(autoResponse.ok)
-    {
-        const autoData = await autoResponse.json()
-        this.setState({accounts: autoData.accounts})
-    }
-
-}
-render(){
+  render(){
 
     let successful
     let failure
@@ -225,7 +177,7 @@ render(){
                       <input onChange={this.handleUserName} value={this.state.user_name} type="text" id="form3Example1c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example1c">Your Username</label>
                       <div className={failureuu} id="failure-message">
-                      Username already used. Please insert a new Username
+                      Username doesn't match. Please insert a new Username
                     </div>
                     </div>
                   </div>
@@ -236,7 +188,7 @@ render(){
                       <input onChange={this.handleEmail} value={this.state.email}type="email" id="form3Example3c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example3c">Your Email</label>
                       <div className={failureee} id="failure-message">
-                      Email already used. Please insert a new Email.
+                      Email doesn't match. Please insert a new Email.
                         </div>
                     </div>
                   </div>
@@ -246,14 +198,6 @@ render(){
                     <div className="form-outline flex-fill mb-0">
                       <input onChange={this.handlePassword} value={this.state.password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
-                    </div>
-                  </div>
-
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handlePassword2} value={this.state.password2} type="password" id="form3Example4cd" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example4cd">Repeat your password</label>
                     </div>
                   </div>
 
@@ -267,10 +211,10 @@ render(){
 
                 </form>
                 <div className={successful} id="success-message">
-                    Successfully Created Account
+                    Successfully Logged In Account
                     </div>
               <div className={failure} id="failure-message">
-                    Failed Creating Account
+                    Failed to Log In Account
                 </div>
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -288,6 +232,5 @@ render(){
 </section>       
 
     )}
-
-}
-export default SignupPage
+  }
+  export default Login

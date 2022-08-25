@@ -71,6 +71,7 @@ def api_show_account(request, pk):
         )
     elif request.method == "DELETE":
         count, _ = Account.objects.filter(id=pk).delete()
+        User.objects.filter(id = pk).delete()
         return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)

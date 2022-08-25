@@ -51,6 +51,7 @@ services:
         environment:
             DATABASE_URL: postgresql://user-name:password@postgres/db-name
             WAIT_HOSTS: database:5432
+            DJWTO_SIGNING_KEY: abcdefg
     reviews-api:
         build:
             context: ./reviews/api
