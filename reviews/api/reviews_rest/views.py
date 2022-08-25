@@ -1,3 +1,6 @@
+#TEST!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
@@ -36,6 +39,17 @@ class ReviewsEncoder(ModelEncoder):
         "movie": MovieEncoder(),
     }
 
+
+
+
+# @require_http_methods(["GET"])
+# def api_list_movies(request):
+#     if request.method == "GET":
+        
+#         movies = Movie.objects.all()
+#         return JsonResponse({"movies:": movies}, encoder=MovieEncoder)
+
+  
 
 
 @require_http_methods(["GET", "POST"])
@@ -111,7 +125,6 @@ def api_show_review(request, pk):
             safe=False,
         )
 
-
 @require_http_methods(["GET"])
 def api_list_movies(request):
     if request.method == "GET":
@@ -120,3 +133,4 @@ def api_list_movies(request):
             {"movies": movie},
             encoder=MovieEncoder
         )
+

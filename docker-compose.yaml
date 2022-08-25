@@ -1,4 +1,6 @@
 volumes:
+    ghi: 
+        external: true
     yovies-data:
         external: true
 services:
