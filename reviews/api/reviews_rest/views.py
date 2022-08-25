@@ -1,13 +1,11 @@
+#TEST!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-# from django.shortcuts import render
+
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
-
 import json
 
-
 from common.json import ModelEncoder
-
 from .models import Review, Movie
 # Create your views here.
 
@@ -31,18 +29,25 @@ class MovieEncoder(ModelEncoder):
 
 class ReviewsEncoder(ModelEncoder):
     model = Review
-    properties = ["title", "post", "movie"]
+    properties = [
+        "title", 
+        "post", 
+        "movie"
+    ]
 
-    encoders = {"movie": MovieEncoder()}
+    encoders = {
+        "movie": MovieEncoder(),
+    }
 
 
 
-@require_http_methods(["GET"])
-def api_list_movies(request):
-    if request.method == "GET":
+
+# @require_http_methods(["GET"])
+# def api_list_movies(request):
+#     if request.method == "GET":
         
-        movies = Movie.objects.all()
-        return JsonResponse({"movies:": movies}, encoder=MovieEncoder)
+#         movies = Movie.objects.all()
+#         return JsonResponse({"movies:": movies}, encoder=MovieEncoder)
 
   
 
@@ -65,10 +70,13 @@ def api_list_reviews(request, movie_id=None):
                 encoder=ReviewsEncoder,
                 safe=False
             )
-        else:
 
+        else:
             reviews = Review.objects.all()
-            return JsonResponse({"reviews:": reviews}, encoder=ReviewsEncoder)
+            return JsonResponse(
+                {"reviews:": reviews},
+                encoder=ReviewsEncoder
+            )
 
     else:
         content = json.loads(request.body)
@@ -77,16 +85,15 @@ def api_list_reviews(request, movie_id=None):
 
         except Movie.DoesNotExist:
             return JsonResponse(
-                {
-                    "message": "invalid movie id",
-
-                },
+                {"ERROR MESSAGE": "Sorry, this movie doesn't exist in the database"},
                 status=400
             )
         content["movie"] = movie
         review = Review.objects.create(**content)
         return JsonResponse(
-            review, encoder=ReviewsEncoder, safe=False
+            review,
+            encoder=ReviewsEncoder,
+            safe=False
         )
 
 
@@ -117,3 +124,13 @@ def api_show_review(request, pk):
             encoder=ReviewsEncoder,
             safe=False,
         )
+
+@require_http_methods(["GET"])
+def api_list_movies(request):
+    if request.method == "GET":
+        movie = Movie.objects.all()
+        return JsonResponse(
+            {"movies": movie},
+            encoder=MovieEncoder
+        )
+

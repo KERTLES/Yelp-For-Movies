@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DropdownNav from './DropdownNav';
 // import HomePage from './HomePage';
@@ -19,7 +20,7 @@ function App(props) {
         </Routes> 
       </div>
     </BrowserRouter>
-  );
+  )
 }
+export default App
 
-export default App;
