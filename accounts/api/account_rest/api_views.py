@@ -1,6 +1,9 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.models import User
 import json
 import pika
 
@@ -177,4 +180,28 @@ def api_account_detail(request, email):
         response = HttpResponse()
         response.status_code = 204
         return response
+
+@require_http_methods(["POST"])
+def authenticate(self, request):
+    username = request.POST['user_name']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+    else:
+        print("error")
+
+def SignUpForm(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            nusername = request.POST.get("user_name")
+            npassword = request.POST.get("password")
+            new_user = User.objects.create_user(
+                username=nusername, password=npassword
+            )
+            new_user.save()
+            login(request, new_user)
+    else:
+        print("error")
     
