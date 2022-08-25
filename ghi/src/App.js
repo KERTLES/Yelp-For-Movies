@@ -2,10 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
 import SignupPage from './SignupPage';
-
+import Login from './Login';
+import { AuthProvider } from "./token";
 
 function App(props) {
   return (
+    <AuthProvider>
     <BrowserRouter>
       <DropdownNav />
       <div className="container">
@@ -16,9 +18,11 @@ function App(props) {
             <Route path="new" element={<ManufacturerForm />} />
           </Route> */}
         <Route path="SignupPage" element={<SignupPage/>}/>
+        <Route path="Login" element={<Login/>}/>
         </Routes> 
       </div>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 

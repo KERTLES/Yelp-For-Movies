@@ -92,8 +92,15 @@ def api_show_account(request, pk):
             encoder=AccountDetailEncoder,
             safe=False,
         )
-
-
+@require_http_methods(["POST"])
+def authenticate(self, request):
+    username = request.POST['user_name']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+    else:
+        print("error")
 
 def SignUpForm(request):
     if request.method == "POST":
@@ -107,9 +114,5 @@ def SignUpForm(request):
             new_user.save()
             login(request, new_user)
     else:
-        form = UserCreationForm()
-    return JsonResponse(
-        request,
-        encoder=AccountDetailEncoder,
-        safe=False,
-    )
+        print("error")
+    

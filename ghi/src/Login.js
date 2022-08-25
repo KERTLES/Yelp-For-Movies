@@ -1,26 +1,25 @@
 import React from 'react';
+
 class Login extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
       user_name: '',
       password: '',
       is_active: false,
       success: '',
-      failure: false,
       accounts: [],
     }
-    this.handleEmail = this.handleEmail.bind(this)
     this.handleUserName = this.handleUserName.bind(this)
     this.handlePassword = this.handlePassword.bind(this)
     this.handleIsActive = this.handleIsActive.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.login = this.login.bind(this)
 }
 
 async login(username, password) {
   // For Django account services, use this one
-  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/login/`;
+  const url = `http://localhost:8080/api/accounts/login/`;
 
   const form = new FormData();
   form.append("username", username);
@@ -33,7 +32,7 @@ async login(username, password) {
   });
   if (response.ok) {
     // For Django services, use this one
-    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
+    const tokenUrl = `http://localhost:8080/api/accounts/tokens/mine/`;
 
     try {
       const response = await fetch(tokenUrl, {
@@ -42,18 +41,32 @@ async login(username, password) {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        // DO SOMETHING WITH THE TOKEN SO YOU CAN USE IT
-        // IN REQUESTS TO YOUR NON-ACCOUNTS SERVICES
+        const cleared = {
+          user_name: '',
+          password: '',
+          success: true,
+          is_active: false,
+        };
+      this.setState(cleared);
       }
     } catch (e) {}
     return false;
   }
-  let error = await response.json();
+  else{
+    const cleared = {
+      user_name:'',
+      password:'',
+      success: false,
+    };
+    let error = await response.json();
+    console.log(error)
+    this.setState(cleared);
+  }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }
 confirmedPassword()
 {
-    if(this.state.password !== "" && this.state.is_active == true)
+    if(this.state.password !== "" && this.state.is_active === true)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -62,32 +75,6 @@ confirmedPassword()
     }
 }
 
-async checker()
-{
-    let found = false
-    for(let a of this.state.accounts)
-    {
-        const IndAccountUrl = `http://localhost:8080/api/accounts/${a.id}`
-        const fetchSoldConfig = {
-            method: "get",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            };
-            const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
-            const data = await newResponse.json()
-            if(this.state.user_name === data.user_name && this.state.email === data.email && this.state.password === data.password)
-            {
-                this.setState({failure: true, user_name: ''})
-                found = true
-            }
-    }
-}
-
-handleEmail(event){
-  const value = event.target.value
-  this.setState({email: value})
-}
 handleUserName(event){
   const value = event.target.value
   this.setState({user_name: value})
@@ -116,66 +103,8 @@ handleSubmit(event)
  {
     event.preventDefault();
     const data = {...this.state};
-    delete data.accounts;
-    delete data.failure
-    delete data.success
-  
-//const data = Object.fromEntries(new FormData(form))
-    const fetchOptions = {
-      method: 'post',
-      body: new FormData(data),
-      credentials: 'include',
-       // headers: {
-//'Content-Type': 'application/json',
-       // }
-      };
-    const url = 'http://localhost:8080/accounts/';
-    const response = await fetch(url, fetchOptions);
-    if (response.ok) {;
-      //window.location.href = '/'
-    } else {
-      console.error(response);
-    }
+    this.login(data.user_name, data.password)
     };
-  async function login(username, password) {
-  // For Django account services, use this one
-  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/login/`;
-
-  // For FastAPI account services, use this one
-  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token`;
-
-  const form = new FormData();
-  form.append("username", username);
-  form.append("password", password);
-
-  const response = await fetch(url, {
-    method: "post",
-    credentials: "include",
-    body: form,
-  });
-  if (response.ok) {
-    // For Django services, use this one
-    const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
-
-    // For FastAPI services, use this one
-    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/token`;
-
-    try {
-      const response = await fetch(tokenUrl, {
-        credentials: "include",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const token = data.token;
-        // DO SOMETHING WITH THE TOKEN SO YOU CAN USE IT
-        // IN REQUESTS TO YOUR NON-ACCOUNTS SERVICES
-      }
-    } catch (e) {}
-    return false;
-  }
-  let error = await response.json();
-  // DO SOMETHING WITH THE ERROR, IF YOU WANT
-}
 
   render(){
 
@@ -196,20 +125,6 @@ handleSubmit(event)
    else{
         failure = "alert alert-danger d-none mb-0"
     } 
-    if (this.state.failuree === true)
-    {
-        failureee = "alert alert-danger mb-0"
-    }
-    else{
-        failureee = "alert alert-danger d-none mb-0"
-    }
-    if (this.state.failureu === true)
-    {
-        failureuu = "alert alert-danger mb-0"
-    }
-    else{
-        failureuu = "alert alert-danger d-none mb-0"
-    }
 
     return(
   <section className="vh-100" >
@@ -221,45 +136,15 @@ handleSubmit(event)
             <div className="row justify-content-center">
               <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
 
                 <form onSubmit={this.handleSubmit} className="mx-1 mx-md-4">
-                
-                <div className="d-flex flex-row align-items-center mb-4">
-                    <i className="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleFirst} value={this.state.first_name} type="text" id="firstname" className="form-control" />
-                      <label className="form-label" htmlFor="firstname">Your First name</label>
-                    </div>
-                  </div>
-
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <i className="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleLast} value={this.state.last_name} type="text" id="lastname" className="form-control" />
-                      <label className="form-label" htmlFor="lastname">Your Last name</label>
-                    </div>
-                  </div>
-
+          
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input onChange={this.handleUserName} value={this.state.user_name} type="text" id="form3Example1c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example1c">Your Username</label>
-                      <div className={failureuu} id="failure-message">
-                      Username doesn't match. Please insert a new Username
-                    </div>
-                    </div>
-                  </div>
-
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleEmail} value={this.state.email}type="email" id="form3Example3c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example3c">Your Email</label>
-                      <div className={failureee} id="failure-message">
-                      Email doesn't match. Please insert a new Email.
-                        </div>
                     </div>
                   </div>
 
