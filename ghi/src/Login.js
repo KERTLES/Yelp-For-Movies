@@ -17,6 +17,40 @@ class Login extends React.Component {
     this.handleIsActive = this.handleIsActive.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
 }
+
+async login(username, password) {
+  // For Django account services, use this one
+  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/login/`;
+
+  const form = new FormData();
+  form.append("username", username);
+  form.append("password", password);
+
+  const response = await fetch(url, {
+    method: "post",
+    credentials: "include",
+    body: form,
+  });
+  if (response.ok) {
+    // For Django services, use this one
+    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
+
+    try {
+      const response = await fetch(tokenUrl, {
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        // DO SOMETHING WITH THE TOKEN SO YOU CAN USE IT
+        // IN REQUESTS TO YOUR NON-ACCOUNTS SERVICES
+      }
+    } catch (e) {}
+    return false;
+  }
+  let error = await response.json();
+  // DO SOMETHING WITH THE ERROR, IF YOU WANT
+}
 confirmedPassword()
 {
     if(this.state.password !== "" && this.state.is_active == true)
@@ -97,20 +131,56 @@ handleSubmit(event)
       };
     const url = 'http://localhost:8080/accounts/';
     const response = await fetch(url, fetchOptions);
-    if (response.ok) {
-      window.location.href = '/';
+    if (response.ok) {;
+      //window.location.href = '/'
     } else {
       console.error(response);
     }
     };
-  
+  async function login(username, password) {
+  // For Django account services, use this one
+  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/login/`;
+
+  // For FastAPI account services, use this one
+  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/token`;
+
+  const form = new FormData();
+  form.append("username", username);
+  form.append("password", password);
+
+  const response = await fetch(url, {
+    method: "post",
+    credentials: "include",
+    body: form,
+  });
+  if (response.ok) {
+    // For Django services, use this one
+    const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
+
+    // For FastAPI services, use this one
+    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/token`;
+
+    try {
+      const response = await fetch(tokenUrl, {
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        // DO SOMETHING WITH THE TOKEN SO YOU CAN USE IT
+        // IN REQUESTS TO YOUR NON-ACCOUNTS SERVICES
+      }
+    } catch (e) {}
+    return false;
+  }
+  let error = await response.json();
+  // DO SOMETHING WITH THE ERROR, IF YOU WANT
+}
 
   render(){
 
     let successful
     let failure
-    let failureee
-    let failureuu
 
     if(this.state.success === true)
     {

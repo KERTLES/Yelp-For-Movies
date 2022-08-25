@@ -28,6 +28,15 @@ class AccountDetailEncoder(ModelEncoder):
         "is_active",
     ]
 
+@require_http_methods(["GET"])
+def api_user_token(request):
+    if "jwt_access_token" in request.COOKIES:
+        token = request.COOKIES["jwt_access_token"]
+        if token:
+            return JsonResponse({"token": token})
+    response = JsonResponse({"token": None})
+    return response
+
 @require_http_methods(["GET", "POST"])
 def api_list_accounts(request):
     if request.method == "GET":
