@@ -14,7 +14,7 @@ import json
 
 class AccountListEncoder(ModelEncoder):
     model = Account
-    properties = ["user_name", "id"]
+    properties = ["username", "id"]
 
 
 class AccountDetailEncoder(ModelEncoder):
@@ -23,9 +23,10 @@ class AccountDetailEncoder(ModelEncoder):
         "email",
         "first_name",
         "last_name",
-        "user_name",
+        "username",
         "password",
         "is_active",
+        "date_joined"
     ]
 
 @require_http_methods(["GET"])
@@ -49,16 +50,16 @@ def api_list_accounts(request):
         try:
             content = json.loads(request.body)
             account = Account.objects.create(**content)
-            nusername = content["user_name"]
-            npassword = content["password"]
-            nfirstname = content["first_name"]
-            nlastname = content["last_name"]
-            nemail= content["email"]
-            new_user = User.objects.create_user(
-                username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname
-            )
-            new_user.save()
-            login(request, new_user)
+            # nusername = content["username"]
+            # npassword = content["password"]
+            # nfirstname = content["first_name"]
+            # nlastname = content["last_name"]
+            # nemail= content["email"]
+            # new_user = User.objects.create_user(
+            #     username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname
+            # )
+            account.save()
+            login(request, account)
             return JsonResponse(
                 account,
                 encoder=AccountDetailEncoder,
@@ -80,7 +81,7 @@ def api_show_account(request, pk):
         )
     elif request.method == "DELETE":
         count, _ = Account.objects.filter(id=pk).delete()
-        User.objects.filter(id = pk).delete()
+        Account.objects.filter(id = pk).delete()
         return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
@@ -103,16 +104,16 @@ def authenticate(self, request):
         print("error")
 
 def SignUpForm(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            nusername = request.POST.get("user_name")
-            npassword = request.POST.get("password")
-            new_user = User.objects.create_user(
-                username=nusername, password=npassword
-            )
-            new_user.save()
-            login(request, new_user)
-    else:
-        print("error")
-    
+    # if request.method == "POST":
+    #     form = UserCreationForm(request.POST)
+    #     if form.is_valid():
+    #         nusername = request.POST.get("user_name")
+    #         npassword = request.POST.get("password")
+    #         new_user = User.objects.create_user(
+    #             username=nusername, password=npassword
+    #         )
+    #         new_user.save()
+    #         login(request, new_user)
+    # else:
+    #     print("error")
+    pass

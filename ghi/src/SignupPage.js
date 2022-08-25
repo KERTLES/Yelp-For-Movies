@@ -6,7 +6,7 @@ class SignupPage extends React.Component {
     first_name: '',
     last_name: '',
       email: '',
-      user_name: '',
+      username: '',
       password: '',
       password2:'',
       is_active: false,
@@ -27,7 +27,7 @@ class SignupPage extends React.Component {
 
 confirmedPassword()
 {
-    if(this.state.password === this.state.password2 && this.state.password !== "" && this.state.is_active == true)
+    if(this.state.password === this.state.password2 && this.state.password !== "" && this.state.is_active === true)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -51,9 +51,9 @@ async checker()
             };
             const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
             const data = await newResponse.json()
-            if(this.state.user_name === data.user_name)
+            if(this.state.username === data.username)
             {
-                this.setState({failureu: true, user_name: ''})
+                this.setState({failureu: true, username: ''})
                 foundu = true
             }   
             if(this.state.email === data.email)
@@ -94,7 +94,7 @@ async checker()
                 first_name: '',
                 last_name: '',
                 email: '',
-                user_name: '',
+                username: '',
                 password: '',
                 password2: '',
                 success: true,
@@ -120,7 +120,7 @@ handleEmail(event){
 }
 handleUserName(event){
     const value = event.target.value
-    this.setState({user_name: value})
+    this.setState({username: value})
 }
 handlePassword(event){
     const value = event.target.value
@@ -222,7 +222,7 @@ render(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleUserName} value={this.state.user_name} type="text" id="form3Example1c" className="form-control" />
+                      <input onChange={this.handleUserName} value={this.state.username} type="text" id="form3Example1c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example1c">Your Username</label>
                       <div className={failureuu} id="failure-message">
                       Username already used. Please insert a new Username
