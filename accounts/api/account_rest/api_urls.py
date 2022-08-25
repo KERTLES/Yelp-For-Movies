@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .api_views import api_list_accounts, api_account_detail
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
         api_account_detail,
         name="api_account_detail",
     ),
+    path("", include("djwto.urls")),
 ]
