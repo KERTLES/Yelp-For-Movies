@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
-from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 
 # Create your views here.
 
@@ -26,7 +26,8 @@ class AccountDetailEncoder(ModelEncoder):
         "username",
         "password",
         "is_active",
-        "date_joined"
+        "date_joined",
+
     ]
 
 @require_http_methods(["GET"])
@@ -49,15 +50,15 @@ def api_list_accounts(request):
     else:
         try:
             content = json.loads(request.body)
-            account = Account.objects.create(**content)
-            # nusername = content["username"]
-            # npassword = content["password"]
-            # nfirstname = content["first_name"]
-            # nlastname = content["last_name"]
-            # nemail= content["email"]
-            # new_user = User.objects.create_user(
-            #     username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname
-            # )
+            # account = Account.objects.create(**content)
+            nusername = content["username"]
+            npassword = content["password"]
+            nfirstname = content["first_name"]
+            nlastname = content["last_name"]
+            nemail= content["email"]
+            account = Account.objects.create_user(
+                username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname
+            )
             account.save()
             login(request, account)
             return JsonResponse(
@@ -94,26 +95,30 @@ def api_show_account(request, pk):
             safe=False,
         )
 @require_http_methods(["POST"])
-def authenticate(self, request):
-    username = request.POST['user_name']
-    password = request.POST['password']
-    user = authenticate(request, username=username, password=password)
+def neo_authenticate(request):
+    nusername = request.POST['username']
+    npassword = request.POST['password']
+    print(nusername + ":" + npassword)
+    user = authenticate(request, username=nusername, password=npassword)
     if user is not None:
+        print(user)
         login(request, user)
+        return HttpResponse('got it')
     else:
         print("error")
+        return HttpResponse('error, credentials not found')
 
-def SignUpForm(request):
-    # if request.method == "POST":
-    #     form = UserCreationForm(request.POST)
-    #     if form.is_valid():
-    #         nusername = request.POST.get("user_name")
-    #         npassword = request.POST.get("password")
-    #         new_user = User.objects.create_user(
-    #             username=nusername, password=npassword
-    #         )
-    #         new_user.save()
-    #         login(request, new_user)
-    # else:
-    #     print("error")
-    pass
+# def SignUpForm(request):
+#     # if request.method == "POST":
+#     #     form = UserCreationForm(request.POST)
+#     #     if form.is_valid():
+#     #         nusername = request.POST.get("user_name")
+#     #         npassword = request.POST.get("password")
+#     #         new_user = User.objects.create_user(
+#     #             username=nusername, password=npassword
+#     #         )
+#     #         new_user.save()
+#     #         login(request, new_user)
+#     # else:
+#     #     print("error")
+#     pass
