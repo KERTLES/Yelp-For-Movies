@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+!3vzjusw@pf)h9xssbaete35vmb6fp4&b@fj%cz!(h4*b70ar'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -51,6 +51,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+LOGIN_URL = "login"
+LOGOUT_URL = "logout"
+
+
 ROOT_URLCONF = 'account_project.urls'
 
 TEMPLATES = [
@@ -71,16 +75,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'account_project.wsgi.application'
 ALLOWED_HOSTS = ["localhost","127.0.0.1"]
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-DJWTO_MODE = "TWO-COOKIES"
+DJWTO_MODE = 'TWO-COOKIES'
 DJWTO_CSRF = False
 DJWTO_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]

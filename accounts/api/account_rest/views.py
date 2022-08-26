@@ -103,10 +103,14 @@ def neo_authenticate(request):
     if user is not None:
         print(user)
         login(request, user)
+        print(request.user.is_authenticated)
         return HttpResponse('got it')
     else:
-        print("error")
-        return HttpResponse('error, credentials not found')
+        response = JsonResponse(
+        {"message": "Some credentials are not unique. Please try again to place new credentials."}
+        )
+        response.status_code = 400
+        return response
 
 # def SignUpForm(request):
 #     # if request.method == "POST":
