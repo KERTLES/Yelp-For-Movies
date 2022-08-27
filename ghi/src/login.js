@@ -1,20 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class Login extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      user_name: '',
-      password: '',
-      is_active: false,
-      success: '',
-      accounts: [],
-    }
-    this.handleUserName = this.handleUserName.bind(this)
-    this.handlePassword = this.handlePassword.bind(this)
-    this.handleIsActive = this.handleIsActive.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.login = this.login.bind(this)
+function Login(props) {
+  const [user_name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [is_active, setActive] = useState(false);
+  const [success, setSucccess] = useState('');
+  const [accounts, setAccounts] = useState([]);
 }
 
 async login(username, password) {
@@ -75,18 +66,7 @@ confirmedPassword()
     }
 }
 
-handleUserName(event){
-  const value = event.target.value
-  this.setState({user_name: value})
-}
-handlePassword(event){
-  const value = event.target.value
-  this.setState({password: value})
-}
-handleIsActive(event){
-  const value = event.target.checked
-  this.setState({is_active: value})
-}
+
 async componentDidMount(){
   const Url = 'http://localhost:8080/api/accounts/'
   const autoResponse = await fetch(Url)
@@ -99,12 +79,6 @@ async componentDidMount(){
 
 }
 
-handleSubmit(event)
- {
-    event.preventDefault();
-    const data = {...this.state};
-    this.login(data.user_name, data.password)
-    };
 
   render(){
 
