@@ -15,6 +15,52 @@ class Login extends React.Component {
     this.handleIsActive = this.handleIsActive.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.login = this.login.bind(this)
+    this.logout = this.logout.bind(this)
+}
+
+async logout(username, password)
+{
+  const url = `http://localhost:8080/api/logout/`;
+
+  const form = new FormData();
+  form.append("username", username);
+  form.append("password", password);
+
+  const response = await fetch(url, {
+    method: "post",
+    credentials: "include",
+    body: form,
+  });
+  console.log(response)
+  if (response.ok) {
+    // For Django services, use this one
+
+    try {
+        const data = await response.json();
+        console.log(data)
+        const token = data.token;
+        console.log(token)
+        const cleared = {
+          username: '',
+          password: '',
+          success: true,
+          is_active: false,
+        };
+      this.setState(cleared);
+    } catch (e) {}
+  }
+  else{
+    const cleared = {
+      username:'',
+      password:'',
+      success: false,
+    };
+    let error = await response.json();
+    console.log(error)
+    console.log("hello")
+    this.setState(cleared);
+  }
+  // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }
 
 async login(username, password) {
@@ -182,6 +228,9 @@ handleSubmit(event)
                   className="img-fluid" alt="Sample image" />
 
               </div>
+              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <button onClick={() => this.logout(this.state.username, this.state.password)} className="btn btn-primary btn-lg">Sign Out</button>
+        </div>
             </div>
           </div>
         </div>

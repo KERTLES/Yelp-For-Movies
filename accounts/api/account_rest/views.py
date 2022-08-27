@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
@@ -104,6 +104,8 @@ def neo_authenticate(request):
         print(user)
         login(request, user)
         print(request.user.is_authenticated)
+        # logout(request)
+        # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
         return HttpResponse('got it')
     else:
         response = JsonResponse(
@@ -112,6 +114,25 @@ def neo_authenticate(request):
         response.status_code = 400
         return response
 
+@require_http_methods(["POST"])
+def neo_logout(request):
+    nusername = request.POST['username']
+    npassword = request.POST['password']
+    print(nusername + ":" + npassword)
+    user = authenticate(request, username=nusername, password=npassword)
+    if user is not None:
+        print(user)
+        logout(request)
+        print(request.user.is_authenticated)
+        # logout(request)
+        # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
+        return HttpResponse('got it')
+    else:
+        response = JsonResponse(
+        {"message": "Some credentials are not unique. Please try again to place new credentials."}
+        )
+        response.status_code = 400
+        return response
 # def SignUpForm(request):
 #     # if request.method == "POST":
 #     #     form = UserCreationForm(request.POST)
