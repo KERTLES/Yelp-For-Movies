@@ -5,6 +5,9 @@ urlpatterns = [
     path("movies/", api_list_movies, name="list_movies"),
     path("reviews/", api_list_reviews, name="list_reviews"),
     path("reviews/<int:movie_id>/", api_list_reviews, name="review_by_id"),
+    # path("reviews/<str:movie_imdb>/", api_list_reviews, name="movie_by_imdb"),
+
+
     path("create/<int:movie_id>/", api_list_reviews, name="create"),
 
     path("reviews/edit/<int:pk>/", api_show_review, name="edit_review"), #PUT

@@ -31,20 +31,31 @@ class MovieEncoder(ModelEncoder):
 
 class ReviewsEncoder(ModelEncoder):
     model = Review
-    properties = ["title", "post", "movie"]
+    properties = ["title", "post", "rating", "movie"]
 
     encoders = {"movie": MovieEncoder()}
-
 
 
 @require_http_methods(["GET"])
 def api_list_movies(request):
     if request.method == "GET":
-        
-        movies = Movie.objects.all()
-        return JsonResponse({"movies:": movies}, encoder=MovieEncoder)
 
-  
+        movies = Movie.objects.all()
+        return JsonResponse({"movies": movies}, encoder=MovieEncoder)
+
+
+@require_http_methods(["GET"])
+def api_list_reviews_by_imdb_id(request):
+    if request.method == "GET":
+        try:
+            content = json.loads(request.body)
+            imdb_id = content["imdb_id"]
+            movie = Movie.objects.get(imdb_id=imdb_id)
+            id = movie.id
+        except Movie.DoesNotExist:
+            return JsonResponse({"message": "movie does not exist in database"})
+        reviews = Review.objects.filter(movie=id)
+        return JsonResponse(reviews, ReviewsEncoder, safe=False)
 
 
 @require_http_methods(["GET", "POST"])
@@ -65,10 +76,9 @@ def api_list_reviews(request, movie_id=None):
                 encoder=ReviewsEncoder,
                 safe=False
             )
-        else:
 
-            reviews = Review.objects.all()
-            return JsonResponse({"reviews:": reviews}, encoder=ReviewsEncoder)
+        else:
+           return api_list_reviews_by_imdb_id(request)
 
     else:
         content = json.loads(request.body)
@@ -92,12 +102,12 @@ def api_list_reviews(request, movie_id=None):
 
 @require_http_methods(["DELETE", "PUT"])
 def api_show_review(request, pk):
-    
+
     if request.method == "DELETE":
         count, _ = Review.objects.filter(id=pk).delete()
-        return JsonResponse ({"deleted": count > 0})
-    
-    else: #PUT
+        return JsonResponse({"deleted": count > 0})
+
+    else:  # PUT
         content = json.loads(request.body)
 
         try:
@@ -109,7 +119,7 @@ def api_show_review(request, pk):
                 {"message": "invalid movie"},
                 status=400
             )
-        
+
         Review.objects.filter(id=pk).update(**content)
         review = Review.objects.get(id=pk)
         return JsonResponse(

@@ -41,6 +41,8 @@ class Review(models.Model):
     )
     user = models.CharField(max_length=50, blank=True, null=True)
 
+    # user = models.ForeignKey("UserVO", related_name="Review", on_delete=models.CASCADE)
+
 
 
     
