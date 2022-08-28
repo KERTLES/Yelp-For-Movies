@@ -5,7 +5,7 @@ from .api_views import (
     api_show_account,
     api_user_token,
     neo_authenticate,
-    SignUpForm,
+    # SignUpForm,
      )
 
 urlpatterns = [
@@ -13,5 +13,5 @@ urlpatterns = [
     path("accounts/<int:pk>", api_show_account, name="account_detail"),
     path("tokens/mine/", api_user_token, name="get_token"),
     path("login/", neo_authenticate, name="login"),
-    path("signup/", SignUpForm, name="signup" ),
+    # path("signup/", SignUpForm, name="signup" ),
 ]

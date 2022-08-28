@@ -99,15 +99,6 @@ async checker()
               };
             this.setState(cleared);
         }
-        else{
-            console.log("error")
-            this.checker()
-            const cleared = {
-                password2: '',
-                success: false,
-              };
-              this.setState(cleared);
-        }
     }
 handleEmail(event){
     const value = event.target.value
