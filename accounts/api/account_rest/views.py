@@ -106,7 +106,7 @@ def neo_authenticate(request):
         print(request.user.is_authenticated)
         # logout(request)
         # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
-        return HttpResponse('got it')
+        return JsonResponse({'message':'got it'})
     else:
         response = JsonResponse(
         {"message": "Some credentials are not unique. Please try again to place new credentials."}
@@ -114,25 +114,14 @@ def neo_authenticate(request):
         response.status_code = 400
         return response
 
-@require_http_methods(["POST"])
+@require_http_methods(["DELETE"])
 def neo_logout(request):
-    nusername = request.POST['username']
-    npassword = request.POST['password']
-    print(nusername + ":" + npassword)
-    user = authenticate(request, username=nusername, password=npassword)
-    if user is not None:
-        print(user)
-        logout(request)
-        print(request.user.is_authenticated)
+    print(request.user.is_authenticated)
+    logout(request)
+    print(request.user.is_authenticated)
         # logout(request)
         # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
-        return HttpResponse('got it')
-    else:
-        response = JsonResponse(
-        {"message": "Some credentials are not unique. Please try again to place new credentials."}
-        )
-        response.status_code = 400
-        return response
+    return JsonResponse({'message':'got it'})
 # def SignUpForm(request):
 #     # if request.method == "POST":
 #     #     form = UserCreationForm(request.POST)
