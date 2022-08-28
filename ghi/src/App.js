@@ -3,6 +3,8 @@ import DropdownNav from './DropdownNav';
 // import HomePage from './HomePage';
 import ListReviewForMovie from './ListReviewForMovie'
 // import MoviesList from './MoviesList';
+import MovieDetail from './MovieDetail';
+
 
 
 
@@ -14,7 +16,7 @@ function App(props) {
       <div className="container">
         <Routes>
           
-            <Route path="" element={<ListReviewForMovie />} />
+            <Route path="" element={<MovieDetail />} />
             
          
         </Routes> 

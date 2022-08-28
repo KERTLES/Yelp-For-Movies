@@ -8,8 +8,14 @@ import json
 
 from common.json import ModelEncoder
 
-from .models import Review, Movie
+from .models import Review, Movie, UserVO
 # Create your views here.
+
+class UserVOEncoder(ModelEncoder):
+    model = UserVO
+    properties = [
+        "user_name"
+    ]
 
 
 class MovieEncoder(ModelEncoder):
@@ -31,9 +37,9 @@ class MovieEncoder(ModelEncoder):
 
 class ReviewsEncoder(ModelEncoder):
     model = Review
-    properties = ["title", "post", "rating", "movie"]
+    properties = ["title", "post", "rating", "movie", "user"]
 
-    encoders = {"movie": MovieEncoder()}
+    encoders = {"movie": MovieEncoder(), "user": UserVOEncoder()}
 
 
 @require_http_methods(["GET"])
@@ -45,11 +51,11 @@ def api_list_movies(request):
 
 
 @require_http_methods(["GET"])
-def api_list_reviews_by_imdb_id(request):
+def api_list_reviews_by_imdb_id(request, imdb_id = None):
     if request.method == "GET":
         try:
-            content = json.loads(request.body)
-            imdb_id = content["imdb_id"]
+            # content = json.loads(request.body)
+            # imdb_id = content["imdb_id"]
             movie = Movie.objects.get(imdb_id=imdb_id)
             id = movie.id
         except Movie.DoesNotExist:
@@ -76,9 +82,8 @@ def api_list_reviews(request, movie_id=None):
                 encoder=ReviewsEncoder,
                 safe=False
             )
-
-        else:
-           return api_list_reviews_by_imdb_id(request)
+        else: 
+            return JsonResponse({"message": "please enter a movie id"})
 
     else:
         content = json.loads(request.body)
