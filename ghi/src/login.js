@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function Login(props) {
-  const [user_name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [is_active, setActive] = useState(false);
-  const [success, setSucccess] = useState('');
-  const [accounts, setAccounts] = useState([]);
+class Login extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: '',
+      is_active: false,
+      success: '',
+      accounts: [],
+    }
+    this.handleUserName = this.handleUserName.bind(this)
+    this.handlePassword = this.handlePassword.bind(this)
+    this.handleIsActive = this.handleIsActive.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.login = this.login.bind(this)
 }
 
 async login(username, password) {
   // For Django account services, use this one
-  const url = `http://localhost:8080/api/accounts/login/`;
+  const url = `http://localhost:8080/api/login/`;
 
   const form = new FormData();
   form.append("username", username);
@@ -21,9 +30,10 @@ async login(username, password) {
     credentials: "include",
     body: form,
   });
+  console.log(response)
   if (response.ok) {
     // For Django services, use this one
-    const tokenUrl = `http://localhost:8080/api/accounts/tokens/mine/`;
+    const tokenUrl = `http://localhost:8080/api/tokens/mine/`;
 
     try {
       const response = await fetch(tokenUrl, {
@@ -31,9 +41,11 @@ async login(username, password) {
       });
       if (response.ok) {
         const data = await response.json();
+        console.log(data)
         const token = data.token;
+        console.log(token)
         const cleared = {
-          user_name: '',
+          username: '',
           password: '',
           success: true,
           is_active: false,
@@ -45,12 +57,13 @@ async login(username, password) {
   }
   else{
     const cleared = {
-      user_name:'',
+      username:'',
       password:'',
       success: false,
     };
     let error = await response.json();
     console.log(error)
+    console.log("hello")
     this.setState(cleared);
   }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
@@ -66,7 +79,18 @@ confirmedPassword()
     }
 }
 
-
+handleUserName(event){
+  const value = event.target.value
+  this.setState({username: value})
+}
+handlePassword(event){
+  const value = event.target.value
+  this.setState({password: value})
+}
+handleIsActive(event){
+  const value = event.target.checked
+  this.setState({is_active: value})
+}
 async componentDidMount(){
   const Url = 'http://localhost:8080/api/accounts/'
   const autoResponse = await fetch(Url)
@@ -79,6 +103,12 @@ async componentDidMount(){
 
 }
 
+handleSubmit(event)
+ {
+    event.preventDefault();
+    const data = {...this.state};
+    this.login(data.username, data.password)
+    };
 
   render(){
 
@@ -117,7 +147,7 @@ async componentDidMount(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleUserName} value={this.state.user_name} type="text" id="form3Example1c" className="form-control" />
+                      <input onChange={this.handleUserName} value={this.state.username} type="text" id="form3Example1c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example1c">Your Username</label>
                     </div>
                   </div>

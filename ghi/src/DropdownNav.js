@@ -19,9 +19,10 @@ function DropdownNav() {
               <NavDropdown.Item href="/Drama">Drama</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="User" id="basic-nav-dropdown" menuVariant="dark">
-            <NavDropdown.Item className="d-none" href="/signup">Signup</NavDropdown.Item>
-            <NavDropdown.Item className="d-none" href="/sign-in">Sign In</NavDropdown.Item>
+            <NavDropdown.Item href="/signup">Signup</NavDropdown.Item>
+            <NavDropdown.Item href="/sign-in">Sign In</NavDropdown.Item>
             <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
+            <NavDropdown.Item href="/login">Login</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

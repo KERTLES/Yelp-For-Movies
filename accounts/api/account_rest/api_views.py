@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
-
-# Create your views here.
-
+from django.urls import reverse\
 from django.http import JsonResponse
-
 from .models import Account
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
+import Login from './Login';
 import SignupPage from './SignupPage';
 
 
@@ -17,6 +18,7 @@ function App(props) {
             <Route path="new" element={<ManufacturerForm />} />
           </Route> */}
           <Route path="signup" element={<SignupPage/>}/>
+          <Route path="login" element={<Login/>}/>
         </Routes> 
       </div>
     </BrowserRouter>
