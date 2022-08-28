@@ -1,33 +1,25 @@
-import React from 'react';
-class SignupPage extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-    first_name: '',
-    last_name: '',
-      email: '',
-      username: '',
-      password: '',
-      password2:'',
-      is_active: false,
-      success: '',
-      failuree: false,
-      failureu: false,
-      accounts: [],
-    }
-    this.handleFirst = this.handleFirst.bind(this)
-    this.handleLast = this.handleLast.bind(this)
-    this.handleEmail = this.handleEmail.bind(this)
-    this.handleUserName = this.handleUserName.bind(this)
-    this.handlePassword = this.handlePassword.bind(this)
-    this.handlePassword2 = this.handlePassword2.bind(this)
-    this.handleIsActive = this.handleIsActive.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-}
-
-confirmedPassword()
+import React, { useEffect, useState } from 'react';
+import { AuthContext, useToken } from "./token";
+import { useNavigate } from "react-router-dom";
+function SignupPage()
 {
-    if(this.state.password === this.state.password2 && this.state.password !== "" && this.state.is_active === true)
+  const [token, signup] = useToken();
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [is_active, setIsActive] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+  const [success, setSuccess] = useState('');
+  const [failuree, setFailureE] = useState(false);
+  const [failureu, setFailureU] = useState(false);
+  const [accounts, setAccounts] = useState([])
+  const navigate = useNavigate();
+
+function confirmedPassword()
+{
+    if(password === password2 && password !== "" && is_active === true)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -36,12 +28,13 @@ confirmedPassword()
     }
 }
 
-async checker()
+async function checker()
 {
     let founde = false
     let foundu = false
-    for(let a of this.state.accounts)
+    for(let a of accounts)
     {
+        console.log(a)
         const IndAccountUrl = `http://localhost:8080/api/accounts/${a.id}`
         const fetchSoldConfig = {
             method: "get",
@@ -51,34 +44,37 @@ async checker()
             };
             const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
             const data = await newResponse.json()
-            if(this.state.username === data.username)
+            if(username === data.username)
             {
-                this.setState({failureu: true, username: ''})
-                foundu = true
+              setFailureU(true)
+              setUsername('')
+              foundu = true
             }   
-            if(this.state.email === data.email)
+            if(email === data.email)
             {
-                this.setState({failuree: true, email: ''})
-                founde = true
+              setFailureE(true)
+              setEmail('')
+              founde = true
             }
             if(founde === false)
             {
-              this.setState({failuree: false})
+              setFailureE(false)
             }
             if(foundu === false)
             {
-              this.setState({failureu: false})
+              setFailureU(false)
             }
     }
 }
-  async handleSubmit(event){
+async function handleSubmit(event){
     event.preventDefault();
-    const data = {...this.state};
-    delete data.accounts;
-    delete data.failuree
-    delete data.failureu
-    delete data.password2
-    delete data.success
+    const data = {
+    'username': username,
+    'first_name': first_name, 
+    'last_name': last_name, 
+    'email': email, 
+    'password': password, 
+    'is_active': is_active};
     const accountUrl = `http://localhost:8080/api/accounts/`;
     const fetchSoldConfig = {
         method: "post",
@@ -89,99 +85,67 @@ async checker()
         };
         const Response = await fetch(accountUrl, fetchSoldConfig);
         if (Response.ok) {
+          signup(username,password,email,first_name,last_name)
             console.log("got it")
-            const cleared = {
-                first_name: '',
-                last_name: '',
-                email: '',
-                username: '',
-                password: '',
-                password2: '',
-                success: true,
-                failuree: false,
-                failureu: false,
-                is_active: false,
-              };
-            this.setState(cleared);
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+            setUsername('');
+            setPassword('');
+            setPassword2('');
+            setSuccess(true);
+            setFailureE(false)
+            setFailureU(false)
+            setIsActive(false)
+            navigate('/')
         }
         else{
             console.log("error")
-            this.checker()
-            const cleared = {
-                password2: '',
-                success: false,
-              };
-              this.setState(cleared);
+            checker()
+            setPassword2('')
+            setSuccess(false)
         }
     }
-handleEmail(event){
-    const value = event.target.value
-    this.setState({email: value})
-}
-handleUserName(event){
-    const value = event.target.value
-    this.setState({username: value})
-}
-handlePassword(event){
-    const value = event.target.value
-    this.setState({password: value})
-}
-handlePassword2(event){
-    const value = event.target.value
-    this.setState({password2: value})
-}
-handleFirst(event){
-    const value = event.target.value
-    this.setState({first_name: value})
-}
-handleLast(event){
-    const value = event.target.value
-    this.setState({last_name: value})
-}
-handleIsActive(event){
-    const value = event.target.checked
-    this.setState({is_active: value})
-}
-async componentDidMount(){
+useEffect(() => {
+async function getAccounts(){
     const Url = 'http://localhost:8080/api/accounts/'
     const autoResponse = await fetch(Url)
 
     if(autoResponse.ok)
     {
         const autoData = await autoResponse.json()
-        this.setState({accounts: autoData.accounts})
+        setAccounts(autoData.accounts)
     }
-
-}
-render(){
+}getAccounts();
+},[])
 
     let successful
     let failure
     let failureee
     let failureuu
 
-    if(this.state.success === true)
+    if(success === true)
     {
         successful = "alert alert-success mb-0"
     }
     else{
         successful = "alert alert-success d-none mb-0"
     }
-    if(this.state.success === false)
+    if(success === false)
     {
         failure = "alert alert-danger mb-0"
     }
    else{
         failure = "alert alert-danger d-none mb-0"
     } 
-    if (this.state.failuree === true)
+    if (failuree === true)
     {
         failureee = "alert alert-danger mb-0"
     }
     else{
         failureee = "alert alert-danger d-none mb-0"
     }
-    if (this.state.failureu === true)
+    if (failureu === true)
     {
         failureuu = "alert alert-danger mb-0"
     }
@@ -201,12 +165,12 @@ render(){
 
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <form onSubmit={this.handleSubmit} className="mx-1 mx-md-4">
+                <form onSubmit={e => handleSubmit(e)} className="mx-1 mx-md-4">
                 
                 <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleFirst} value={this.state.first_name} type="text" id="firstname" className="form-control" />
+                      <input onChange={e => setFirstName(e.target.value)} value={first_name} type="text" id="firstname" className="form-control" />
                       <label className="form-label" htmlFor="firstname">Your First name</label>
                     </div>
                   </div>
@@ -214,7 +178,7 @@ render(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleLast} value={this.state.last_name} type="text" id="lastname" className="form-control" />
+                      <input onChange={e => setLastName(e.target.value)} value={last_name} type="text" id="lastname" className="form-control" />
                       <label className="form-label" htmlFor="lastname">Your Last name</label>
                     </div>
                   </div>
@@ -222,7 +186,7 @@ render(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleUserName} value={this.state.username} type="text" id="form3Example1c" className="form-control" />
+                      <input onChange={e => setUsername(e.target.value)} value={username} type="text" id="form3Example1c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example1c">Your Username</label>
                       <div className={failureuu} id="failure-message">
                       Username already used. Please insert a new Username
@@ -233,7 +197,7 @@ render(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleEmail} value={this.state.email}type="email" id="form3Example3c" className="form-control" />
+                      <input onChange={e => setEmail(e.target.value)} value={email}type="email" id="form3Example3c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example3c">Your Email</label>
                       <div className={failureee} id="failure-message">
                       Email already used. Please insert a new Email.
@@ -244,7 +208,7 @@ render(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handlePassword} value={this.state.password} type="password" id="form3Example4c" className="form-control" />
+                      <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
                     </div>
                   </div>
@@ -252,18 +216,18 @@ render(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handlePassword2} value={this.state.password2} type="password" id="form3Example4cd" className="form-control" />
+                      <input onChange={e => setPassword2(e.target.value)} value={password2} type="password" id="form3Example4cd" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4cd">Repeat your password</label>
                     </div>
                   </div>
 
                   <div className="form-check d-flex justify-content-center mb-5">
-                    <input onChange={this.handleIsActive} value={this.state.is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
+                    <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
                       I agree all statements in <a href="#!">Terms of service</a>
                     </label>
                   </div>
-                {this.confirmedPassword()}
+                {confirmedPassword()}
 
                 </form>
                 <div className={successful} id="success-message">
@@ -287,7 +251,7 @@ render(){
   </div>
 </section>       
 
-    )}
+    )
 
 }
 export default SignupPage
