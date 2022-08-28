@@ -73,7 +73,7 @@ async checker()
     delete data.failureu
     delete data.password2
     delete data.success
-    const accountUrl = `http://localhost:8080/api/accounts/`;
+    const accountUrl = 'http://localhost:8080/api/accounts/';
     const fetchSoldConfig = {
         method: "post",
         body: JSON.stringify(data),
