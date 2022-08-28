@@ -19,3 +19,12 @@
     Today, we fixed up the sign up page and made adjustments to make it work better.
     We also began work on the Login page did extensive research trying to figure out Tokens.
     We also discussed more plans for the projects over the next few weeks.
+
+## August 25, 2022
+    Today, we spent more time trying to implement a login page and figuring out tokens. We ultimately got it to work where a user would successfully be logged in on the Django end. Ultimately figured out that the issue was something going on with JWT access token not being generated.
+
+## August 26, 2022
+    Quickly made a logout button to test out logout functionality on the backend side. Figured out how to make logout work.
+
+## August 27, 2022
+    Figured out what was wrong and managed to get a JWT access token generated. I also converted both the sign up JavaScript and the Login JavaScript into React Hook format. Also figured out how to get the pages to navigate to the main page once a user logged in.
