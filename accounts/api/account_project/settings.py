@@ -28,10 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL = "account_rest.Account"
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     "djwto",
     "account_rest.apps.AccountRestConfig",
     'django.contrib.admin',
@@ -52,18 +53,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:3000",
-]
+LOGIN_URL ="login"
+LOGOUT_URL ="logout"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
-CORS_ALLOW_CREDENTIALS = True
-
-DJWTO_MODE = "TWO-COOKIES"
-DJWTO_ACCESS_TOKEN_LIFETIME = None
-
 
 ROOT_URLCONF = 'account_project.urls'
 
@@ -84,6 +79,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'account_project.wsgi.application'
+ALLOWED_HOSTS = ["localhost","127.0.0.1"]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+CORS_ALLOW_CREDENTIALS = True
+
+DJWTO_MODE = "TWO-COOKIES"
+DJWTO_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
+
+DJWTO_SAME_SITE = "LAX" if DEBUG else "NONE"
 
 
 # Database
@@ -137,8 +143,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-DJWTO_MODE = "TWO-COOKIES"
-DJWTO_CSRF = False
-DJWTO_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
-DJWTO_SAME_SITE = "LAX" if DEBUG else "NONE"
