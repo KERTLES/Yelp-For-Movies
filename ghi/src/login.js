@@ -10,10 +10,10 @@ function Login(){
   const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
 const contextType = AuthContext;
-async function clogout()
-{
-  const url = `http://localhost:8080/api/logout/`;
 
+async function clogout() {
+
+  const url = `http://localhost:8080/api/logout/`;
   const response = await fetch(url, {
     method: "delete",
     credentials: "include",
