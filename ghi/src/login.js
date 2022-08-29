@@ -1,23 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { AuthContext, useToken } from "./token";
+import { useNavigate } from "react-router-dom";
+function Login(){
+  const [token, login, logout] = useToken();
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [is_active, setIsActive] = useState(false)
+  const [success, setSuccess] = useState('')
+  const [accounts, setAccounts] = useState([])
+  const navigate = useNavigate();
+const contextType = AuthContext;
+async function clogout()
+{
+  const url = `http://localhost:8080/api/logout/`;
 
-class Login extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      username: '',
-      password: '',
-      is_active: false,
-      success: '',
-      accounts: [],
+  const response = await fetch(url, {
+    method: "delete",
+    credentials: "include",
+  });
+  console.log(response)
+  if (response.ok) {
+    // For Django services, use this one
+    try {
+        const data = await response.json();
+        console.log(data)
+        const token = data.token;
+        console.log(token)
+        setUsername('')
+        setPassword('')
+        setSuccess(true)
+        setIsActive(false)
+        logout()
+    } catch (e) {
+      console.log(e)
     }
-    this.handleUserName = this.handleUserName.bind(this)
-    this.handlePassword = this.handlePassword.bind(this)
-    this.handleIsActive = this.handleIsActive.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.login = this.login.bind(this)
+  }
+  else{
+    setUsername('')
+    setPassword('')
+    setSuccess(false)
+    let error = await response.json();
+    console.log(error)
+    console.log("hello")
+  }
+  // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }
 
-async login(username, password) {
+async function clogin(username, password) {
   // For Django account services, use this one
   const url = `http://localhost:8080/api/login/`;
 
@@ -33,6 +62,7 @@ async login(username, password) {
   console.log(response)
   if (response.ok) {
     // For Django services, use this one
+    login(username, password)
     const tokenUrl = `http://localhost:8080/api/tokens/mine/`;
 
     try {
@@ -44,33 +74,28 @@ async login(username, password) {
         console.log(data)
         const token = data.token;
         console.log(token)
-        const cleared = {
-          username: '',
-          password: '',
-          success: true,
-          is_active: false,
-        };
-      this.setState(cleared);
+        setUsername('')
+        setPassword('')
+        setSuccess(true)
+        setIsActive(false)
+        navigate('/')
       }
     } catch (e) {}
     return false;
   }
   else{
-    const cleared = {
-      username:'',
-      password:'',
-      success: false,
-    };
+    setUsername('')
+    setPassword('')
+    setSuccess(false)
     let error = await response.json();
     console.log(error)
     console.log("hello")
-    this.setState(cleared);
   }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }
-confirmedPassword()
+function confirmedPassword()
 {
-    if(this.state.password !== "" && this.state.is_active === true)
+    if(password !== "" && is_active === true)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -79,50 +104,38 @@ confirmedPassword()
     }
 }
 
-handleUserName(event){
-  const value = event.target.value
-  this.setState({username: value})
-}
-handlePassword(event){
-  const value = event.target.value
-  this.setState({password: value})
-}
-handleIsActive(event){
-  const value = event.target.checked
-  this.setState({is_active: value})
-}
-async componentDidMount(){
+useEffect(() => {
+async function getAccounts(){
   const Url = 'http://localhost:8080/api/accounts/'
   const autoResponse = await fetch(Url)
 
   if(autoResponse.ok)
   {
       const autoData = await autoResponse.json()
-      this.setState({accounts: autoData.accounts})
+      setAccounts(autoData.accounts)
   }
 
 }
+getAccounts();
+}, [])
 
-handleSubmit(event)
+function handleSubmit(event)
  {
     event.preventDefault();
-    const data = {...this.state};
-    this.login(data.username, data.password)
-    };
-
-  render(){
+    clogin(username, password)
+  };
 
     let successful
     let failure
 
-    if(this.state.success === true)
+    if(success === true)
     {
         successful = "alert alert-success mb-0"
     }
     else{
         successful = "alert alert-success d-none mb-0"
     }
-    if(this.state.success === false)
+    if(success === false)
     {
         failure = "alert alert-danger mb-0"
     }
@@ -130,7 +143,7 @@ handleSubmit(event)
         failure = "alert alert-danger d-none mb-0"
     } 
 
-    return(
+  return(
   <section className="vh-100" >
   <div className="container h-100">
     <div className="row d-flex justify-content-center align-items-center h-100">
@@ -142,12 +155,12 @@ handleSubmit(event)
 
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
 
-                <form onSubmit={this.handleSubmit} className="mx-1 mx-md-4">
+                <form onSubmit={e => handleSubmit(e)} className="mx-1 mx-md-4">
           
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handleUserName} value={this.state.username} type="text" id="form3Example1c" className="form-control" />
+                      <input onChange={e => setUsername(e.target.value)} value={username} type="text" id="form3Example1c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example1c">Your Username</label>
                     </div>
                   </div>
@@ -155,18 +168,18 @@ handleSubmit(event)
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={this.handlePassword} value={this.state.password} type="password" id="form3Example4c" className="form-control" />
+                      <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
                     </div>
                   </div>
 
                   <div className="form-check d-flex justify-content-center mb-5">
-                    <input onChange={this.handleIsActive} value={this.state.is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
+                    <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
                       I agree all statements in <a href="#!">Terms of service</a>
                     </label>
                   </div>
-                {this.confirmedPassword()}
+                {confirmedPassword()}
 
                 </form>
                 <div className={successful} id="success-message">
@@ -182,6 +195,9 @@ handleSubmit(event)
                   className="img-fluid" alt="Sample image" />
 
               </div>
+              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+        <button onClick={() => clogout()} className="btn btn-primary btn-lg">Sign Out</button>
+        </div>
             </div>
           </div>
         </div>
@@ -191,5 +207,4 @@ handleSubmit(event)
 </section>       
 
     )}
-  }
   export default Login
