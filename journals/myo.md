@@ -1,3 +1,12 @@
+## August 24, 2022
+Today I worked on:
+- Completing the creation of the Movie Detail Page
+
+I started off with just creating a static detail page for a specific movie, with all the information I got from the day before. It was kind of hard trying to style some stuffs but overall everything went well. The only trouble I ran into that took a while to figure out was to make the page dynamic, meaning the detail page load the details of the whichever movie I clicked on from the Main Page rather than just the just the same movie.
+
+The two things I learned during the process was the use of useParam and useRef. I was able to get the url link and the detail page to change dynamically using the useParam. But for some reason, the page would load for a second and disappear. I was able to fix that bug when I learned of useRef, which is to just save a reference point for a value so that I can reuse it somewhere else in the code rather than using useState to save that value (which is also the cause of the bug).
+
+
 ## August 23, 2022
 Today I worked on:
 - Refactoring the API Key and the public URL and getting the initial set up for the Movie Detail Page
