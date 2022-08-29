@@ -14,6 +14,8 @@ services:
             HOST_OS: ${OS}
             NODE_ENV: development
             HOST: "0.0.0.0"
+            REACT_APP_ACCOUNTS_HOST: http://localhost:8080
+            DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
     database:
         build:
             context: ./relational-data
@@ -52,6 +54,7 @@ services:
             DATABASE_URL: postgresql://user-name:password@postgres/db-name
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
+            
     reviews-api:
         build:
             context: ./reviews/api

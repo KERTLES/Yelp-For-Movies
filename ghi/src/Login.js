@@ -12,8 +12,7 @@ function Login(){
 const contextType = AuthContext;
 async function clogout()
 {
-  const url = `http://localhost:8080/api/logout/`;
-
+  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/logout/`;
   const response = await fetch(url, {
     method: "delete",
     credentials: "include",
@@ -48,7 +47,7 @@ async function clogout()
 
 async function clogin(username, password) {
   // For Django account services, use this one
-  const url = `http://localhost:8080/api/login/`;
+  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
 
   const form = new FormData();
   form.append("username", username);
@@ -63,7 +62,7 @@ async function clogin(username, password) {
   if (response.ok) {
     // For Django services, use this one
     login(username, password)
-    const tokenUrl = `http://localhost:8080/api/tokens/mine/`;
+    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
     try {
       const response = await fetch(tokenUrl, {
@@ -106,7 +105,8 @@ function confirmedPassword()
 
 useEffect(() => {
 async function getAccounts(){
-  const Url = 'http://localhost:8080/api/accounts/'
+  const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
+  console.log(Url)
   const autoResponse = await fetch(Url)
 
   if(autoResponse.ok)
