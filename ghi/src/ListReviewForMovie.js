@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 
 import './style.css'
 
@@ -8,10 +8,8 @@ function ListReviewForMovie(data) {
   //declare new state variable 
 
   const [reviews, setReviews] = useState([])
-  // const imdb_id = useRef()
 
   //fetches review data 
-
 
 
   useEffect(() => {
@@ -23,15 +21,13 @@ function ListReviewForMovie(data) {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log(data)
         setReviews(data)
-        console.log(data)
       }
 
     }
     getData()
 
-  }, [setReviews])
+  }, [])
 
   const checkIfRatings = (rating) => {
     return (
@@ -51,6 +47,8 @@ function ListReviewForMovie(data) {
 
 
 
+
+
   return (
 
 
@@ -62,17 +60,24 @@ function ListReviewForMovie(data) {
           <div className="p-3 mb-3 mb-md-0 mr-md-3 bg-light scroll">
 
 
+
             {reviews?.map((review) => {
 
 
 
               return (
 
-                <div ><br />
+                <div className="text"><br />
 
                   <h6 key={review.id}>{review.title}</h6>
 
-                  @{review.user.user_name}
+                  <span className="user">@{review.user.user_name}</span>
+
+
+                  <span className="style">{'\t'}{review.date}</span>
+
+
+
 
                   {checkIfRatings(review.rating)}
 

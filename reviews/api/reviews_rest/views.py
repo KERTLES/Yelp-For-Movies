@@ -37,7 +37,7 @@ class MovieEncoder(ModelEncoder):
 
 class ReviewsEncoder(ModelEncoder):
     model = Review
-    properties = ["title", "post", "rating", "movie", "user"]
+    properties = ["title", "post", "rating","date", "movie", "user"]
 
     encoders = {"movie": MovieEncoder(), "user": UserVOEncoder()}
 

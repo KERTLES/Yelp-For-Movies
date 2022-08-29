@@ -50,3 +50,27 @@
     scrollbar-width: thin;
   }
 
+.text {
+    color:#000000cd;
+    font-weight: 400;
+}
+
+h6{
+    font-weight: 600;
+    
+}
+
+.user {
+    color: rgb(64, 60, 55);
+    font-weight: 500;
+}
+
+.style {
+    
+    color:#20240bd7;
+    font-style: italic;
+    font-weight: 400;
+   
+    
+    
+  }

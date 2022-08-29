@@ -120,6 +120,8 @@ function MovieDetail() {
                     </table>
                 </div>
 
+                
+
                 <ListReviewForMovie imdb_id = {imdbID} /> 
                     
                 
