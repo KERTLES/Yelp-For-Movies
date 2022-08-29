@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
@@ -47,3 +46,27 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+class Review(models.Model):
+    title = models.CharField(max_length=200)
+    post = models.TextField(blank=True, null=True)
+    movie = models.ForeignKey("Movie", related_name= "Review", on_delete=models.CASCADE) 
+    #if movie id is deleted, we want to delete all reviews associated with movie (?) 
+    rating = models.PositiveSmallIntegerField(blank=True, null=True,
+        validators=[MinValueValidator(1),MaxValueValidator(5)]
+    )
+    date = models.DateField(auto_now=True)
+    # user = models.CharField(max_length=50, blank=True, null=True)
+
+    user = models.ForeignKey("UserVO", related_name="Review", on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return str("@"+self.user.user_name) + " review for " + str(self.movie.title)
+
+
+
+    
+    
+
+

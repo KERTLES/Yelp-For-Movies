@@ -14,6 +14,10 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     pass
+@admin.register(UserVO)
+class UserVOAdmin(admin.ModelAdmin):
+    pass
+
 
 
 
