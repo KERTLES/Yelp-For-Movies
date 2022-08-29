@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
@@ -127,3 +127,10 @@ def neo_authenticate(request):
 #     #     print("error")
 #     pass
 
+@require_http_methods(["DELETE"])
+def neo_logout(request):
+    print(request.user.is_authenticated)
+    logout(request)
+    print(request.user.is_authenticated)
+    
+    return JsonResponse({'message':'got it'})
