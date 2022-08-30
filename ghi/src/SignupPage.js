@@ -34,8 +34,7 @@ async function checker()
     let foundu = false
     for(let a of accounts)
     {
-        console.log(a)
-        const IndAccountUrl = `http://localhost:8080/api/accounts/${a.id}`
+        const IndAccountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${a.id}`
         const fetchSoldConfig = {
             method: "get",
             headers: {
@@ -75,7 +74,7 @@ async function handleSubmit(event){
     'email': email, 
     'password': password, 
     'is_active': is_active};
-    const accountUrl = `http://localhost:8080/api/accounts/`;
+    const accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
     const fetchSoldConfig = {
         method: "post",
         body: JSON.stringify(data),
@@ -108,7 +107,7 @@ async function handleSubmit(event){
     }
 useEffect(() => {
 async function getAccounts(){
-    const Url = 'http://localhost:8080/api/accounts/'
+    const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`
     const autoResponse = await fetch(Url)
 
     if(autoResponse.ok)

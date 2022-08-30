@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AuthContext, useToken } from "./token";
+import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function Login(){
   const [token, login, logout] = useToken();
@@ -9,41 +9,38 @@ function Login(){
   const [success, setSuccess] = useState('')
   const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
-const contextType = AuthContext;
-async function clogout()
-{
-  const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/logout/`;
-  const response = await fetch(url, {
-    method: "delete",
-    credentials: "include",
-  });
-  console.log(response)
-  if (response.ok) {
-    // For Django services, use this one
-    try {
-        const data = await response.json();
-        console.log(data)
-        const token = data.token;
-        console.log(token)
-        setUsername('')
-        setPassword('')
-        setSuccess(true)
-        setIsActive(false)
-        logout()
-    } catch (e) {
-      console.log(e)
-    }
-  }
-  else{
-    setUsername('')
-    setPassword('')
-    setSuccess(false)
-    let error = await response.json();
-    console.log(error)
-    console.log("hello")
-  }
-  // DO SOMETHING WITH THE ERROR, IF YOU WANT
-}
+
+// async function clogout()
+// {
+//   const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/logout/`;
+//   const response = await fetch(url, {
+//     method: "delete",
+//     credentials: "include",
+//   });
+//   console.log(response)
+//   if (response.ok) {
+//     // For Django services, use this one
+//     try {
+//         const data = await response.json();
+//         const token = data.token;
+//         setUsername('')
+//         setPassword('')
+//         setSuccess(true)
+//         setIsActive(false)
+//         logout()
+//     } catch (e) {
+//       console.log('error')
+//     }
+//   }
+//   else{
+//     setUsername('')
+//     setPassword('')
+//     setSuccess(false)
+//     let error = await response.json();
+//     console.log("hello")
+//   }
+//   // DO SOMETHING WITH THE ERROR, IF YOU WANT
+// }
 
 async function clogin(username, password) {
   // For Django account services, use this one
@@ -70,9 +67,7 @@ async function clogin(username, password) {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data)
         const token = data.token;
-        console.log(token)
         setUsername('')
         setPassword('')
         setSuccess(true)
@@ -87,7 +82,6 @@ async function clogin(username, password) {
     setPassword('')
     setSuccess(false)
     let error = await response.json();
-    console.log(error)
     console.log("hello")
   }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
@@ -106,7 +100,6 @@ function confirmedPassword()
 useEffect(() => {
 async function getAccounts(){
   const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-  console.log(Url)
   const autoResponse = await fetch(Url)
 
   if(autoResponse.ok)
@@ -195,9 +188,6 @@ function handleSubmit(event)
                   className="img-fluid" alt="Sample image" />
 
               </div>
-              <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-        <button onClick={() => clogout()} className="btn btn-primary btn-lg">Sign Out</button>
-        </div>
             </div>
           </div>
         </div>

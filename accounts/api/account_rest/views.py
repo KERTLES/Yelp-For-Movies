@@ -14,7 +14,7 @@ import json
 
 class AccountListEncoder(ModelEncoder):
     model = Account
-    properties = ["username", "id"]
+    properties = ["first_name", "id"]
 
 
 class AccountDetailEncoder(ModelEncoder):
@@ -98,12 +98,9 @@ def api_show_account(request, pk):
 def neo_authenticate(request):
     nusername = request.POST['username']
     npassword = request.POST['password']
-    print(nusername + ":" + npassword)
     user = authenticate(request, username=nusername, password=npassword)
     if user is not None:
-        print(user)
         login(request, user)
-        print(request.user.is_authenticated)
         # logout(request)
         # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
         return JsonResponse({'message':'got it'})
@@ -116,12 +113,15 @@ def neo_authenticate(request):
 
 @require_http_methods(["DELETE"])
 def neo_logout(request):
-    print(request.user.is_authenticated)
     logout(request)
-    print(request.user.is_authenticated)
         # logout(request)
         # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
     return JsonResponse({'message':'got it'})
+
+def get_some_data(request):
+    token_data = request.payload
+    # do stuff with user_info
+    return data
 # def SignUpForm(request):
 #     # if request.method == "POST":
 #     #     form = UserCreationForm(request.POST)
