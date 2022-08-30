@@ -1,3 +1,11 @@
+## August 29, 2022
+Today I worked on:
+- Implementing the search feature and the filter by a genre feature
+
+It was actually really great progress impletementing these 2 features. I had a little of struggle while working on the search function to look up a list of matching results when a user types in the movie they want to look for. I was trying to make it so that when someone clicks the submit button on the search bar, the page would re-render and load a list of matching results, rather than taking them to another page with a different url for that results list. I couldn't get it to work at first because even though I was able to pass the search name as a prop to the MoviesList component, I didn't know how to apply it inside the MovieList component so that the page would load up correctly. I eventually got it working by taking the result to a different page, and then refactored the MovieList component so that it does what I originally wanted it to and also by placing props inside the dependency array of the useEffect to get a list of movie, so that the page re-rendered everytime props changes.
+
+For the filter by a genre feature, it turned out to be a lot easier to impletement than I had thought. I was able to get a list of the genres from the TMDB page to use in the nav bar so that whicheve the genre a user select, it would take them to result by genre page with the url also dynamically refectly the corresponding genre.
+
 ## August 24, 2022
 Today I worked on:
 - Completing the creation of the Movie Detail Page
