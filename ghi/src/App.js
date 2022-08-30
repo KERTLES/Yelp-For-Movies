@@ -4,6 +4,7 @@ import HomePage from './HomePage';
 import SignupPage from './SignupPage';
 import Login from './Login';
 import { AuthProvider } from "./token";
+import LogoutButton from './LogoutButton'
 
 function App(props) {
   return (

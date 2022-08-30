@@ -77,7 +77,6 @@ export function useToken() {
     if (token) {
       const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/token/refresh/logout/`;
       let response = await fetch(url, { method: "delete", credentials: "include" });
-      console.log(response)
       internalToken = null;
       setToken(null);
       navigate("/");
