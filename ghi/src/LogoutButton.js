@@ -1,32 +1,54 @@
 import React, { useState, useEffect } from "react"
+import { useToken } from "./token"
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
+function LogoutButton(){
+    const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
 
-// class LogoutButton extends React.Component {
-//     constructor(props) {
-//       super(props);
-//       this.state = {
-//         disabled: 
-//       };
-  
-//       this.handleClick = this.handleClick.bind(this);
-//     }
+function user_visibility() {
+        if (token !== null)
+        {
+          return (
+            <>
+            <NavDropdown.Item onClick={() => clogout()}>
+              Sign Out
+              </NavDropdown.Item>
+            <NavDropdown.Item href='/my-profile'>My Profile</NavDropdown.Item>
+            </>
+          ) }
+        else {
+          return (
+            <>
+            <NavDropdown.Item href='/Login'>Login</NavDropdown.Item>
+              <NavDropdown.Item href='/SignupPage'>Signup</NavDropdown.Item>
+              </>
+          )
+        }
+        }
 
-//     handleClick(event) {
-//         event.preventDefault();
-//         Userfront.logout();
-//       }
-    
-//       render() {
-//         return (
-//           <button
-//             id="logout-button"
-//             onClick={this.handleClick}
-//             disabled={this.state.disabled}
-//           >
-//             Log out
-//           </button>
-//         );
-//       }
-//     }
+    async function clogout()
+  {
+    const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/logout/`;
+    const response = await fetch(url, {
+      method: "delete",
+      credentials: "include",
+    });
+    if (response.ok) {
+      // For Django services, use this one
+      try {
+          logout()
+      } catch (e) {
+        console.log('error')
+      }
+    }
+    else{
+      let error = await response.json();
+      console.log("hello")
+    }
+    // DO SOMETHING WITH THE ERROR, IF YOU WANT
+  }
+return user_visibility()
+}
 
-// export default LogoutButton
+export default LogoutButton
+

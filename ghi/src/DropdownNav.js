@@ -3,30 +3,12 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { AuthProvider, useToken } from "./token";
+import { AuthContext, useToken } from "./token";
+import LogoutButton from "./LogoutButton"
 
 
 function DropdownNav() {
-
-  const [token, login, logout] = useToken();
-  function user_visibility() {
-    if (token !== null ) 
-    {
-      return (
-        <>
-        <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
-        <NavDropdown.Item href="/my-profile">My Profile</NavDropdown.Item>
-        </>
-  
-      ) }
-    else {
-      return (
-        <>
-          <NavDropdown.Item href="/signup">Signup</NavDropdown.Item>
-          </>
-      )
-    }
-    }
+  const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
@@ -39,10 +21,12 @@ function DropdownNav() {
               <NavDropdown.Item href="/action">Action</NavDropdown.Item>
               <NavDropdown.Item href="/comedy">Comedy</NavDropdown.Item>
               <NavDropdown.Item href="/Drama">Drama</NavDropdown.Item>
+              {/* <NavDropdown.Item href="/SignupPage">Signup</NavDropdown.Item>
+              <NavDropdown.Item href="/Login">Login</NavDropdown.Item> */}
             </NavDropdown>
-            <NavDropdown title="User" id="basic-nav-dropdown" menuVariant="dark">
-            {user_visibility()}
-            </NavDropdown>
+            <NavDropdown className="mr-auto" title= "User" id="basic-nav-dropdown" menuVariant= "dark">
+              <LogoutButton></LogoutButton>
+              </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -51,3 +35,4 @@ function DropdownNav() {
 }
 
 export default DropdownNav;
+
