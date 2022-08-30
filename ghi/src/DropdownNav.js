@@ -3,9 +3,31 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { AuthProvider, useToken } from "./token";
 
 
 function DropdownNav() {
+
+  const [token, login, logout] = useToken();
+  function user_visibility() {
+    if (token !== null ) 
+    {
+      return (
+        <>
+        <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
+        <NavDropdown.Item href="/my-profile">My Profile</NavDropdown.Item>
+        </>
+  
+      ) }
+    else {
+      return (
+        <>
+          <NavDropdown.Item href="/signup">Signup</NavDropdown.Item>
+          </>
+      )
+    }
+    }
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -19,10 +41,7 @@ function DropdownNav() {
               <NavDropdown.Item href="/Drama">Drama</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="User" id="basic-nav-dropdown" menuVariant="dark">
-            <NavDropdown.Item href="/signup">Signup</NavDropdown.Item>
-            <NavDropdown.Item href="/sign-in">Sign In</NavDropdown.Item>
-            <NavDropdown.Item href="/sign-out">Sign Out</NavDropdown.Item>
-            <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+            {user_visibility()}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

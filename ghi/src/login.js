@@ -23,14 +23,14 @@ async function clogout() {
     // For Django services, use this one
     try {
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         const token = data.token;
-        console.log(token)
-        setUsername('')
-        setPassword('')
-        setSuccess(true)
-        setIsActive(false)
-        logout()
+        console.log(token);
+        setUsername('');
+        setPassword('');
+        setSuccess(true);
+        setIsActive(false);
+        logout();
     } catch (e) {
       console.log(e)
     }
@@ -84,12 +84,12 @@ async function clogin(username, password) {
     return false;
   }
   else{
-    setUsername('')
-    setPassword('')
-    setSuccess(false)
+    setUsername('');
+    setPassword('');
+    setSuccess(false);
     let error = await response.json();
-    console.log(error)
-    console.log("hello")
+    console.log(error);
+    console.log("hello");
   }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }

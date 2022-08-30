@@ -112,21 +112,6 @@ def neo_authenticate(request):
         response.status_code = 400
         return response
 
-# def SignUpForm(request):
-#     # if request.method == "POST":
-#     #     form = UserCreationForm(request.POST)
-#     #     if form.is_valid():
-#     #         nusername = request.POST.get("user_name")
-#     #         npassword = request.POST.get("password")
-#     #         new_user = User.objects.create_user(
-#     #             username=nusername, password=npassword
-#     #         )
-#     #         new_user.save()
-#     #         login(request, new_user)
-#     # else:
-#     #     print("error")
-#     pass
-
 @require_http_methods(["DELETE"])
 def neo_logout(request):
     print(request.user.is_authenticated)

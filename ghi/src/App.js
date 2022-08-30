@@ -3,12 +3,14 @@ import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
 import Login from './Login';
 import SignupPage from './SignupPage';
+import { AuthProvider } from "./token";
 
 
 
 
 function App(props) {
   return (
+    <AuthProvider>
     <BrowserRouter>
       <DropdownNav />
       <div className="container">
@@ -18,11 +20,12 @@ function App(props) {
             <Route path="" element={<ManufacturersList />} />
             <Route path="new" element={<ManufacturerForm />} />
           </Route> */}
-          <Route path="signup" element={<SignupPage/>}/>
+          <Route path="SignupPage" element={<SignupPage/>}/>
           <Route path="login" element={<Login/>}/>
         </Routes> 
       </div>
     </BrowserRouter>
+    </AuthProvider>
   );
 }
 
