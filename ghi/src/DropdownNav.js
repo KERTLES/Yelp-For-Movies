@@ -7,7 +7,7 @@ import { AuthContext, useToken } from "./token";
 
 
 function DropdownNav() {
-  const [token, login, logout] = useToken();
+  const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
 
   async function clogout()
 {
@@ -16,12 +16,9 @@ function DropdownNav() {
     method: "delete",
     credentials: "include",
   });
-  console.log(response)
   if (response.ok) {
     // For Django services, use this one
     try {
-        const data = await response.json();
-        const token = data.token;
         logout()
     } catch (e) {
       console.log('error')
