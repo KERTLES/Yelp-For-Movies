@@ -28,3 +28,7 @@
 
 ## August 27, 2022
     Figured out what was wrong and managed to get a JWT access token generated. I also converted both the sign up JavaScript and the Login JavaScript into React Hook format. Also figured out how to get the pages to navigate to the main page once a user logged in.
+
+## August 29, 2022
+    Today, I helped out Lander with getting login code on his side to work properly.
+    We also began work on adding the functionality where certain pages would be only visible to logged in users. So far, it only checks whether the user has a token or not, which we will have to adjust later to actually check credentials. We also moved the sign up page to a button on the navbar that disappears if the user isn't logged in.
