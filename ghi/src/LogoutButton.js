@@ -13,7 +13,7 @@ function user_visibility() {
             <NavDropdown.Item onClick={() => clogout()}>
               Sign Out
               </NavDropdown.Item>
-            <NavDropdown.Item href='/my-profile'>My Profile</NavDropdown.Item>
+            <NavDropdown.Item href='/profile'>My Profile</NavDropdown.Item>
             </>
           ) }
         else {

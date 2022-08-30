@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react';
 import { AuthContext, useToken } from './token';
 
 function UserProfile(){
-
+  const [accounts, setAccount] = useState([])
 
     useEffect(() => {
         async function getAccount(){
@@ -12,7 +12,7 @@ function UserProfile(){
           if(autoResponse.ok)
           {
               const autoData = await autoResponse.json()
-              setAccounts(autoData.accounts)
+              setAccount(autoData.accounts)
           }
         
         }
@@ -29,11 +29,11 @@ function UserProfile(){
                   <div className="row justify-content-center">
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
       
-                      <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Login</p>
+                      <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Profile</p>
       
-                      <form onSubmit={e => handleSubmit(e)} className="mx-1 mx-md-4">
+                      <form className="mx-1 mx-md-4">
                 
-                        <div className="d-flex flex-row align-items-center mb-4">
+                        {/* <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                           <div className="form-outline flex-fill mb-0">
                             <input onChange={e => setUsername(e.target.value)} value={username} type="text" id="form3Example1c" className="form-control" />
@@ -55,15 +55,15 @@ function UserProfile(){
                             I agree all statements in <a href="#!">Terms of service</a>
                           </label>
                         </div>
-                      {confirmedPassword()}
+                      {confirmedPassword()} */}
       
                       </form>
-                      <div className={successful} id="success-message">
+                      {/* <div className={successful} id="success-message">
                           Successfully Logged In Account
                           </div>
                     <div className={failure} id="failure-message">
                           Failed to Log In Account
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
       
@@ -71,9 +71,9 @@ function UserProfile(){
                         className="img-fluid" alt="Sample image" />
       
                     </div>
-                    <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    {/* <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
               <button onClick={() => clogout()} className="btn btn-primary btn-lg">Sign Out</button>
-              </div>
+              </div> */}
                   </div>
                 </div>
               </div>

@@ -6,7 +6,7 @@ from django.urls import reverse
 # Create your views here.
 
 from django.http import JsonResponse
-
+import djwto.authentication as auth
 from .models import Account
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
@@ -37,6 +37,12 @@ def api_user_token(request):
         if token:
             return JsonResponse({"token": token})
     response = JsonResponse({"token": None})
+    return response
+
+@auth.jwt_login_required
+def get_some_data(request):
+    token_data = request.payload
+    print(token_data)
     return response
 
 @require_http_methods(["GET", "POST"])

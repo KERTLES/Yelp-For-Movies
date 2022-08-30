@@ -4,7 +4,7 @@ import HomePage from './HomePage';
 import SignupPage from './SignupPage';
 import Login from './Login';
 import { AuthProvider } from "./token";
-import LogoutButton from './LogoutButton'
+import UserProfile from './UserProfile';
 
 function App(props) {
   return (
@@ -20,6 +20,7 @@ function App(props) {
           </Route> */}
         <Route path="SignupPage" element={<SignupPage/>}/>
         <Route path="Login" element={<Login/>}/>
+        <Route path="profile" element={<UserProfile/>}/>
         </Routes> 
       </div>
     </BrowserRouter>

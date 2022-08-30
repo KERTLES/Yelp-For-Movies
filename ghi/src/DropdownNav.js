@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { AuthContext, useToken } from "./token";
 import LogoutButton from "./LogoutButton"
+import UserProfile from './UserProfile';
 
 
 function DropdownNav() {
