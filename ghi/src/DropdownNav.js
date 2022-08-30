@@ -7,6 +7,7 @@ import { AuthContext, useToken } from "./token";
 import LogoutButton from "./LogoutButton"
 
 
+
 function DropdownNav() {
   const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
 
@@ -21,8 +22,13 @@ function DropdownNav() {
               <NavDropdown.Item href="/action">Action</NavDropdown.Item>
               <NavDropdown.Item href="/comedy">Comedy</NavDropdown.Item>
               <NavDropdown.Item href="/Drama">Drama</NavDropdown.Item>
+<<<<<<< HEAD
               {/* <NavDropdown.Item href="/SignupPage">Signup</NavDropdown.Item>
               <NavDropdown.Item href="/Login">Login</NavDropdown.Item> */}
+=======
+              <NavDropdown.Item href="/SignupPage">Signup</NavDropdown.Item>
+              <NavDropdown.Item href="/Login">Login</NavDropdown.Item>
+>>>>>>> Matthew-branch
             </NavDropdown>
             <NavDropdown className="mr-auto" title= "User" id="basic-nav-dropdown" menuVariant= "dark">
               <LogoutButton></LogoutButton>

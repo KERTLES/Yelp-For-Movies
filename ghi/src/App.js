@@ -4,7 +4,10 @@ import HomePage from './HomePage';
 import SignupPage from './SignupPage';
 import Login from './Login';
 import { AuthProvider } from "./token";
+<<<<<<< HEAD
 import LogoutButton from './LogoutButton'
+=======
+>>>>>>> Matthew-branch
 
 function App(props) {
   return (

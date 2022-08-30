@@ -9,10 +9,8 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
 from pathlib import Path
 from datetime import timedelta
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,10 +31,10 @@ AUTH_USER_MODEL = "account_rest.Account"
 
 INSTALLED_APPS = [
     'corsheaders',
-    "djwto",
-    "account_rest.apps.AccountRestConfig",
     'django.contrib.admin',
     'django.contrib.auth',
+    'account_rest.apps.AccountRestConfig',
+    'djwto',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -53,16 +51,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGIN_URL ="login"
-LOGOUT_URL ="logout"
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
-CORS_ALLOW_ALL_ORIGINS = True
-
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
-
+LOGIN_URL = "login"
+LOGOUT_URL = "logout"
 
 
 ROOT_URLCONF = 'account_project.urls'
@@ -86,19 +76,17 @@ TEMPLATES = [
 WSGI_APPLICATION = 'account_project.wsgi.application'
 ALLOWED_HOSTS = ["localhost","127.0.0.1"]
 
-
-
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-DJWTO_MODE = "TWO-COOKIES"
+DJWTO_MODE = 'TWO-COOKIES'
+DJWTO_CSRF = False
 DJWTO_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
-
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+# Your DEBUG value MUST be False in production
 DJWTO_SAME_SITE = "LAX" if DEBUG else "NONE"
-
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -108,7 +96,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -128,7 +115,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -139,7 +125,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
