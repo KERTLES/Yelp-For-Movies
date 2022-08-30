@@ -1,9 +1,5 @@
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
-from django.contrib.auth import login, logout, authenticate
-=======
 from django.contrib.auth import login, authenticate, logout
->>>>>>> Matthew-branch
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
