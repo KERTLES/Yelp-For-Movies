@@ -11,3 +11,6 @@ Today I continued work on the sign up page. We referenced the learn module when 
 
 ## August 25, 2022
 Today I continued working on the login page. I referenced from the learn module and used code from the Authentication which set up the login.js. I am still trying to go about how to link the login feature with the accounts as well. and I believe I need to at a function within our sign up feature and make some changes for our app.js
+
+## August 29, 2022
+Today my partner and I finally got the login and authentication to work with reference from the model. I then did a lot of bug fixing and made changes to my views.py and models.py in order to include particular fields like authentication and is staff as well as added the backend functions for the views.py. I implemented a user_visibility feature in the dropdown nav where if the user is logged in our logged out, only certain dropdowns options will be present for the user. I then proceeded to work on a user profile page for the user to be able to look at their information and reviews.
