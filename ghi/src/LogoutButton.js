@@ -51,4 +51,3 @@ return user_visibility()
 }
 
 export default LogoutButton
-
