@@ -24,7 +24,7 @@ services:
             - yovies-data:/var/lib/postgresql/data
         environment:
             - POSTGRES_MULTIPLE_DATABASES=movies,reviews,accounts
-            - POSTGRES_PASSWORD=test-database
+            - POSTGRES_PASSWORD=test-databases
         ports:
             - 15432:5432
     movie-api:
@@ -38,7 +38,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://movies:password@database:5432/movies
             WAIT_HOSTS: database:5432
     account-api:
         build:
@@ -51,7 +51,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://account-api:password@database:5432/account-api
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
             
@@ -66,5 +66,5 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://reviews-api:password@database:5432/reviews-api
             WAIT_HOSTS: database:5432
