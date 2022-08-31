@@ -14,3 +14,9 @@ Today I continued working on the login page. I referenced from the learn module 
 
 ## August 29, 2022
 Today my partner and I finally got the login and authentication to work with reference from the model. I then did a lot of bug fixing and made changes to my views.py and models.py in order to include particular fields like authentication and is staff as well as added the backend functions for the views.py. I implemented a user_visibility feature in the dropdown nav where if the user is logged in our logged out, only certain dropdowns options will be present for the user. I then proceeded to work on a user profile page for the user to be able to look at their information and reviews.
+
+## August 30, 2022
+I was dealing with debugging the whole day as I was trying to figure out why my logout feature wasn't working. I ended up debugging with Andrew and Daniel where I needed to delete my docker containers, images, and deleted all the db.sqlite3 on my code as well as changing our database. However, I was still unable to overcome this roadblock however, the login was no longer an error
+
+## August 31, 2022
+Today I finally got the roadblock fixed, I changed the docker.yaml from ghi to react within the volumes as well as did a makemigrations for my account container. Apparantly I was missing a migration from djwto with some file called jetblack. I felt so much better now that the logout feature was now working and now I will be working on the view user profile feature.
