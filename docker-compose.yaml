@@ -24,7 +24,7 @@ services:
             - yovies-data:/var/lib/postgresql/data
         environment:
             - POSTGRES_MULTIPLE_DATABASES=movies,reviews,accounts
-            - POSTGRES_PASSWORD=test-databases
+            - POSTGRES_PASSWORD=test-database
         ports:
             - 15432:5432
     movie-api:

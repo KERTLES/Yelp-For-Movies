@@ -10,5 +10,5 @@ urlpatterns = [
     path("accounts/", api_list_accounts, name="accounts_list"),
     path("accounts/<int:pk>", api_show_account, name="account_detail"),
     path("tokens/mine/", api_user_token, name="get_token"),
-    path("get/token", get_some_data, name="token_get")
+    path("get/token/", get_some_data, name="token_get")
 ]

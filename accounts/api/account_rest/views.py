@@ -42,7 +42,8 @@ def api_user_token(request):
 @auth.jwt_login_required
 def get_some_data(request):
     token_data = request.payload
-    print(token_data)
+    print(token_data['user'])
+    response = JsonResponse({"token": token_data['user']})
     return response
 
 @require_http_methods(["GET", "POST"])
@@ -92,7 +93,13 @@ def api_show_account(request, pk):
         return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-        Account.objects.filter(id=pk).update(**content)
+        nusername = content["username"]
+        npassword = content["password"]
+        nfirstname = content["first_name"]
+        nlastname = content["last_name"]
+        nemail= content["email"]
+
+        Account.objects.filter(id=pk).update(username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname)
 
         account = Account.objects.get(id=pk)
         return JsonResponse(
@@ -124,21 +131,3 @@ def neo_logout(request):
         # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
     return JsonResponse({'message':'got it'})
 
-def get_some_data(request):
-    token_data = request.payload
-    # do stuff with user_info
-    return data
-# def SignUpForm(request):
-#     # if request.method == "POST":
-#     #     form = UserCreationForm(request.POST)
-#     #     if form.is_valid():
-#     #         nusername = request.POST.get("user_name")
-#     #         npassword = request.POST.get("password")
-#     #         new_user = User.objects.create_user(
-#     #             username=nusername, password=npassword
-#     #         )
-#     #         new_user.save()
-#     #         login(request, new_user)
-#     # else:
-#     #     print("error")
-#     pass

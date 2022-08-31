@@ -55,7 +55,6 @@ async function clogin(username, password) {
     credentials: "include",
     body: form,
   });
-  console.log(response)
   if (response.ok) {
     // For Django services, use this one
     login(username, password)
@@ -82,7 +81,6 @@ async function clogin(username, password) {
     setPassword('')
     setSuccess(false)
     let error = await response.json();
-    console.log("hello")
   }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }
