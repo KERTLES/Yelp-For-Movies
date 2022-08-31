@@ -19,7 +19,7 @@ function SignupPage()
 
 function confirmedPassword()
 {
-    if(password === password2 && password !== "" && is_active === true)
+    if(password === password2 && password !== "" && is_active === true && password.length >= 8)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -196,7 +196,7 @@ async function getAccounts(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={e => setEmail(e.target.value)} value={email}type="email" id="form3Example3c" className="form-control" />
+                      <input placeholder="example@gmail.com" onChange={e => setEmail(e.target.value)} value={email}type="email" id="form3Example3c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example3c">Your Email</label>
                       <div className={failureee} id="failure-message">
                       Email already used. Please insert a new Email.
@@ -207,7 +207,7 @@ async function getAccounts(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
+                      <input placeholder="Password must be at least 8 characters" onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
                     </div>
                   </div>
@@ -215,7 +215,7 @@ async function getAccounts(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={e => setPassword2(e.target.value)} value={password2} type="password" id="form3Example4cd" className="form-control" />
+                      <input placeholder="Password must be the same" onChange={e => setPassword2(e.target.value)} value={password2} type="password" id="form3Example4cd" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4cd">Repeat your password</label>
                     </div>
                   </div>
@@ -223,7 +223,7 @@ async function getAccounts(){
                   <div className="form-check d-flex justify-content-center mb-5">
                     <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
+                      I agree all statements in <a href="https://www.termsofservicegenerator.net/assets/images/terms-of-service-generator.png">Terms of service</a>
                     </label>
                   </div>
                 {confirmedPassword()}
