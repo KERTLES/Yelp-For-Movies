@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
+import MovieDetail from './MovieDetail';
+import GenreList from './GenreList';
 import SignupPage from './SignupPage';
 import Login from './Login';
 import { AuthProvider } from "./token";
@@ -14,13 +16,15 @@ function App(props) {
       <div className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          {/* <Route path="manufacturers">
-            <Route path="" element={<ManufacturersList />} />
+          <Route path=":movieTitle-:movieId" element={<MovieDetail />} />
+          <Route path=":genreName/:genreId" element={<GenreList />} />
+          {/* <Route path="movie">
+            <Route path="" element={<MovieDetail />} />
             <Route path="new" element={<ManufacturerForm />} />
           </Route> */}
         <Route path="SignupPage" element={<SignupPage/>}/>
         <Route path="Login" element={<Login/>}/>
-        <Route path="my-profile" element={<UserProfile/>}/>
+        <Route path="/my-profile" element={<UserProfile/>}/>
         </Routes> 
       </div>
     </BrowserRouter>
@@ -29,4 +33,3 @@ function App(props) {
 }
 
 export default App;
-
