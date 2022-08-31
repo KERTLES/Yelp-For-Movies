@@ -17,6 +17,7 @@ services:
             NODE_ENV: development
             HOST: "0.0.0.0"
             REACT_APP_ACCOUNTS_HOST: http://localhost:8080
+            REACT_APP_REVIEWS_HOST: http://localhost:8090
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
     database:
         build:
@@ -85,5 +86,7 @@ services:
             - reviews-api
         environment:
             ACCOUNT_SERVICE_URL: http://account-api:8000
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://reviews:password@database:5432/reviews
             WAIT_HOSTS: database:5432, reviews-api:8000
+            WAIT_TIMEOUT: 240
+

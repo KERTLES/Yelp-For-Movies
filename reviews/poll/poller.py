@@ -16,15 +16,16 @@ def get_users():
     # url = f"{os.environ['ACCOUNT_SERVICE_URL']}/api/accounts/"
 
     response = requests.get("http://account-api:8000/api/accounts/")
+ 
     print(response)
     
     # try:
-    #     content = json.loads(response.content)
+    content = json.loads(response.content)
     # except:
-        # print(content)
+    #     print(content)
 
-    # for account in content["accounts"]:
-    #     UserVO.objects.update_or_create(user_name=account["username"])
+    for account in content["accounts"]:
+        UserVO.objects.update_or_create(user_name=account["username"])
 
 
 def poll():
