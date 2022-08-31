@@ -3,11 +3,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { AuthContext, useToken } from "./token";
+import LogoutButton from "./LogoutButton"
+import UserProfile from './UserProfile';
 
 
 function DropdownNav() {
   const [genres, setGenres] = useState([])
-
+  const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
   const apiKey = process.env.REACT_APP_TMDB_API_KEY
   const tmdbURL = process.env.REACT_APP_TMDB_URL
 
@@ -17,10 +20,11 @@ function DropdownNav() {
         if (genresResponse.ok) {
             const genresData = await genresResponse.json()
             setGenres(genresData.genres)
-        }
-    })()
-}, [])
+          }
+      })()
+  }, [])
   
+
   return (
     <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
       <Container fluid>
@@ -35,6 +39,9 @@ function DropdownNav() {
                 )
               })}
             </NavDropdown>
+            <NavDropdown className="mr-auto" title= "User" id="basic-nav-dropdown" menuVariant= "dark">
+              <LogoutButton></LogoutButton>
+              </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
