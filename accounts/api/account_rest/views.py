@@ -46,6 +46,12 @@ def get_some_data(request):
     response = JsonResponse({"token": token_data['user']})
     return response
 
+@auth.jwt_login_required
+def check_user(request):
+    if request.user is not None:
+        return JsonResponse({"authenticated" : request.user.is_authenticated})
+    else:
+        return JsonResponse({"message": "not found"})
 @require_http_methods(["GET", "POST"])
 def api_list_accounts(request):
     if request.method == "GET":
