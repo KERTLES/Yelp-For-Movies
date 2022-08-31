@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-0p=3mve68&slozzmupptx(b=+b=9_53p(b64d*x)nrlo67ew2w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost'] 
+ALLOWED_HOSTS = ['localhost', 'reviews-api', 'account-api'] 
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
@@ -84,12 +85,8 @@ WSGI_APPLICATION = 'reviews_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = {}
+DATABASES["default"] = dj_database_url.config()
 
 
 # Password validation

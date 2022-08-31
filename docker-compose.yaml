@@ -27,6 +27,7 @@ services:
         environment:
             - POSTGRES_MULTIPLE_DATABASES=movies,reviews,accounts
             - POSTGRES_PASSWORD=test-databases
+    
         ports:
             - 15432:5432
     movie-api:
@@ -40,7 +41,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://movies:password@database:5432/movies
             WAIT_HOSTS: database:5432
     account-api:
         build:
@@ -53,7 +54,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://accounts:password@database:5432/accounts
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
             
@@ -65,8 +66,24 @@ services:
             - "8090:8000"
         volumes:
             - ./reviews/api:/app
+            #mount volume and run container. Then make
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://reviews:password@database:5432/reviews
             WAIT_HOSTS: database:5432
+    reviews-poller:
+        build: 
+            context: ./reviews/poll
+            dockerfile: ./Dockerfile.dev
+        volumes:
+            - ./reviews/poll:/app
+            - ./reviews/api/reviews_project:/app/reviews_project 
+            - ./reviews/api/reviews_rest:/app/reviews_rest
+        depends_on:
+            - database
+            - reviews-api
+        environment:
+            ACCOUNT_SERVICE_URL: http://account-api:8000
+            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            WAIT_HOSTS: database:5432, reviews-api:8000
