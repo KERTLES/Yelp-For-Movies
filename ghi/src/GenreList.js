@@ -42,7 +42,7 @@ function GenreList(props) {
             <h1 className="display-5 fw-bold">Yovies</h1>
         </div>
         <div className="container">
-            <h2>{`${genreName.charAt(0).toLocaleUpperCase()}${genreName.slice(1)} Movies`}</h2>
+            <h2 className="text-capitalize">{`${genreName} Movies`}</h2>
             <div className="row mt-5">
                 {movieColumns.map((column, col_idx) => {
                     return (

@@ -41,7 +41,7 @@ function MoviesList(props) {
 
     return (
         <div className="container">
-            <h2>{props.query ? `Search results for "${props.query}"` : "TRENDING"}</h2>
+            <h2>{props.query ? `Search results for "${props.query}"...` : "TRENDING"}</h2>
             <div className="row mt-5">
                 {movieColumns.map((column, col_idx) => {
                     return (

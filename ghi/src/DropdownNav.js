@@ -22,7 +22,7 @@ function DropdownNav() {
 }, [])
   
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
       <Container fluid>
         <Navbar.Brand href="/">Yovies</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

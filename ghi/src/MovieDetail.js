@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import Badge from 'react-bootstrap/Badge';
+import Stack from 'react-bootstrap/Stack';
 
 
 const omdbapiKey = process.env.REACT_APP_OMDB_API_KEY
@@ -46,25 +48,31 @@ function MovieDetail() {
 
     const checkIfRatings = (ratings) => {
         if (ratings.length === 0) {
-            return (<div>Ratings: N/A</div>)
+            return (
+                <div>
+                    <span className="p-2 border bg-light border-dark rounded">Ratings N/A</span>
+                </div>
+            )
         } else {
-            return(
-                <>
-                {ratings.map((rating, index) => {
-                    return (
-                        <div key={index}>
-                            {rating.Source}: {rating.Value}
-                        </div>
-                    )
-                })}
-                </>
+            return (
+                <Stack direction="horizontal" gap={4}>
+                    {ratings.map((rating, index) => {
+                        return (
+                            <div key={index}>
+                                <h6>
+                                    { rating.Source } <span className="p-2 text-white border border-danger bg-danger rounded">{ rating.Value }</span>
+                                </h6>
+                            </div>
+                        )
+                    })}
+                </Stack>
             )        
         }
     }
 
     return (
         <>
-        <div className="container">
+        <div className="container mt-5 pt-4 pb-4">
             <h1>{ movie.Title }</h1>
             <ul className="list-inline">
                 <li className="list-inline-item">{ movie.Year } • </li>
@@ -73,17 +81,14 @@ function MovieDetail() {
             </ul>
             <div className="row">
                 <div className="col-xl-3 ">
-                    <img src={ poster.current } width='250' height='auto' />
-                    <div>
-                        {checkIfRatings(ratings)}
-                    </div>
+                    <img src={ poster.current } width='275' height='auto' />
                 </div>
                 <div className="col-9">
                     <div>
                         {genres.map((genre, index) => {
                             return (
                             <span key={index}>
-                                <Button className="rounded-pill" variant="outline-dark" size="sm">{ genre }</Button>{' '}
+                                <Button disabled className="rounded-pill" variant="outline-dark" size="sm">{ genre }</Button>{' '}
                             </span>
                             )
                         })}
@@ -120,6 +125,9 @@ function MovieDetail() {
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div className="mt-2">
+                        {checkIfRatings(ratings)}
                     </div>    
                 </div>
             </div>
