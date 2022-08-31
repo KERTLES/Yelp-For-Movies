@@ -20,7 +20,7 @@ function App(props) {
           </Route> */}
         <Route path="SignupPage" element={<SignupPage/>}/>
         <Route path="Login" element={<Login/>}/>
-        <Route path="profile" element={<UserProfile/>}/>
+        <Route path="my-profile" element={<UserProfile/>}/>
         </Routes> 
       </div>
     </BrowserRouter>
