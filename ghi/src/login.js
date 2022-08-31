@@ -5,7 +5,6 @@ function Login(){
   const [token, login, logout] = useToken();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [is_active, setIsActive] = useState(false)
   const [success, setSuccess] = useState('')
   const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
@@ -70,7 +69,6 @@ async function clogin(username, password) {
         setUsername('')
         setPassword('')
         setSuccess(true)
-        setIsActive(false)
         navigate('/')
       }
     } catch (e) {}
@@ -86,7 +84,7 @@ async function clogin(username, password) {
 }
 function confirmedPassword()
 {
-    if(password !== "" && is_active === true)
+    if(password !== "")
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -162,13 +160,6 @@ function handleSubmit(event)
                       <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
                     </div>
-                  </div>
-
-                  <div className="form-check d-flex justify-content-center mb-5">
-                    <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
-                    <label className="form-check-label" htmlFor="form2Example2">
-                      I agree all statements in <a href="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp">Terms of service</a>
-                    </label>
                   </div>
                 {confirmedPassword()}
 

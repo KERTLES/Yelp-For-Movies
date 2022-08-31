@@ -223,7 +223,7 @@ async function getAccounts(){
                   <div className="form-check d-flex justify-content-center mb-5">
                     <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="https://www.termsofservicegenerator.net/assets/images/terms-of-service-generator.png">Terms of service</a>
+                      I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=K1deYn7OSuN0zHIlY6KpKKbIBvqRUsUA">Terms of service</a>
                     </label>
                   </div>
                 {confirmedPassword()}
