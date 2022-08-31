@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
@@ -94,7 +95,7 @@ def api_show_account(request, pk):
     else:
         content = json.loads(request.body)
         nusername = content["username"]
-        npassword = content["password"]
+        npassword = make_password(content["password"])
         nfirstname = content["first_name"]
         nlastname = content["last_name"]
         nemail= content["email"]
