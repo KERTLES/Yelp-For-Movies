@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from "react"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,19 +7,34 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
 function DropdownNav() {
+  const [genres, setGenres] = useState([])
+
+  const apiKey = process.env.REACT_APP_TMDB_API_KEY
+  const tmdbURL = process.env.REACT_APP_TMDB_URL
+
+  useEffect(() => {
+    (async () => {
+        const genresResponse = await fetch(`${tmdbURL}/genre/movie/list?api_key=${apiKey}&language=en-US`)
+        if (genresResponse.ok) {
+            const genresData = await genresResponse.json()
+            setGenres(genresData.genres)
+        }
+    })()
+}, [])
+  
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
       <Container fluid>
         <Navbar.Brand href="/">Yovies</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <NavDropdown title="Genre" id="basic-nav-dropdown" menuVariant="dark">
-              <NavDropdown.Item href="/action">Action</NavDropdown.Item>
-              <NavDropdown.Item href="/comedy">Comedy</NavDropdown.Item>
-              <NavDropdown.Item href="/Drama">Drama</NavDropdown.Item>
-              <NavDropdown.Item href="/SignupPage">Signup</NavDropdown.Item>
-              <NavDropdown.Item href="/Login">Login</NavDropdown.Item>
+              {genres.map(genre => {
+                return (
+                  <NavDropdown.Item key={genre.id} href={`/${genre.name.toLowerCase()}/${genre.id}`}>{genre.name}</NavDropdown.Item>
+                )
+              })}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

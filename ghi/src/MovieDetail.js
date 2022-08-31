@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import ListReviewForMovie from "./ListReviewForMovie";
+import Badge from 'react-bootstrap/Badge';
+import Stack from 'react-bootstrap/Stack';
 
 
 const omdbapiKey = process.env.REACT_APP_OMDB_API_KEY
@@ -10,9 +12,11 @@ const omdbURL = process.env.REACT_APP_OMDB_URL
 const tmdbURL = process.env.REACT_APP_TMDB_URL
 
 function MovieDetail() {
-    const imdbID = "tt3896198"
-    const {state} = useParams()
-    const movieId = "tt3896198"
+    const imdbID = useRef()
+    const poster = useRef()
+    const overview = useRef()
+    const posterUrl = "https://image.tmdb.org/t/p/w220_and_h330_face"
+    const { movieId } = useParams()
 
     const [movie, setMovie] = useState({})
     const [genres, setGenres] = useState([])
@@ -20,113 +24,116 @@ function MovieDetail() {
 
     const getMovieData = async () => {
         const movieResponse = await fetch(`${omdbURL}/?i=${imdbID.current}&plot=full&apikey=${omdbapiKey}`)
-            if (movieResponse.ok) {
-                const moviesData = await movieResponse.json()
-                setMovie(moviesData)
-                setGenres(moviesData.Genre.split(","))
-                setRatings(moviesData.Ratings)
-            }
+        if (movieResponse.ok) {
+            const moviesData = await movieResponse.json()
+            setMovie(moviesData)
+            setGenres(moviesData.Genre.split(","))
+            setRatings(moviesData.Ratings)
+        }
     }
 
-    // const getImdbID = async () => {
-    //     const imdbIdResponse = await fetch(`${tmdbURL}/movie/${movieId}?api_key=${tmdbapiKey}&language=en-US`)
-    //     if (imdbIdResponse.ok) {
-    //         const imdbIddata = await imdbIdResponse.json()
-    //         imdbID.current = imdbIddata.imdb_id
-    //         getMovieData()
-    //         ListReviewForMovie(movieId)
-            
-    //     }
-    // }
+    const getImdbID = async () => {
+        const imdbIdResponse = await fetch(`${tmdbURL}/movie/${movieId}?api_key=${tmdbapiKey}&language=en-US`)
+        if (imdbIdResponse.ok) {
+            const imdbIddata = await imdbIdResponse.json()
+            imdbID.current = imdbIddata.imdb_id
+            poster.current = `${posterUrl}${imdbIddata.poster_path}`
+            overview.current = imdbIddata.overview
+            getMovieData()
+        }
+    }
 
-    // useEffect(() => {
-    //     getImdbID()
-    // }, [])
+    useEffect(() => {
+        getImdbID()
+    }, [])
 
     const checkIfRatings = (ratings) => {
         if (ratings.length === 0) {
-            return (<div>Ratings: N/A</div>)
+            return (
+                <div>
+                    <span className="p-2 border bg-light border-dark rounded">Ratings N/A</span>
+                </div>
+            )
         } else {
-            return(
-                <>
-                {ratings.map((rating, index) => {
-                    return (
-                        <div key={index}>
-                            {rating.Source}: {rating.Value}
-                        </div>
-                    )
-                })}
-                </>
-            )        
+            return (
+                <Stack direction="horizontal" gap={4}>
+                    {ratings.map((rating, index) => {
+                        return (
+                            <div key={index}>
+                                <h6>
+                                    {rating.Source} <span className="p-2 text-white border border-danger bg-danger rounded">{rating.Value}</span>
+                                </h6>
+                            </div>
+                        )
+                    })}
+                </Stack>
+            )
         }
     }
 
     return (
         <>
-        <div className="container">
-            <h1>{ movie.Title }</h1>
-            <ul className="list-inline">
-                <li className="list-inline-item">{ movie.Year } • </li>
-                <li className="list-inline-item">{ movie.Rated === "N/A" ? "NR" : movie.Rated } • </li>
-                <li className="list-inline-item">{ movie.Runtime }</li>
-            </ul>
-            <div className="row">
-                <div className="col-3">
-                    <img src={ movie.Poster } width='250' height='auto' />
-                    <div>
-                        {checkIfRatings(ratings)}
+            <div className="container mt-5 pt-4 pb-4">
+                <h1>{movie.Title}</h1>
+                <ul className="list-inline">
+                    <li className="list-inline-item">{movie.Year} • </li>
+                    <li className="list-inline-item">{movie.Rated === "N/A" ? "NR" : movie.Rated} • </li>
+                    <li className="list-inline-item">{movie.Runtime}</li>
+                </ul>
+                <div className="row">
+                    <div className="col-xl-3 ">
+                        <img src={poster.current} width='275' height='auto' />
                     </div>
+                    <div className="col-9">
+                        <div>
+                            {genres.map((genre, index) => {
+                                return (
+                                    <span key={index}>
+                                        <Button disabled className="rounded-pill" variant="outline-dark" size="sm">{genre}</Button>{' '}
+                                    </span>
+                                )
+                            })}
+                        </div>
+                        <div className="table-responsive">
+                            <table className="table">
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={2}>{movie.Plot === "N/A" ? overview.current : movie.Plot}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Release date</th>
+                                        <td>{movie.Released}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Language</th>
+                                        <td>{movie.Language}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Country</th>
+                                        <td>{movie.Country}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Director(s)</th>
+                                        <td>{movie.Director}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Writer(s)</th>
+                                        <td>{movie.Writer}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Main Casts</th>
+                                        <td>{movie.Actors}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="mt-2">
+                            {checkIfRatings(ratings)}
+                        </div>
+                    </div>
+                    < ListReviewForMovie />
                 </div>
-                <div className="col-9">
-                    <div>
-                        {genres.map((genre, index) => {
-                            return (
-                            <span key={index}>
-                                <Button className="rounded-pill" variant="outline-dark" size="sm">{ genre }</Button>{' '}
-                            </span>
-                            )
-                        })}
-                    </div>    
-                    <table className="table">
-                        <tbody>
-                            <tr>
-                                <td colSpan={2}>{ movie.Plot }</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Release date</th>
-                                <td>{ movie.Released }</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Language</th>
-                                <td>{ movie.Language }</td> 
-                            </tr>
-                            <tr>
-                                <th scope="row">Country</th>
-                                <td>{ movie.Country }</td> 
-                            </tr>
-                            <tr>
-                                <th scope="row">Director(s)</th>
-                                <td>{ movie.Director }</td> 
-                            </tr>
-                            <tr>
-                                <th scope="row">Writer(s)</th>
-                                <td>{ movie.Writer }</td> 
-                            </tr>
-                            <tr>
-                                <th scope="row">Main Casts</th>
-                                <td>{ movie.Actors }</td> 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                
-
-                <ListReviewForMovie imdb_id = {imdbID} /> 
-                    
-                
             </div>
-        </div>
         </>
     )
 }
