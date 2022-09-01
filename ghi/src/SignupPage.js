@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { AuthContext, useToken } from "./token";
+import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function SignupPage()
 {
-  const [token, login, logout, signUp, update] = useToken();
+  const [token, login] = useToken();
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -85,6 +85,21 @@ async function handleSubmit(event){
         const Response = await fetch(accountUrl, fetchSoldConfig);
         if(Response.ok){
             console.log("got it")
+            const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
+
+            const form = new FormData();
+            form.append("username", username);
+            form.append("password", password);
+          
+            const response = await fetch(url, {
+              method: "post",
+              credentials: "include",
+              body: form,
+            });
+            if (response.ok) {
+              // For Django services, use this one
+              login(username, password)
+            }
             setFirstName('');
             setLastName('');
             setEmail('');
@@ -95,7 +110,6 @@ async function handleSubmit(event){
             setFailureE(false)
             setFailureU(false)
             setIsActive(false)
-            login(username, password)
             navigate('/')
         }
         else{

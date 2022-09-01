@@ -107,11 +107,11 @@ export function useToken() {
     const response = await fetch(url, {
       method: "post",
       body: JSON.stringify({
-        username : username,
-        password : password,
-        email: email,
-        first_name: firstName,
-        last_name: lastName,
+        'username' : username,
+        'password' : password,
+        'email': email,
+        'first_name': firstName,
+        'last_name': lastName,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +120,9 @@ export function useToken() {
     if (response.ok) {
       await login(username, password);
     }
+    else{
     return false;
+    }
   }
 
   async function update(username, password, email, firstName, lastName, person_id) {
