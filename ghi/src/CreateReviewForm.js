@@ -21,7 +21,7 @@ function CreateReviewForm() {
     return (
         <div className="button-modal">
             {/* button trigger modal */}
-            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Create A Review
             </button>
             
@@ -36,7 +36,7 @@ function CreateReviewForm() {
                         </div>
 
                         <div className="modal-body">
-                            <div class="mb-3">
+                            <div className="mb-3">
                                 {stars.map((star, i) => rating >= i + 1 || hoverRating >= i + 1 ? (
                                             <AiFillStar
                                                 onMouseOver={() => !rating && setHoverRating(i + 1)}
@@ -57,14 +57,14 @@ function CreateReviewForm() {
                                     )}
                             </div>
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Headline</label>
-                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="What's most important to know?" />
+                            <div className="mb-3">
+                                <label for="exampleFormControlInput1" onChange={handleTitleInputChange} className="form-label">Headline</label>
+                                <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="What's most important to know?" />
                             </div>
 
-                            <div class="mb-3">
-                                <label for="exampleFormControlTextarea1" class="form-label">What did you think?</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Enter your review" rows="3"></textarea>
+                            <div className="mb-3">
+                                <label for="exampleFormControlTextarea1" onChange={handlePostInputChange} className="form-label">What did you think?</label>
+                                <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Enter your review" rows="3"></textarea>
                             </div>
 
                         </div>
