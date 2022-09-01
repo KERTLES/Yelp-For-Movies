@@ -1,8 +1,26 @@
+## September 1, 2022
+Today I worked on:
+-  Making some small other adjustments to the design of our application
+
+I added the logo to our Nav Bar and got rid of manual name that we originally had. As I was helping Nikansha with merging our branches together and correcting the same bug that I had had yesterday, we realized there was a slight bug on the Sign Up page that cause the user not being automatically logged in after signing up. Hence, Matthew was going to work on that some more to try and figure out the solution for it. I also helped Lander with a bug he had when trying to get the footer to load on react. The reason for the bug was because react uses a different format when implementing css style attribute directly onto the JSX; so instead of the regular format which is "style="'somestyle: value' ", it had to be in the react format which is "style={{somestyle: 'value'}} in order for the style to be applied properly.
+
+
+## August 31, 2022
+Today we worked on:
+- Merging out progress up to now together
+
+I started merging what I had been working on with Matthew and Lander's progress at the beginning, but ran into an inconsistent migration issue caused by the use of our custom User model rather than Django model. I had tried testing out different solutions such as deleting my migrations, containers, images, and volume and building everything back from scratch; and even tried running the container separately in the hope that the migrations would be made and applied properly; but nothing was really working. I had also tried researching which I found a solution on stack overflow. Unfortunately, I wasn't awared that there was one step that I missed which caused the solution I found to not be working. However, I was able to get help from Phil (our seir) to fix the problem. And that was when I realized that I was missing a final step. 
+
+Later in the day, I helped Kelly with a poller bug that she was having. She kept getting a 400 Response error while trying to make an API call from her reviews microservice to the accounts microservice. It turned out the bug had been because the Allow Host variable wasn't set up properly in the accounts' setting.py file. For some reason there was 2 Allow Host variables in the file. THe bug was fixed once we removed one of the two variables and set up to allow the host from the reviews microservice to access the accounts microservice.
+
+One other thing I was able to get done on my part was adding the logo to our application. I learned that if I placed the image inside the public directory, I only needed to write "/some-image" and react would automatically know to look into the public directory to locate the image. I had originally tried a variety of ways (ie. "../public/some-image", "./public/some-image, etc.) and nothing was working out; until I learned that that was just how react works.
+
 ## August 30, 2022
 Today I worked on:
 - Refining the application by adjusting some css styling
 
 For the most part, I was just fixing up some styling issues that I had at the beginning but didn't have time to adjust because I wanted to focus more on the functionality of the application. However, today, I was able to make those adjustments. For example, I added some a magnifying logo to the left of the search bar as well as modifying the submit button so that it showed an arrow rather than just the word "Search". I was also able to align the cards for the list of movies so that they are evenly aligned on each role rather than filling in on empty spots. I was also able to create a placeholder for movies that didn't have a poster included in the JSON response; as well as showing the released year as "Unknown" when the information is unavailable. For the Movie Detail Page, I adjust the ratings style so that they aligned horizontally below the movie information table. I also tried to add in our logo to the main page and the genre list page but that was not working out for some reason. I was planning to do some more research on it tomorrow to get it to work.
+
 
 ## August 29, 2022
 Today I worked on:
@@ -11,6 +29,7 @@ Today I worked on:
 It was actually really great progress impletementing these 2 features. I had a little of struggle while working on the search function to look up a list of matching results when a user types in the movie they want to look for. I was trying to make it so that when someone clicks the submit button on the search bar, the page would re-render and load a list of matching results, rather than taking them to another page with a different url for that results list. I couldn't get it to work at first because even though I was able to pass the search name as a prop to the MoviesList component, I didn't know how to apply it inside the MovieList component so that the page would load up correctly. I eventually got it working by taking the result to a different page, and then refactored the MovieList component so that it does what I originally wanted it to and also by placing props inside the dependency array of the useEffect to get a list of movie, so that the page re-rendered everytime props changes.
 
 For the filter by a genre feature, it turned out to be a lot easier to impletement than I had thought. I was able to get a list of the genres from the TMDB page to use in the nav bar so that whicheve the genre a user select, it would take them to result by genre page with the url also dynamically refectly the corresponding genre.
+
 
 ## August 24, 2022
 Today I worked on:
