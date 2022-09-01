@@ -22,9 +22,9 @@ function App(props) {
             <Route path="" element={<MovieDetail />} />
             <Route path="new" element={<ManufacturerForm />} />
           </Route> */}
-        <Route path="SignupPage" element={<SignupPage/>}/>
-        <Route path="Login" element={<Login/>}/>
-        <Route path="profile" element={<UserProfile/>}/>
+          <Route path="SignupPage" element={<SignupPage/>}/>
+          <Route path="Login" element={<Login/>}/>
+          <Route path="profile" element={<UserProfile/>}/>
         </Routes> 
       </div>
     </BrowserRouter>

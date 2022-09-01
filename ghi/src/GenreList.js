@@ -37,9 +37,8 @@ function GenreList(props) {
 
     return (
         <>
-        <div className="px-4 py-5 my-5 text-center">
-            {/* <img src="./yoovies.png" alt="logo"/> */}
-            <h1 className="display-5 fw-bold">Yovies</h1>
+        <div className="px-4 pt-5 pb-3 mt-5 mb-1 text-center">
+            <img src="/yoovies.png" alt="logo" width="500" height="auto" />
         </div>
         <div className="container">
             <h2 className="text-capitalize">{`${genreName} Movies`}</h2>

@@ -41,7 +41,7 @@ function DropdownNav() {
             </NavDropdown>
             <NavDropdown className="mr-auto" title= "User" id="basic-nav-dropdown" menuVariant= "dark">
               <LogoutButton></LogoutButton>
-              </NavDropdown>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

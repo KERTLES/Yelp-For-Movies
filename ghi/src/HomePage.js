@@ -15,7 +15,7 @@ function HomePage() {
   return (
       <>
       <div className="px-4 py-5 my-5 text-center">
-        <h1 className="display-5 fw-bold">Yovies</h1>
+        <img src="/yoovies.png" alt="logo" width="500" height="auto" />
         <form onSubmit={handleSubmit} className="d-flex mt-3 mb-3">
             <HiOutlineSearch style={{fontSize: '45px'}} />
             <input placeholder="Enter a movie..." type="search" name="movie" id="movie" aria-label="Search" className="form-control form-control-lg me-2"/>
