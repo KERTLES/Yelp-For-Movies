@@ -60,6 +60,7 @@ services:
             - database
         environment:
             DATABASE_URL: postgresql://accounts:password@database:5432/accounts
+            # DATABASE_URL: postgresql://account-api:password@database:5432/account-api
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
 
@@ -76,6 +77,7 @@ services:
             - database
         environment:
             DATABASE_URL: postgresql://reviews:password@database:5432/reviews
+            # DATABASE_URL: postgresql://reviews-api:password@database:5432/reviews-api
             WAIT_HOSTS: database:5432
     reviews-poller:
         build:

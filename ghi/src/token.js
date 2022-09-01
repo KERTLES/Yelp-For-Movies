@@ -102,10 +102,31 @@ export function useToken() {
     return handleErrorMessage(error);
   }
 
-  async function signup(username, password, email, firstName, lastName) {
+  async function signUp(username, password, email, firstName, lastName) {
     const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
     const response = await fetch(url, {
       method: "post",
+      body: JSON.stringify({
+        username : username,
+        password : password,
+        email: email,
+        first_name: firstName,
+        last_name: lastName,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      await login(username, password);
+    }
+    return false;
+  }
+
+  async function update(username, password, email, firstName, lastName, person_id) {
+    const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${person_id}`;
+    const response = await fetch(url, {
+      method: "put",
       body: JSON.stringify({
         username,
         password,
@@ -123,26 +144,5 @@ export function useToken() {
     return false;
   }
 
-  async function update(username, password, email, firstName, lastName) {
-    const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-    const response = await fetch(url, {
-      method: "post",
-      body: JSON.stringify({
-        username,
-        password,
-        email,
-        first_name: firstName,
-        last_name: lastName,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      await login(username, password);
-    }
-    return false;
-  }
-
-  return [token, login, logout, signup, update];
+  return [token, login, logout, signUp, update];
 }

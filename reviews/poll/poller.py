@@ -22,10 +22,11 @@ def get_users():
     # try:
     content = json.loads(response.content)
     # except:
-    #     print(content)
+    print(content)
+    
 
     for account in content["accounts"]:
-        UserVO.objects.update_or_create(user_name=account["username"])
+        UserVO.objects.update_or_create(user_name=account["first_name"])
 
 
 def poll():

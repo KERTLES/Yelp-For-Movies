@@ -27,9 +27,6 @@ SECRET_KEY = 'django-insecure-+!3vzjusw@pf)h9xssbaete35vmb6fp4&b@fj%cz!(h4*b70ar
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# ALLOWED_HOSTS = ["localhost", "reviews-api", "account-api"]
-ALLOWED_HOSTS = ['*']
-
 AUTH_USER_MODEL = "account_rest.Account"
 # Application definition
 
@@ -78,7 +75,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'account_project.wsgi.application'
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "account-api", "reviews-api"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
@@ -95,7 +92,7 @@ DJWTO_SAME_SITE = "LAX" if DEBUG else "NONE"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {}
-DATABASES["default"] = dj_database_url.config(default='postgresql://accounts:password@postgres/accounts')
+DATABASES["default"] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

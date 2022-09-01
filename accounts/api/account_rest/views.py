@@ -6,7 +6,7 @@ from django.urls import reverse
 # Create your views here.
 
 from django.http import JsonResponse
-
+import djwto.authentication as auth
 from .models import Account
 from common.json import ModelEncoder
 from django.views.decorators.http import require_http_methods
@@ -14,7 +14,7 @@ import json
 
 class AccountListEncoder(ModelEncoder):
     model = Account
-    properties = ["username", "id"]
+    properties = ["first_name", "id"]
 
 
 class AccountDetailEncoder(ModelEncoder):
@@ -37,6 +37,13 @@ def api_user_token(request):
         if token:
             return JsonResponse({"token": token})
     response = JsonResponse({"token": None})
+    return response
+
+@auth.jwt_login_required
+def get_some_data(request):
+    token_data = request.payload
+    print(token_data['user'])
+    response = JsonResponse({"token": token_data['user']})
     return response
 
 @require_http_methods(["GET", "POST"])
@@ -86,7 +93,13 @@ def api_show_account(request, pk):
         return JsonResponse({"deleted": count > 0})
     else:
         content = json.loads(request.body)
-        Account.objects.filter(id=pk).update(**content)
+        nusername = content["username"]
+        npassword = content["password"]
+        nfirstname = content["first_name"]
+        nlastname = content["last_name"]
+        nemail= content["email"]
+
+        Account.objects.filter(id=pk).update(username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname)
 
         account = Account.objects.get(id=pk)
         return JsonResponse(
@@ -98,12 +111,9 @@ def api_show_account(request, pk):
 def neo_authenticate(request):
     nusername = request.POST['username']
     npassword = request.POST['password']
-    print(nusername + ":" + npassword)
     user = authenticate(request, username=nusername, password=npassword)
     if user is not None:
-        print(user)
         login(request, user)
-        print(request.user.is_authenticated)
         # logout(request)
         # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
         return JsonResponse({'message':'got it'})
@@ -116,23 +126,8 @@ def neo_authenticate(request):
 
 @require_http_methods(["DELETE"])
 def neo_logout(request):
-    print(request.user.is_authenticated)
     logout(request)
-    print(request.user.is_authenticated)
         # logout(request)
         # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
     return JsonResponse({'message':'got it'})
-# def SignUpForm(request):
-#     # if request.method == "POST":
-#     #     form = UserCreationForm(request.POST)
-#     #     if form.is_valid():
-#     #         nusername = request.POST.get("user_name")
-#     #         npassword = request.POST.get("password")
-#     #         new_user = User.objects.create_user(
-#     #             username=nusername, password=npassword
-#     #         )
-#     #         new_user.save()
-#     #         login(request, new_user)
-#     # else:
-#     #     print("error")
-#     pass
+

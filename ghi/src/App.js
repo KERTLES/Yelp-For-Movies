@@ -3,8 +3,10 @@ import DropdownNav from './DropdownNav';
 import HomePage from './HomePage';
 import MovieDetail from './MovieDetail';
 import GenreList from './GenreList';
-
-
+import SignupPage from './SignupPage';
+import Login from './Login';
+import { AuthProvider } from "./token";
+import UserProfile from './UserProfile';
 
 function App(props) {
   return (
@@ -19,7 +21,10 @@ function App(props) {
             <Route path="" element={<MovieDetail />} />
             <Route path="new" element={<ManufacturerForm />} />
           </Route> */}
-        </Routes> 
+          <Route path="SignupPage" element={<SignupPage />} />
+          <Route path="Login" element={<Login />} />
+          <Route path="profile" element={<UserProfile />} />
+        </Routes>
       </div>
     </BrowserRouter>
   );

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { AuthContext, useToken } from "./token";
+import React, { useEffect, useState} from 'react';
+import { AuthContext, useToken } from './token';
 import { useNavigate } from "react-router-dom";
-function SignupPage()
-{
-  const [token, login, logout, signUp, update] = useToken();
+function UserProfile(){
+  const [accounts, setAccount] = useState([])
+  const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -14,7 +14,6 @@ function SignupPage()
   const [success, setSuccess] = useState('');
   const [failuree, setFailureE] = useState(false);
   const [failureu, setFailureU] = useState(false);
-  const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
 
 function confirmedPassword()
@@ -23,7 +22,7 @@ function confirmedPassword()
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-        <button className="btn btn-primary btn-lg">Register</button>
+        <button className="btn btn-primary btn-lg">Submit</button>
       </div>)
     }
 }
@@ -67,24 +66,37 @@ async function checker()
 }
 async function handleSubmit(event){
     event.preventDefault();
-    // const data = {
-    // 'username': username,
-    // 'first_name': first_name, 
-    // 'last_name': last_name, 
-    // 'email': email, 
-    // 'password': password, 
-    // 'is_active': is_active};
-    // const accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-    // const fetchSoldConfig = {
-    //     method: "post",
-    //     body: JSON.stringify(data),
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     };
-        // const Response = await fetch(accountUrl, fetchSoldConfig);
-        try {
-          signUp(username,password,email,first_name,last_name)
+    const data = {
+    'username': username,
+    'first_name': first_name, 
+    'last_name': last_name, 
+    'email': email, 
+    'password': password};
+    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
+    const request = await fetch(tokenUrl, { 
+      method: "delete", 
+      credentials: "include" })
+    let accountUrl = "";
+    let tokenNum = 0
+      if(request.ok)
+        {
+          let tokenData = await request.json()
+          accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
+          tokenNum = tokenData.token['id']
+        }
+        else
+        {
+          console.log("error")
+        }
+    const fetchSoldConfig = {
+        method: "put",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        };
+        const Response = await fetch(accountUrl, fetchSoldConfig);
+        if (Response.ok) {
             console.log("got it")
             setFirstName('');
             setLastName('');
@@ -96,27 +108,50 @@ async function handleSubmit(event){
             setFailureE(false)
             setFailureU(false)
             setIsActive(false)
+            login(username, password)
             navigate('/')
         }
-        catch(e){
+        else{
             console.log("error")
             checker()
             setPassword2('')
             setSuccess(false)
         }
     }
-useEffect(() => {
-async function getAccounts(){
-    const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`
-    const autoResponse = await fetch(Url)
 
-    if(autoResponse.ok)
-    {
-        const autoData = await autoResponse.json()
-        setAccounts(autoData.accounts)
-    }
-}getAccounts();
-},[])
+
+    useEffect(() => {
+      async function getAccount(){
+
+        const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
+        const request = await fetch(tokenUrl, { 
+          method: "delete", 
+          credentials: "include" }
+        
+      
+          // Other fetch options, like method and body, if applicable
+        ); 
+
+        if(request.ok)
+        {
+          const tokenData = await request.json()
+          const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
+          const autoResponse = await fetch(Url)
+
+          if(autoResponse.ok)
+          { 
+            const autoData = await autoResponse.json()
+              setAccount(autoData)
+              setEmail(autoData.email)
+              setFirstName(autoData.first_name)
+              setLastName(autoData.last_name)
+              setUsername(autoData.username)
+          }
+        }
+      
+      }
+      getAccount();
+  }, [])
 
     let successful
     let failure
@@ -162,7 +197,7 @@ async function getAccounts(){
             <div className="row justify-content-center">
               <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">UserProfile</p>
 
                 <form onSubmit={e => handleSubmit(e)} className="mx-1 mx-md-4">
                 
@@ -223,14 +258,14 @@ async function getAccounts(){
                   <div className="form-check d-flex justify-content-center mb-5">
                     <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
+                      I accept these changes
                     </label>
                   </div>
                 {confirmedPassword()}
 
                 </form>
                 <div className={successful} id="success-message">
-                    Successfully Created Account
+                    Successfully Changed Account
                     </div>
               <div className={failure} id="failure-message">
                     Failed Creating Account
@@ -253,4 +288,5 @@ async function getAccounts(){
     )
 
 }
-export default SignupPage
+
+export default UserProfile

@@ -131,7 +131,7 @@ function MovieDetail() {
                             {checkIfRatings(ratings)}
                         </div>
                     </div>
-                    < ListReviewForMovie />
+                    {/* < ListReviewForMovie /> */}
                 </div>
             </div>
         </>
