@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.hashers import make_password
 from django.urls import reverse
 
 # Create your views here.
@@ -42,9 +42,15 @@ def api_user_token(request):
 @auth.jwt_login_required
 def get_some_data(request):
     token_data = request.payload
-    print(token_data['user'])
     response = JsonResponse({"token": token_data['user']})
     return response
+
+@auth.jwt_login_required
+def check_user(request):
+    if request.user is not None:
+        return JsonResponse({"authenticated" : request.user.is_authenticated})
+    else:
+        return JsonResponse({"message": "not found"})
 
 @require_http_methods(["GET", "POST"])
 def api_list_accounts(request):
@@ -94,7 +100,7 @@ def api_show_account(request, pk):
     else:
         content = json.loads(request.body)
         nusername = content["username"]
-        npassword = content["password"]
+        npassword = make_password(content["password"])
         nfirstname = content["first_name"]
         nlastname = content["last_name"]
         nemail= content["email"]
