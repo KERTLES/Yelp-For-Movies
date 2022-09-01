@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { useToken } from "./token"
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useNavigate } from "react-router-dom";
 
 function LogoutButton(){
     const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
     const [auth, setAuth] = useState([]);
-
+    const navigate = useNavigate();
    useEffect(() => {
     async function authen(){
       if(token !== null)
@@ -63,6 +64,8 @@ function user_visibility() {
       // For Django services, use this one
       try {
           logout()
+          navigate('/')
+          setAuth(false)
       } catch (e) {
         console.log('error')
       }
