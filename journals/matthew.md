@@ -32,3 +32,9 @@
 ## August 29, 2022
     Today, I helped out Lander with getting login code on his side to work properly.
     We also began work on adding the functionality where certain pages would be only visible to logged in users. So far, it only checks whether the user has a token or not, which we will have to adjust later to actually check credentials. We also moved the sign up page to a button on the navbar that disappears if the user isn't logged in.
+
+## August 30, 2022
+    Today, we began work on creating a user profile page where a user can update their information. Also fully implemented a logout button in a way that's fully functional.
+
+## August 31, 2022
+    Today, we adjusted the token verification system so that it actually checks if the user is authorized rather than just checking if a token is available or not. Also fixed some errors where the user profile updating would update the password in a way that wouldn't input it in the proper format. I also began work figuring out how to implement  React side tests. Finally, we managed to merge my branch into the main branch.

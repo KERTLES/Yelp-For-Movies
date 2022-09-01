@@ -13,7 +13,7 @@ function App(props) {
     <AuthProvider>
     <BrowserRouter>
       <DropdownNav />
-      <div className="container">
+      <div title="App" className="container">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path=":movieTitle-:movieId" element={<MovieDetail />} />

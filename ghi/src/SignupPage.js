@@ -67,24 +67,23 @@ async function checker()
 }
 async function handleSubmit(event){
     event.preventDefault();
-    // const data = {
-    // 'username': username,
-    // 'first_name': first_name, 
-    // 'last_name': last_name, 
-    // 'email': email, 
-    // 'password': password, 
-    // 'is_active': is_active};
-    // const accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-    // const fetchSoldConfig = {
-    //     method: "post",
-    //     body: JSON.stringify(data),
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     };
-        // const Response = await fetch(accountUrl, fetchSoldConfig);
-        try {
-          signUp(username,password,email,first_name,last_name)
+    const data = {
+    'username': username,
+    'first_name': first_name, 
+    'last_name': last_name, 
+    'email': email, 
+    'password': password, 
+    'is_active': is_active};
+    const accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
+    const fetchSoldConfig = {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        };
+        const Response = await fetch(accountUrl, fetchSoldConfig);
+        if(Response.ok){
             console.log("got it")
             setFirstName('');
             setLastName('');
@@ -96,9 +95,10 @@ async function handleSubmit(event){
             setFailureE(false)
             setFailureU(false)
             setIsActive(false)
+            login(username, password)
             navigate('/')
         }
-        catch(e){
+        else{
             console.log("error")
             checker()
             setPassword2('')

@@ -4,9 +4,35 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function LogoutButton(){
     const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
+    const [auth, setAuth] = useState([]);
 
+   useEffect(() => {
+    async function authen(){
+      if(token !== null)
+      {
+    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/check/`;
+    const request = await fetch(tokenUrl, { 
+      method: "delete", 
+      credentials: "include" })
+      if(request.ok)
+      {
+      const toDa = await request.json()
+      setAuth(toDa['authenticated'])
+      }
+      else
+      {
+        setAuth(false)
+      }
+    }
+    else{
+      setAuth(false)
+    }
+    }authen();
+  },[]
+)
 function user_visibility() {
-        if (token !== null)
+
+        if (auth)
         {
           return (
             <>
@@ -42,7 +68,6 @@ function user_visibility() {
       }
     }
     else{
-      let error = await response.json();
       console.log("hello")
     }
     // DO SOMETHING WITH THE ERROR, IF YOU WANT
