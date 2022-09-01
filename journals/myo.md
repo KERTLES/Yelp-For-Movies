@@ -1,3 +1,9 @@
+## August 30, 2022
+Today I worked on:
+- Refining the application by adjusting some css styling
+
+For the most part, I was just fixing up some styling issues that I had at the beginning but didn't have time to adjust because I wanted to focus more on the functionality of the application. However, today, I was able to make those adjustments. For example, I added some a magnifying logo to the left of the search bar as well as modifying the submit button so that it showed an arrow rather than just the word "Search". I was also able to align the cards for the list of movies so that they are evenly aligned on each role rather than filling in on empty spots. I was also able to create a placeholder for movies that didn't have a poster included in the JSON response; as well as showing the released year as "Unknown" when the information is unavailable. For the Movie Detail Page, I adjust the ratings style so that they aligned horizontally below the movie information table. I also tried to add in our logo to the main page and the genre list page but that was not working out for some reason. I was planning to do some more research on it tomorrow to get it to work.
+
 ## August 29, 2022
 Today I worked on:
 - Implementing the search feature and the filter by a genre feature
