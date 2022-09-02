@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.hashers import make_password
-from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 # Create your views here.
@@ -52,6 +51,7 @@ def check_user(request):
         return JsonResponse({"authenticated" : request.user.is_authenticated})
     else:
         return JsonResponse({"message": "not found"})
+
 @require_http_methods(["GET", "POST"])
 def api_list_accounts(request):
     if request.method == "GET":

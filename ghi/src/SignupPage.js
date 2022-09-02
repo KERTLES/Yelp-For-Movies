@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { AuthContext, useToken } from "./token";
+import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function SignupPage()
 {
-  const [token, login, logout, signUp, update] = useToken();
+  const [token, login] = useToken();
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -67,25 +67,39 @@ async function checker()
 }
 async function handleSubmit(event){
     event.preventDefault();
-    // const data = {
-    // 'username': username,
-    // 'first_name': first_name, 
-    // 'last_name': last_name, 
-    // 'email': email, 
-    // 'password': password, 
-    // 'is_active': is_active};
-    // const accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-    // const fetchSoldConfig = {
-    //     method: "post",
-    //     body: JSON.stringify(data),
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     };
-        // const Response = await fetch(accountUrl, fetchSoldConfig);
-        try {
-          signUp(username,password,email,first_name,last_name)
+    const data = {
+    'username': username,
+    'first_name': first_name, 
+    'last_name': last_name, 
+    'email': email, 
+    'password': password, 
+    'is_active': is_active};
+    const accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
+    const fetchSoldConfig = {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        };
+        const Response = await fetch(accountUrl, fetchSoldConfig);
+        if(Response.ok){
             console.log("got it")
+            const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
+
+            const form = new FormData();
+            form.append("username", username);
+            form.append("password", password);
+          
+            const response = await fetch(url, {
+              method: "post",
+              credentials: "include",
+              body: form,
+            });
+            if (response.ok) {
+              // For Django services, use this one
+              login(username, password)
+            }
             setFirstName('');
             setLastName('');
             setEmail('');
@@ -98,7 +112,7 @@ async function handleSubmit(event){
             setIsActive(false)
             navigate('/')
         }
-        catch(e){
+        else{
             console.log("error")
             checker()
             setPassword2('')
@@ -238,8 +252,8 @@ async function getAccounts(){
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                  className="img-fluid" alt="Sample image" />
+                <img src="/yooviesblack.png"
+                  className="img-fluid" alt="logo" />
 
               </div>
             </div>

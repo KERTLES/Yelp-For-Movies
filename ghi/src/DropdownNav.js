@@ -26,9 +26,17 @@ function DropdownNav() {
   
 
   return (
-    <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
+    <Navbar fixed="top" variant="dark" expand="lg" bg="dark">
       <Container fluid>
-        <Navbar.Brand href="/">Yovies</Navbar.Brand>
+        <Navbar.Brand href="/">
+          <img
+              alt=""
+              src="/yoovieswhite.png"
+              width="85"
+              height="auto"
+              className="d-inline-block align-top"
+          />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -41,7 +49,7 @@ function DropdownNav() {
             </NavDropdown>
             <NavDropdown className="mr-auto" title= "User" id="basic-nav-dropdown" menuVariant= "dark">
               <LogoutButton></LogoutButton>
-              </NavDropdown>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

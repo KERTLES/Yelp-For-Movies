@@ -10,38 +10,6 @@ function Login(){
   const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
 
-// async function clogout()
-// {
-//   const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/logout/`;
-//   const response = await fetch(url, {
-//     method: "delete",
-//     credentials: "include",
-//   });
-//   console.log(response)
-//   if (response.ok) {
-//     // For Django services, use this one
-//     try {
-//         const data = await response.json();
-//         const token = data.token;
-//         setUsername('')
-//         setPassword('')
-//         setSuccess(true)
-//         setIsActive(false)
-//         logout()
-//     } catch (e) {
-//       console.log('error')
-//     }
-//   }
-//   else{
-//     setUsername('')
-//     setPassword('')
-//     setSuccess(false)
-//     let error = await response.json();
-//     console.log("hello")
-//   }
-//   // DO SOMETHING WITH THE ERROR, IF YOU WANT
-// }
-
 async function clogin(username, password) {
   // For Django account services, use this one
   const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
@@ -136,7 +104,7 @@ function handleSubmit(event)
 
   return(
   <section className="vh-100" >
-  <div className="container h-100">
+  <div title="login" className="container h-100">
     <div className="row d-flex justify-content-center align-items-center h-100">
       <div className="col-lg-12 col-xl-11">
         <div className="card text-black" >
