@@ -63,7 +63,6 @@ services:
             # DATABASE_URL: postgresql://account-api:password@database:5432/account-api
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
-
     reviews-api:
         build:
             context: ./reviews/api

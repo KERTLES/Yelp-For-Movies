@@ -32,3 +32,12 @@
 ## August 29, 2022
     Today, I helped out Lander with getting login code on his side to work properly.
     We also began work on adding the functionality where certain pages would be only visible to logged in users. So far, it only checks whether the user has a token or not, which we will have to adjust later to actually check credentials. We also moved the sign up page to a button on the navbar that disappears if the user isn't logged in.
+
+## August 30, 2022
+    Today, we began work on creating a user profile page where a user can update their information. Also fully implemented a logout button in a way that's fully functional.
+
+## August 31, 2022
+    Today, we adjusted the token verification system so that it actually checks if the user is authorized rather than just checking if a token is available or not. Also fixed some errors where the user profile updating would update the password in a way that wouldn't input it in the proper format. I also began work figuring out how to implement  React side tests. Finally, we managed to merge my branch into the main branch.
+
+## September 01, 2022
+    Today, I fixed some more errors with the log in system that the rest of my team noticed now that it has been pushed to the main branch. I also began further experimentations with react testing and managed to get two pyTests working on the Django side. Those two tests see if a list of accounts can be retrieved and if a new account can be created. It took a bit to figure out the formatting of the pytests, but I should now be able to create more relatively quickly.

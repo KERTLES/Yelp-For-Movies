@@ -242,7 +242,7 @@ async function handleSubmit(event){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
+                      <input placeholder="Password must be at least 8 characters" onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
                     </div>
                   </div>
@@ -250,7 +250,7 @@ async function handleSubmit(event){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input onChange={e => setPassword2(e.target.value)} value={password2} type="password" id="form3Example4cd" className="form-control" />
+                      <input placeholder="Password must be the same" onChange={e => setPassword2(e.target.value)} value={password2} type="password" id="form3Example4cd" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4cd">Repeat your password</label>
                     </div>
                   </div>
@@ -273,8 +273,8 @@ async function handleSubmit(event){
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                  className="img-fluid" alt="Sample image" />
+                <img src="/yooviesblack.png"
+                  className="img-fluid" alt="logo" />
 
               </div>
             </div>

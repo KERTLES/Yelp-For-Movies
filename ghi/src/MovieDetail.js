@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+<<<<<<< HEAD
 import ListReviewForMovie from "./ListReviewForMovie";
 import Badge from 'react-bootstrap/Badge';
+=======
+>>>>>>> main
 import Stack from 'react-bootstrap/Stack';
+import ListReviewForMovie from './ListReviewForMovie';
+import CreateReviewForm from "./CreateReviewForm";
+import { Link } from "react-router-dom";
 
 
 const omdbapiKey = process.env.REACT_APP_OMDB_API_KEY
@@ -27,7 +33,6 @@ function MovieDetail() {
         if (movieResponse.ok) {
             const moviesData = await movieResponse.json()
             setMovie(moviesData)
-            setGenres(moviesData.Genre.split(","))
             setRatings(moviesData.Ratings)
         }
     }
@@ -39,6 +44,7 @@ function MovieDetail() {
             imdbID.current = imdbIddata.imdb_id
             poster.current = `${posterUrl}${imdbIddata.poster_path}`
             overview.current = imdbIddata.overview
+            setGenres(imdbIddata.genres)
             getMovieData()
         }
     }
@@ -51,7 +57,7 @@ function MovieDetail() {
         if (ratings.length === 0) {
             return (
                 <div>
-                    <span className="p-2 border bg-light border-dark rounded">Ratings N/A</span>
+                    <span className="p-2 border bg-dark border-white rounded">Ratings N/A</span>
                 </div>
             )
         } else {
@@ -60,9 +66,12 @@ function MovieDetail() {
                     {ratings.map((rating, index) => {
                         return (
                             <div key={index}>
-                                <h6>
-                                    {rating.Source} <span className="p-2 text-white border border-danger bg-danger rounded">{rating.Value}</span>
-                                </h6>
+                                <span>
+                                    <span className="p-2 border bg-dark border-white rounded">
+                                        {rating.Source}
+                                    </span>{' '}
+                                    <span className="p-2 text-white border border-white bg-danger rounded">{rating.Value}</span>
+                                </span>
                             </div>
                         )
                     })}
@@ -73,7 +82,7 @@ function MovieDetail() {
 
     return (
         <>
-            <div className="container mt-5 pt-4 pb-4">
+            <div className="container mt-5 pt-4 pb-4 text-white">
                 <h1>{movie.Title}</h1>
                 <ul className="list-inline">
                     <li className="list-inline-item">{movie.Year} • </li>
@@ -82,20 +91,23 @@ function MovieDetail() {
                 </ul>
                 <div className="row">
                     <div className="col-xl-3 ">
-                        <img src={poster.current} width='275' height='auto' />
+                        <img src={poster.current} alt="poster" width='275' height='auto' />
+                        <CreateReviewForm />
                     </div>
                     <div className="col-9">
                         <div>
                             {genres.map((genre, index) => {
                                 return (
                                     <span key={index}>
-                                        <Button disabled className="rounded-pill" variant="outline-dark" size="sm">{genre}</Button>{' '}
+                                        <Link to={`/${genre.name.toLowerCase()}/${genre.id}`}>
+                                            <Button className="rounded-pill" variant="outline-light" size="sm">{genre.name}</Button>
+                                        </Link>{' '}
                                     </span>
                                 )
                             })}
                         </div>
                         <div className="table-responsive">
-                            <table className="table">
+                            <table className="table text-white">
                                 <tbody>
                                     <tr>
                                         <td colSpan={2}>{movie.Plot === "N/A" ? overview.current : movie.Plot}</td>
@@ -131,8 +143,7 @@ function MovieDetail() {
                             {checkIfRatings(ratings)}
                         </div>
                     </div>
-                    {movie["Title"]? < ListReviewForMovie movie={movie}/>: null}
-                    
+                    {movie["Title"] ? < ListReviewForMovie movie={movie} /> : null}
                 </div>
             </div>
         </>
