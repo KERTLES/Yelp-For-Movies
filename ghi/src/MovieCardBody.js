@@ -8,7 +8,7 @@ function MovieCardBody(column, col_idx) {
       {column.map(movie => {
         const title = movie.title.toLowerCase().split(/[-:\s,]+/).join("-")
         return (
-          <div key={movie.id} className="card mb-3 border-0" style={{height:'475px'}}>
+          <div key={movie.id} className="card mb-3 border-0" style={{height:'475px', backgroundColor: "black"}}>
             <Link to={`/${title}-${movie.id}`}>
               {movie.poster_path === null 
               ? <>
@@ -25,9 +25,9 @@ function MovieCardBody(column, col_idx) {
             </Link>
             <div className="card-body">
               <Link style={{textDecoration: "none"}} to={`/${title}-${movie.id}`}>
-                <span style={{fontSize: "20px"}} className="text-dark card-title">{movie.title}</span><br />
+                <span style={{fontSize: "20px", fontWeight: "bold"}} className="text-white card-title">{movie.title}</span><br />
               </Link>
-              <span className="text-muted">
+              <span className="text-muted" style={{fontWeight: "bold"}}>
                 {(movie.release_date === "" || !movie.release_date)
                 ? "Unknown"
                 : new Date(movie.release_date).getFullYear()} 
