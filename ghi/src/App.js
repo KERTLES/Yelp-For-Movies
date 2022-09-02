@@ -22,7 +22,7 @@ function App(props) {
           <Route path=":genreName/:genreId" element={<GenreList />} />
           <Route path="SignupPage" element={<SignupPage/>}/>
           <Route path="Login" element={<Login/>}/>
-          <Route path="profile" element={<UserProfile/>}/>
+          <Route path="myprofile" element={<UserProfile/>}/>
         </Routes> 
       </div>
       <Footer/>
