@@ -16,6 +16,12 @@ services:
             HOST_OS: ${OS}
             NODE_ENV: development
             HOST: "0.0.0.0"
+            REACT_APP_TMDB_API_KEY: ${REACT_APP_TMDB_API_KEY}
+            REACT_APP_TMDB_URL: https://api.themoviedb.org/3
+            REACT_APP_OMDB_API_KEY: ${REACT_APP_OMDB_API_KEY}
+            REACT_APP_OMDB_URL: http://www.omdbapi.com
+            REACT_APP_ACCOUNTS_HOST: http://localhost:8080
+            DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
     database:
         build:
             context: ./relational-data
@@ -38,7 +44,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://movies:password@database:5432/movies
             WAIT_HOSTS: database:5432
     account-api:
         build:
@@ -51,8 +57,10 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://account-api:password@database:5432/account-api
             WAIT_HOSTS: database:5432
+            DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
+            
     reviews-api:
         build:
             context: ./reviews/api
@@ -64,7 +72,7 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://user-name:password@postgres/db-name
+            DATABASE_URL: postgresql://reviews-api:password@database:5432/reviews-api
             WAIT_HOSTS: database:5432
 
 

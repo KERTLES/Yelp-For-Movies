@@ -1,30 +1,18 @@
-.content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 405px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.create-review-button {
+    margin-top: 10px;
+    width: 275px;
 }
 
-.button-modal {
-    /* padding: 32px; */
-    display: flex;
-    /* flex-direction: column; */
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+.success-message {
+    font-family: "Roboto", sans-serif;
+    background-color: #060707;
+    padding: 15px;
+    color: white;
 }
 
-.textarea {
-    width: 100%;
-    border-radius: 6px;
-    padding: 10px;
+.stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
 }
