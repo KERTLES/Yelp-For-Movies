@@ -7,6 +7,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class UserVO(models.Model):
     user_name = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return str(self.user_name)
+
 
 class Movie(models.Model): 
     # imdb_id is from the API

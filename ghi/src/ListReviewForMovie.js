@@ -1,33 +1,74 @@
-
-import React, { useState, useEffect } from "react"
-
-import './style.css'
-
-
+import React, { useState, useEffect, useRef } from 'react';
 function ListReviewForMovie(data) {
-  //declare new state variable 
-
   const [reviews, setReviews] = useState([])
+  const [movie, setMovie] = useState([false])
+  const [reviewLoading, setIsLoading] = useState([true])
+  const post_data = useRef()
+  post_data["imdb_id"] = data.movie.imdbID
+  post_data["title"] = data.movie["Title"]
 
-  //fetches review data 
+  const getMovies = async () => {
+    const url = `http://localhost:8090/api/movies/${data.movie.imdbID}/`
+    const fetchConfig = {
+      method: "post",
+      body: JSON.stringify(post_data),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    }
+    const response = await fetch(url, fetchConfig)
+    if (response.ok) {
+      const data = await response.json()
+      setMovie(true)
+    }
+  }
 
+  const getReviews = async () => {
+    const response = await fetch(`http://localhost:8090/api/reviews/${data.movie.imdbID}/`)
+    if (response.ok) {
+      const data = await response.json();
+      setReviews(data)
+      post_data["reviews"] = data
+      setIsLoading(false)
+    } else {
+      console.log("Still not ok")
+    }
+  }
 
   useEffect(() => {
-    async function getData() {
-
-      const url = `http://localhost:8090/api/reviews/${data.imdb_id}/`
-
-      const response = await fetch(url);
-
-      if (response.ok) {
-        const data = await response.json();
-        setReviews(data)
-      }
-
-    }
-    getData()
-
+    getMovies()
+    getReviews()
   }, [])
+
+  function ReviewExists(reviews) {
+    if (reviews.length == 0) {
+      return (
+        <>
+          <div>
+            No reviews for this movie yet. Click here to create one!
+          </div>
+        </>
+      )
+    } else {
+      return (
+        reviews.map((review, i) => {
+          return (
+            <div className="text" key={i}>
+              <br />
+              <h6 key={i}> {review.title}</h6>
+              <span className="user">@{review.user.user_name}</span>
+              <span className="style">{'\t'}{review.date}</span>
+              {checkIfRatings(review.rating)}
+              {review.post}
+              <br />
+            </div>
+          )
+        }
+        )
+      )
+    }
+
+  }
 
   const checkIfRatings = (rating) => {
     return (
@@ -39,74 +80,20 @@ function ListReviewForMovie(data) {
             );
           })}
         </div>
-
       </>
     )
   }
 
-
-
-
-
-
   return (
-
-
-
-
     <div className="mt-4">
       <div className="flex-grow-1 flex-shrink-1">
         <div className="shadow p-4 mb-5 bg-white rounded">
           <div className="p-3 mb-3 mb-md-0 mr-md-3 bg-light scroll">
-
-
-
-            {reviews?.map((review) => {
-
-
-
-              return (
-
-                <div className="text"><br />
-
-                  <h6 key={review.id}>{review.title}</h6>
-
-                  <span className="user">@{review.user.user_name}</span>
-
-
-                  <span className="style">{'\t'}{review.date}</span>
-
-
-
-
-                  {checkIfRatings(review.rating)}
-
-                  {review.post}
-                  <br />
-
-                </div>
-
-
-
-
-              )
-            })
-            }
-
-
+            {ReviewExists(reviews)}
           </div>
-
         </div>
-
-
       </div>
     </div >
-
-
-
-
-
   )
 }
-
 export default ListReviewForMovie

@@ -131,7 +131,9 @@ function MovieDetail() {
                             {checkIfRatings(ratings)}
                         </div>
                     </div>
-                    {/* < ListReviewForMovie /> */}
+                    {/* {console.log("MOVIE DATA ", movie)} */}
+                    {movie["Title"]? < ListReviewForMovie movie={movie}/>: null}
+                    
                 </div>
             </div>
         </>
