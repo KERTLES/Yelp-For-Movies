@@ -29,7 +29,6 @@ function HomePage() {
         </div>
       </div>
       {<MoviesList query={movieName} />}
-      
       </>
 
     );

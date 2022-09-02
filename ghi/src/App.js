@@ -7,6 +7,7 @@ import SignupPage from './SignupPage';
 import Login from './Login';
 import { AuthProvider } from "./token";
 import UserProfile from './UserProfile';
+import Footer from './Footer';
 
 function App(props) {
   return (
@@ -27,8 +28,10 @@ function App(props) {
         <Route path="myprofile" element={<UserProfile/>}/>
         </Routes> 
       </div>
+      <Footer/>
     </BrowserRouter>
     </AuthProvider>
+
   );
 }
 
