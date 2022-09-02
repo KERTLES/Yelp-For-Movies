@@ -4,7 +4,7 @@ import HomePage from './HomePage';
 import MovieDetail from './MovieDetail';
 import GenreList from './GenreList';
 import SignupPage from './SignupPage';
-import Login from './Login';
+import Login from './login';
 import { AuthProvider } from "./token";
 import UserProfile from './UserProfile';
 import Footer from './Footer';
