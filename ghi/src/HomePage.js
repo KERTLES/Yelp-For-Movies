@@ -15,14 +15,14 @@ function HomePage() {
   return (
       <>
       <div className="px-4 py-5 my-5 text-center">
-        <img src="/yoovies.png" alt="logo" width="500" height="auto" />
+        <img src="/yoovieswhite.png" alt="logo" width="500" height="auto" />
         <form onSubmit={handleSubmit} className="d-flex mt-3 mb-3">
-            <HiOutlineSearch style={{fontSize: '45px'}} />
+            <HiOutlineSearch style={{fontSize: "45px", color: "white"}} />
             <input placeholder="Enter a movie..." type="search" name="movie" id="movie" aria-label="Search" className="form-control form-control-lg me-2"/>
-            <button className="btn btn-dark me-2 rounded-circle" type="submit"><FaArrowRight style={{fontSize: '22px'}} /></button>
+            <button className="btn btn-light me-2 rounded-circle" type="submit"><FaArrowRight style={{fontSize: "22px", color: "black"}} /></button>
         </form>
         <div className="col-lg-6 mx-auto">
-          <p className="lead mb-4">
+          <p className="lead mb-4 text-white">
             Ratings, Reviews, and Where to Watch the Best Movies...
           </p>
         </div>
