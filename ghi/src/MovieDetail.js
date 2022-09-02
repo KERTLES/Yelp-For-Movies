@@ -60,7 +60,7 @@ function MovieDetail() {
                         return (
                             <div key={index}>
                                 <h6>
-                                    { rating.Source } <span className="p-2 text-white border border-danger bg-danger rounded">{ rating.Value }</span>
+                                    { rating.Source } <span className="p-2 text-white border border-danger bg-danger rounded">{ rating.Value }</span> {/*Might want tot consider changing the formatting of this. having a smaller width screen causes the reviews to oversect with the source name.*/}
                                 </h6>
                             </div>
                         )
