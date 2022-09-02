@@ -14,6 +14,7 @@ class accountsTester(TestCase):
         last_name = "Oshima", 
         username= "pyuisad",
 	    password = "tatasddasdime")
+
     def test_get_list_accounts(self): # tests if a list of accounts can be retrieved
         response = self.client.get("/api/accounts/")
         content =response.json()
