@@ -38,3 +38,6 @@
 
 ## August 31, 2022
     Today, we adjusted the token verification system so that it actually checks if the user is authorized rather than just checking if a token is available or not. Also fixed some errors where the user profile updating would update the password in a way that wouldn't input it in the proper format. I also began work figuring out how to implement  React side tests. Finally, we managed to merge my branch into the main branch.
+
+## September 01, 2022
+    Today, I fixed some more errors with the log in system that the rest of my team noticed now that it has been pushed to the main branch. I also began further experimentations with react testing and managed to get two pyTests working on the Django side. Those two tests see if a list of accounts can be retrieved and if a new account can be created. It took a bit to figure out the formatting of the pytests, but I should now be able to create more relatively quickly.
