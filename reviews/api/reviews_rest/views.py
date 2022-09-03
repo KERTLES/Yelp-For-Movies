@@ -1,3 +1,4 @@
+import re
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
@@ -41,7 +42,7 @@ def api_list_accountVOs(request):
     return JsonResponse({"message": "no users in the database"})
 
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(["POST", "GET"])
 def api_list_movies(request, imdb_id=None):
     if request.method == "GET":
         if id is None:
@@ -56,8 +57,8 @@ def api_list_movies(request, imdb_id=None):
         content = json.loads(request.body)
         try:
             imdb_id = content["imdb_id"]
-
             movie_obj = Movie.objects.get(imdb_id=imdb_id)
+            return JsonResponse({"message": "movie already in database"})
 
         except Movie.DoesNotExist:
 
@@ -79,7 +80,7 @@ def api_list_reviews_by_imdb_id(request, imdb_id=None):
             id = movie.id
         except Movie.DoesNotExist:
             # return JsonResponse({"message": "movie does not exist in database"})
-            return JsonResponse([])
+            return JsonResponse([], safe=False)
         reviews = Review.objects.filter(movie=id)
         return JsonResponse(reviews, ReviewsEncoder, safe=False)
 
@@ -155,11 +156,11 @@ def api_show_review(request, pk):
         )
 
 
-@require_http_methods(["GET"])
-def api_list_movies(request):
-    if request.method == "GET":
-        movie = Movie.objects.all()
-        return JsonResponse(
-            {"movies": movie},
-            encoder=MovieEncoder
-        )
+# @require_http_methods(["GET"])
+# def api_list_movies(request):
+#     if request.method == "GET":
+#         movie = Movie.objects.all()
+#         return JsonResponse(
+#             {"movies": movie},
+#             encoder=MovieEncoder
+#         )

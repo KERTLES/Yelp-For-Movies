@@ -11,12 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 from pathlib import Path
 from datetime import timedelta
-<<<<<<< HEAD
 import dj_database_url
 
 
-=======
->>>>>>> main
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,10 +26,6 @@ SECRET_KEY = 'django-insecure-+!3vzjusw@pf)h9xssbaete35vmb6fp4&b@fj%cz!(h4*b70ar
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-<<<<<<< HEAD
-=======
-ALLOWED_HOSTS = []
->>>>>>> main
 
 AUTH_USER_MODEL = "account_rest.Account"
 # Application definition

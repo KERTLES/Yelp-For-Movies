@@ -11,21 +11,21 @@ class UserVO(models.Model):
         return str(self.user_name)
 
 
-class Review(models.Model):
-    title = models.CharField(max_length=200)
-    post = models.TextField(blank=True, null=True) 
-    #if movie id is deleted, we want to delete all reviews associated with movie (?) 
-    rating = models.PositiveSmallIntegerField(blank=True, null=True,
-        validators=[MinValueValidator(1),MaxValueValidator(5)]
-    )
-    user = models.CharField(max_length=50, blank=True, null=True)
-    movie = models.ForeignKey(
-        "Movie", 
-        on_delete=models.CASCADE
-    )
+# class Review(models.Model):
+#     title = models.CharField(max_length=200)
+#     post = models.TextField(blank=True, null=True) 
+#     #if movie id is deleted, we want to delete all reviews associated with movie (?) 
+#     rating = models.PositiveSmallIntegerField(blank=True, null=True,
+#         validators=[MinValueValidator(1),MaxValueValidator(5)]
+#     )
+#     user = models.CharField(max_length=50, blank=True, null=True)
+#     movie = models.ForeignKey(
+#         "Movie", 
+#         on_delete=models.CASCADE
+#     )
     
-    def __str__(self):
-        return (self.title)
+#     def __str__(self):
+#         return (self.title)
 
 
 class Movie(models.Model): 
@@ -71,3 +71,4 @@ class Review(models.Model):
 
     
     
+

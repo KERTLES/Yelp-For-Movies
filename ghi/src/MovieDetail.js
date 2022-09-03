@@ -1,13 +1,9 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
-<<<<<<< HEAD
 import ListReviewForMovie from "./ListReviewForMovie";
 import Badge from 'react-bootstrap/Badge';
-=======
->>>>>>> main
 import Stack from 'react-bootstrap/Stack';
-import ListReviewForMovie from './ListReviewForMovie';
 import CreateReviewForm from "./CreateReviewForm";
 import { Link } from "react-router-dom";
 
@@ -142,8 +138,10 @@ function MovieDetail() {
                         <div className="mt-2">
                             {checkIfRatings(ratings)}
                         </div>
+                    </div >
+                    <div className="text-black">
+                        {movie["Title"] ? < ListReviewForMovie movie={movie} /> : null}
                     </div>
-                    {movie["Title"] ? < ListReviewForMovie movie={movie} /> : null}
                 </div>
             </div>
         </>
