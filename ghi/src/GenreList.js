@@ -42,7 +42,7 @@ function GenreList(props) {
         </div>
         <div className="container">
             <h2 className="text-capitalize text-white">{`${genreName} Movies`}</h2>
-            <div className="row mt-5">
+            <div className="row mt-5 mb-3">
                 {movieColumns.map((column, col_idx) => {
                     return (
                         MovieCardBody(column, col_idx)
