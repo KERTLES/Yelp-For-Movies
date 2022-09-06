@@ -17,6 +17,7 @@ function DropdownNav() {
   useEffect(() => {
     (async () => {
         const genresResponse = await fetch(`${tmdbURL}/genre/movie/list?api_key=${apiKey}&language=en-US`)
+        console.log(genresResponse)
         if (genresResponse.ok) {
             const genresData = await genresResponse.json()
             setGenres(genresData.genres)

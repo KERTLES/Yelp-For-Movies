@@ -1,4 +1,6 @@
 volumes:
+    ghi:
+        external: true
     yovies-data:
         external: true
 services:
@@ -20,6 +22,7 @@ services:
             REACT_APP_OMDB_URL: http://www.omdbapi.com
             REACT_APP_ACCOUNTS_HOST: http://localhost:8080
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
+            REACT_APP_REVIEWS_HOST: http://localhost:8090
     database:
         build:
             context: ./relational-data
@@ -29,6 +32,7 @@ services:
         environment:
             - POSTGRES_MULTIPLE_DATABASES=movies,reviews,accounts
             - POSTGRES_PASSWORD=test-databases
+
         ports:
             - 15432:5432
     movie-api:
@@ -55,7 +59,8 @@ services:
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://account-api:password@database:5432/account-api
+            DATABASE_URL: postgresql://accounts:password@database:5432/accounts
+            # DATABASE_URL: postgresql://account-api:password@database:5432/account-api
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
     reviews-api:
@@ -66,8 +71,26 @@ services:
             - "8090:8000"
         volumes:
             - ./reviews/api:/app
+            #mount volume and run container. Then make
         depends_on:
             - database
         environment:
-            DATABASE_URL: postgresql://reviews-api:password@database:5432/reviews-api
+            DATABASE_URL: postgresql://reviews:password@database:5432/reviews
+            # DATABASE_URL: postgresql://reviews-api:password@database:5432/reviews-api
             WAIT_HOSTS: database:5432
+    reviews-poller:
+        build:
+            context: ./reviews/poll
+            dockerfile: ./Dockerfile.dev
+        volumes:
+            - ./reviews/poll:/app
+            - ./reviews/api/reviews_project:/app/reviews_project
+            - ./reviews/api/reviews_rest:/app/reviews_rest
+        depends_on:
+            - database
+            - reviews-api
+        environment:
+            ACCOUNT_SERVICE_URL: http://account-api:8000
+            DATABASE_URL: postgresql://reviews:password@database:5432/reviews
+            WAIT_HOSTS: database:5432, reviews-api:8000
+            WAIT_TIMEOUT: 240

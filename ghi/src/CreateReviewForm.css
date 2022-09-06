@@ -1,0 +1,26 @@
+.create-review-button {
+    margin-top: 10px;
+    width: 275px;
+}
+
+.success-message {
+    font-family: "Roboto", sans-serif;
+    background-color: #060707;
+    padding: 15px;
+    color: white;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.form-label {
+    color: #696969;
+}
+
+.modal-title {
+    color: #080808;
+}

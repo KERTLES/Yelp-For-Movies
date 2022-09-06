@@ -14,7 +14,7 @@ import json
 
 class AccountListEncoder(ModelEncoder):
     model = Account
-    properties = ["first_name", "id"]
+    properties = ["first_name", "id", "username"]
 
 
 class AccountDetailEncoder(ModelEncoder):
