@@ -104,7 +104,7 @@ function handleSubmit(event)
 
   return(
   <section className="vh-100" >
-  <div title="login" className="container h-200">
+  <div title="login" className="container pt-5 mt-5 h-100">
     <div className="row d-flex justify-content-center align-items-center h-100">
       <div className="col-lg-12 col-xl-11">
         <div className="card text-black" >
@@ -150,7 +150,7 @@ function handleSubmit(event)
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="/yoovieswhite.png"
+                <img src="/yooviesblack.png"
                   className="img-fluid" alt="logo" />
 
               </div>

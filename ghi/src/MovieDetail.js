@@ -78,7 +78,7 @@ function MovieDetail() {
 
     return (
         <>
-            <div className="container mt-5 pt-4 pb-4 text-white">
+            <div className="container mt-5 pt-5 pb-4 text-white">
                 <h1>{movie.Title}</h1>
                 <ul className="list-inline">
                     <li className="list-inline-item">{movie.Year} • </li>
