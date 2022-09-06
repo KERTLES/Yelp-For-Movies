@@ -42,7 +42,7 @@ function MoviesList(props) {
     return (
         <div className="container text-white">
             <h2>{props.query ? `Search results for "${props.query}"...` : "TRENDING"}</h2>
-            <div className="row mt-5">
+            <div className="row mt-5 mb-5">
                 {movieColumns.map((column, col_idx) => {
                     return (
                         MovieCardBody(column, col_idx)
