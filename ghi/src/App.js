@@ -5,7 +5,7 @@ import CreateReviewForm from './CreateReviewForm';
 import MovieDetail from './MovieDetail';
 import GenreList from './GenreList';
 import SignupPage from './SignupPage';
-import Login from './login';
+import Login from './Login';
 import { AuthProvider } from "./token";
 import UserProfile from './UserProfile';
 import Footer from './Footer';
