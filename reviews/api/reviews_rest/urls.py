@@ -15,7 +15,6 @@ urlpatterns = [
     path("create/<int:movie_id>/", api_list_reviews, name="create"),
 
     path("reviews/edit/<int:pk>/", api_show_review, name="edit_review"),  # PUT
-    path("reviews/delete/<int:pk>/", api_show_review,
-         name="delete_review"),  # DELETE
+    path("reviews/delete/<int:pk>/", api_show_review, name="delete_review"),  # DELETE
 
 ]
