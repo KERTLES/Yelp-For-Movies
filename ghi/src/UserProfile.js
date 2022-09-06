@@ -188,8 +188,8 @@ async function handleSubmit(event){
     }
 
     return(
-  <section className="vh-100" >
-  <div className="container h-100">
+  <section className="vh-101" >
+  <div className="container h-100 pt-5 mt-5 mb-4">
     <div className="row d-flex justify-content-center align-items-center h-100">
       <div className="col-lg-12 col-xl-11">
         <div className="card text-black" >
@@ -197,7 +197,7 @@ async function handleSubmit(event){
             <div className="row justify-content-center">
               <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">UserProfile</p>
+                <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">My Profile</p>
 
                 <form onSubmit={e => handleSubmit(e)} className="mx-1 mx-md-4">
                 
