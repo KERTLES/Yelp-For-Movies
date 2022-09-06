@@ -16,13 +16,10 @@ def get_users():
     # url = f"{os.environ['ACCOUNT_SERVICE_URL']}/api/accounts/"
 
     response = requests.get("http://account-api:8000/api/accounts/")
- 
- 
     
     # try:
     content = json.loads(response.content)
     # except:
-   
     
 
     for account in content["accounts"]:
