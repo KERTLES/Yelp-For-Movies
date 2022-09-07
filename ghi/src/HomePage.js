@@ -16,7 +16,9 @@ function HomePage() {
   return (
       <>
       <div className="px-4 py-5 my-5 text-center">
-        <img src="/yoovieswhite.png" alt="logo" width="500" height="auto" />
+        <a href="/">
+          <img src="/yoovieswhite.png" alt="logo" width="500" height="auto" />
+        </a>
         <form onSubmit={handleSubmit} className="d-flex mt-3 mb-3">
             <HiOutlineSearch style={{fontSize: "45px", color: "white"}} />
             <input placeholder="Enter a movie..." type="search" name="movie" id="movie" aria-label="Search" className="form-control form-control-lg me-2"/>
