@@ -33,7 +33,7 @@ function DropdownNav() {
         <Navbar.Brand href="/">
           <img
               alt=""
-              src="/yoovieswhite.png"
+              src={`${process.env.PUBLIC_URL}/yoovieswhite.png`}
               width="85"
               height="auto"
               className="d-inline-block align-top"
@@ -45,7 +45,7 @@ function DropdownNav() {
             <NavDropdown title="Genre" id="basic-nav-dropdown" menuVariant="dark">
               {genres.map(genre => {
                 return (
-                  <NavDropdown.Item key={genre.id} href={`/${genre.name.toLowerCase()}/${genre.id}`}>{genre.name}</NavDropdown.Item>
+                  <NavDropdown.Item key={genre.id} href={`${process.env.PUBLIC_URL}/${genre.name.toLowerCase()}/${genre.id}`}>{genre.name}</NavDropdown.Item>
                 )
               })}
             </NavDropdown>
