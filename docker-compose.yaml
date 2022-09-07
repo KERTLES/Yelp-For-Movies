@@ -19,7 +19,7 @@ services:
             REACT_APP_TMDB_API_KEY: ${REACT_APP_TMDB_API_KEY}
             REACT_APP_TMDB_URL: https://api.themoviedb.org/3
             REACT_APP_OMDB_API_KEY: ${REACT_APP_OMDB_API_KEY}
-            REACT_APP_OMDB_URL: http://www.omdbapi.com
+            REACT_APP_OMDB_URL: https://www.omdbapi.com
             REACT_APP_ACCOUNTS_HOST: http://localhost:8080
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
             REACT_APP_REVIEWS_HOST: http://localhost:8090
