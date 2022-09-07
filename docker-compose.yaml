@@ -30,24 +30,11 @@ services:
         volumes:
             - yovies-data:/var/lib/postgresql/data
         environment:
-            - POSTGRES_MULTIPLE_DATABASES=movies,reviews,accounts
+            - POSTGRES_MULTIPLE_DATABASES=reviews,accounts
             - POSTGRES_PASSWORD=test-databases
 
         ports:
             - 15432:5432
-    movie-api:
-        build:
-            context: ./movies/api
-            dockerfile: ./Dockerfile.dev
-        ports:
-            - "8100:8000"
-        volumes:
-            - ./movies/api:/app
-        depends_on:
-            - database
-        environment:
-            DATABASE_URL: postgresql://movies:password@database:5432/movies
-            WAIT_HOSTS: database:5432
     account-api:
         build:
             context: ./accounts/api
@@ -60,7 +47,6 @@ services:
             - database
         environment:
             DATABASE_URL: postgresql://accounts:password@database:5432/accounts
-            # DATABASE_URL: postgresql://account-api:password@database:5432/account-api
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
     reviews-api:
@@ -71,12 +57,10 @@ services:
             - "8090:8000"
         volumes:
             - ./reviews/api:/app
-            #mount volume and run container. Then make
         depends_on:
             - database
         environment:
             DATABASE_URL: postgresql://reviews:password@database:5432/reviews
-            # DATABASE_URL: postgresql://reviews-api:password@database:5432/reviews-api
             WAIT_HOSTS: database:5432
     reviews-poller:
         build:
