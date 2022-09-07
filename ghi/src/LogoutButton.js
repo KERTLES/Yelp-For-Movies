@@ -41,14 +41,14 @@ function user_visibility() {
             <NavDropdown.Item onClick={() => clogout()}>
               Sign Out
               </NavDropdown.Item>
-            <NavDropdown.Item href='myprofile'>My Profile</NavDropdown.Item>
+            <NavDropdown.Item href={`${process.env.PUBLIC_URL}/myprofile`}>My Profile</NavDropdown.Item>
             </>
           ) }
         else {
           return (
             <>
-            <NavDropdown.Item href='/Login'>Login</NavDropdown.Item>
-              <NavDropdown.Item href='/SignupPage'>Signup</NavDropdown.Item>
+            <NavDropdown.Item href={`${process.env.PUBLIC_URL}/Login`}>Login</NavDropdown.Item>
+              <NavDropdown.Item href={`${process.env.PUBLIC_URL}/SignupPage`}>Signup</NavDropdown.Item>
               </>
           )
         }

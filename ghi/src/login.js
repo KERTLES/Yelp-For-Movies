@@ -40,7 +40,7 @@ async function clogin(username, password) {
         setPassword('')
         setSuccess(true)
         setIsActive(false)
-        navigate('/')
+        navigate({`${process.env.PUBLIC_URL}/`})
       }
     } catch (e) {}
     return false;
@@ -151,8 +151,8 @@ function handleSubmit(event)
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <a href="/">
-                  <img src="/yooviesblack.png" className="img-fluid" alt="logo" />
+                <a href={`${process.env.PUBLIC_URL}/`}>
+                  <img src={`${process.env.PUBLIC_URL}/yooviesblack.png`} className="img-fluid" alt="logo" />
                 </a>
 
               </div>

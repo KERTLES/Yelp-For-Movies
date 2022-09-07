@@ -16,8 +16,8 @@ function HomePage() {
   return (
       <>
       <div className="px-4 py-5 my-5 text-center">
-        <a href="/">
-          <img src="/yoovieswhite.png" alt="logo" width="500" height="auto" />
+        <a href={`${process.env.PUBLIC_URL}/`}>
+          <img src={`${process.env.PUBLIC_URL}/yoovieswhite.png`} alt="logo" width="500" height="auto" />
         </a>
         <form onSubmit={handleSubmit} className="d-flex mt-3 mb-3">
             <HiOutlineSearch style={{fontSize: "45px", color: "white"}} />

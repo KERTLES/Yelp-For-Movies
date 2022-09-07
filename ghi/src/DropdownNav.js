@@ -30,7 +30,7 @@ function DropdownNav() {
   return (
     <Navbar fixed="top" variant="dark" expand="lg" bg="dark">
       <Container fluid>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href={`${process.env.PUBLIC_URL}/`}>
           <img
               alt=""
               src={`${process.env.PUBLIC_URL}/yoovieswhite.png`}

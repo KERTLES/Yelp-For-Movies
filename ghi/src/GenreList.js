@@ -39,8 +39,8 @@ function GenreList(props) {
     return (
         <>
         <div className="px-4 pt-5 pb-3 mt-5 mb-1 text-center">
-            <a href="/">
-                <img src="/yoovieswhite.png" alt="logo" width="500" height="auto" />
+            <a href={`${process.env.PUBLIC_URL}/`}>
+                <img src={`${process.env.PUBLIC_URL}/yoovieswhite.png`} alt="logo" width="500" height="auto" />
             </a>
         </div>
         <div className="container">
