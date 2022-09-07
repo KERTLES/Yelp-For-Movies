@@ -14,6 +14,7 @@ function UserProfile(){
   const [success, setSuccess] = useState('');
   const [failuree, setFailureE] = useState(false);
   const [failureu, setFailureU] = useState(false);
+  const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
 
 function confirmedPassword()
@@ -145,13 +146,32 @@ async function handleSubmit(event){
               setEmail(autoData.email)
               setFirstName(autoData.first_name)
               setLastName(autoData.last_name)
-              setUsername(autoData.username)
+              setUsername(autoData.username) 
+              getReviews(autoData.username)
           }
         }
       
       }
       getAccount();
   }, [])
+
+  async function getReviews(username2){
+      const tokenUrl = `http://localhost:8090/api/create/review/`;
+      const request = await fetch(tokenUrl, { 
+        method: "get"}
+      
+    
+        // Other fetch options, like method and body, if applicable
+      ); 
+
+      if(request.ok)
+      { 
+        const data = await request.json()
+        const filteredReviews = data.filter(rev => {return rev.user.user_name == username2})
+        console.log(filteredReviews)
+        setReviews(filteredReviews)
+      }
+    }
 
     let successful
     let failure
@@ -278,6 +298,29 @@ async function handleSubmit(event){
 
               </div>
             </div>
+            <p>Reviews</p>
+            <table className="center border border-5 table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Title</th>
+                            <th scope="col">description</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {reviews.map((review) => {
+                            return (
+                                <tr scope="row" key={review.id}>
+                                    <td><p>{review.title}</p></td>
+                                    <td><p>{review.post}</p></td>
+                                    <td><p>{review.rating}</p></td>
+                                    <td><p>{review.date}</p></td>
+                                </tr>
+                            );}
+                        )}
+                    </tbody>
+                </table>
           </div>
         </div>
       </div>
