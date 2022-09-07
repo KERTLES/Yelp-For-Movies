@@ -1,5 +1,5 @@
 stages:
-  - test   # Run tests first
+  # - test   # Run tests first
   - build  # Run build after tests
   - deploy # Deploy the services and front-end
 
