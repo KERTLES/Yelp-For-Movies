@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 function ListReviewForMovie(data) {
   const [reviews, setReviews] = useState([])
-  const [movie, setMovie] = useState([false])
-  const [reviewLoading, setIsLoading] = useState([true])
+  // const [movie, setMovie] = useState([false])
+  // const [reviewLoading, setIsLoading] = useState([true])
   const post_data = useRef()
   const review_api = process.env.REACT_APP_REVIEWS_HOST
   post_data["imdb_id"] = data.movie.imdbID
@@ -19,11 +19,12 @@ function ListReviewForMovie(data) {
         'Content-type': 'application/json',
       },
     }
-    const response = await fetch(url, fetchConfig)
-    if (response.ok) {
-      const data = await response.json()
-      setMovie(true)
-    } 
+    await fetch(url, fetchConfig)
+    // const response = await fetch(url, fetchConfig)
+    // if (response.ok) {
+    //   // const data = await response.json()
+    //   // setMovie(true)
+    // } 
   }
 
   const getReviews = async () => {
@@ -32,7 +33,7 @@ function ListReviewForMovie(data) {
       const data = await response.json();
       setReviews(data)
       post_data["reviews"] = data
-      setIsLoading(false)
+      // setIsLoading(false)
     } else {
       console.log("Still not ok")
     }
@@ -41,10 +42,11 @@ function ListReviewForMovie(data) {
   useEffect(() => {
     getMovies()
     getReviews()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function ReviewExists(reviews) {
-    if (reviews.length == 0) {
+    if (reviews.length === 0) {
       return (
         <>
           <div>

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function Login(){
-  const [token, login, logout] = useToken();
+  // const [token, login, logout] = useToken();
+  const [login] = useToken();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [is_active, setIsActive] = useState(false)
   const [success, setSuccess] = useState('')
-  const [accounts, setAccounts] = useState([])
+  // const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
 
 async function clogin(username, password) {
@@ -33,8 +34,8 @@ async function clogin(username, password) {
         credentials: "include",
       });
       if (response.ok) {
-        const data = await response.json();
-        const token = data.token;
+        // const data = await response.json();
+        // const token = data.token;
         setUsername('')
         setPassword('')
         setSuccess(true)
@@ -48,7 +49,7 @@ async function clogin(username, password) {
     setUsername('')
     setPassword('')
     setSuccess(false)
-    let error = await response.json();
+    // let error = await response.json();
   }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }
@@ -63,20 +64,20 @@ function confirmedPassword()
     }
 }
 
-useEffect(() => {
-async function getAccounts(){
-  const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-  const autoResponse = await fetch(Url)
+// useEffect(() => {
+// async function getAccounts(){
+//   const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
+//   const autoResponse = await fetch(Url)
 
-  if(autoResponse.ok)
-  {
-      const autoData = await autoResponse.json()
-      setAccounts(autoData.accounts)
-  }
+//   if(autoResponse.ok)
+//   {
+//       const autoData = await autoResponse.json()
+//       setAccounts(autoData.accounts)
+//   }
 
-}
-getAccounts();
-}, [])
+// }
+// getAccounts();
+// }, [])
 
 function handleSubmit(event)
  {

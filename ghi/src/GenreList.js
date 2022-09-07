@@ -19,6 +19,7 @@ function GenreList(props) {
                 setMovies(moviesData.results)
             }
         })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
 

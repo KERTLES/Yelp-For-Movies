@@ -3,14 +3,14 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { AuthContext, useToken } from "./token";
+// import { AuthContext, useToken } from "./token";
 import LogoutButton from "./LogoutButton";
-import UserProfile from './UserProfile';
+// import UserProfile from './UserProfile';
 
 
 function DropdownNav() {
   const [genres, setGenres] = useState([])
-  const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
+  // const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
   const apiKey = process.env.REACT_APP_TMDB_API_KEY
   const tmdbURL = process.env.REACT_APP_TMDB_URL
 
@@ -23,6 +23,7 @@ function DropdownNav() {
             setGenres(genresData.genres)
           }
       })()
+  // eslint-disable-next-line react-hooks/exhaustive-deps    
   }, [])
   
 
