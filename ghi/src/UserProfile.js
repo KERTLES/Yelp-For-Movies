@@ -111,7 +111,7 @@ async function handleSubmit(event){
             setFailureU(false)
             setIsActive(false)
             login(username, password)
-            navigate({`${process.env.PUBLIC_URL}/`})
+            navigate(`${process.env.PUBLIC_URL}/`)
         }
         else{
             console.log("error")
