@@ -4,8 +4,8 @@ import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
 function UserProfile(){
   const [accounts, setAccount] = useState([])
-  // const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
-  const [login] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
+  const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
+  // const [token, login] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -80,12 +80,12 @@ async function handleSubmit(event){
       method: "delete", 
       credentials: "include" })
     let accountUrl = "";
-    // let tokenNum;
+    let tokenNum = 0;
       if(request.ok)
         {
           let tokenData = await request.json()
           accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
-          // tokenNum = tokenData.token['id']
+          tokenNum = tokenData.token['id']
         }
         else
         {
@@ -111,6 +111,17 @@ async function handleSubmit(event){
             setFailureE(false)
             setFailureU(false)
             setIsActive(false)
+            const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
+
+            const form = new FormData();
+            form.append("username", username);
+            form.append("password", password);
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+            const response = await fetch(url, {
+              method: "post",
+              credentials: "include",
+              body: form,
+            });
             login(username, password)
             navigate(`${process.env.PUBLIC_URL}/`)
         }

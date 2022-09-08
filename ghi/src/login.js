@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function Login(){
-  // const [token, login, logout] = useToken();
-  const [login] = useToken();
+  const [token, login, logout] = useToken();
+  // const [login] = useToken();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [is_active, setIsActive] = useState(false)
