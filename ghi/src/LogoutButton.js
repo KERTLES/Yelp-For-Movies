@@ -4,7 +4,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from "react-router-dom";
 
 function LogoutButton(){
-    const [token, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
+    // eslint-disable-next-line
+    const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
     const [auth, setAuth] = useState([]);
     const navigate = useNavigate();
    useEffect(() => {

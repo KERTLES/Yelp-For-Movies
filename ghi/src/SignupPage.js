@@ -3,7 +3,8 @@ import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function SignupPage()
 {
-  const [login] = useToken();
+  // eslint-disable-next-line
+  const [token, login] = useToken();
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
