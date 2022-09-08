@@ -11,7 +11,7 @@ function CreateReviewForm() {
 
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
-    const [submitted, setSubmitted] = useState('');
+    // const [submitted, setSubmitted] = useState('');
     // const [valid, setValid] = useState(false)
 
     const handleTitleInputChange = (event) => {
@@ -62,7 +62,7 @@ function CreateReviewForm() {
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             {/* submitted && valid? */}
-                            {submitted ? <div className="success-message">Thanks for your review!</div> : null}
+                            {/* {submitted ? <div className="success-message">Thanks for your review!</div> : null} */}
                             <div className="modal-header">
                                 <h5 className="modal-title" id="staticBackdropLabel">Write your review for MOVIE NAME</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

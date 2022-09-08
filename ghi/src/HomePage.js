@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { HiOutlineSearch } from "react-icons/hi";
 import { FaArrowRight } from "react-icons/fa";
 import MoviesList from "./MoviesList";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 
 
 function HomePage() {
@@ -16,7 +16,9 @@ function HomePage() {
   return (
       <>
       <div className="px-4 py-5 my-5 text-center">
-        <img src="/yoovieswhite.png" alt="logo" width="500" height="auto" />
+        <a href={`${process.env.PUBLIC_URL}/`}>
+          <img src={`${process.env.PUBLIC_URL}/yoovieswhite.png`} alt="logo" width="500" height="auto" />
+        </a>
         <form onSubmit={handleSubmit} className="d-flex mt-3 mb-3">
             <HiOutlineSearch style={{fontSize: "45px", color: "white"}} />
             <input placeholder="Enter a movie..." type="search" name="movie" id="movie" aria-label="Search" className="form-control form-control-lg me-2"/>
