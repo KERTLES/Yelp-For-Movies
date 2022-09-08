@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 function ListReviewForMovie(data) {
   const [reviews, setReviews] = useState([])
-  const [movie, setMovie] = useState([false])
-  const [reviewLoading, setIsLoading] = useState([true])
+  // const [movie, setMovie] = useState([false])
+  // const [reviewLoading, setIsLoading] = useState([true])
   const post_data = useRef()
   post_data["imdb_id"] = data.movie.imdbID
   post_data["title"] = data.movie["Title"]
@@ -16,11 +16,11 @@ function ListReviewForMovie(data) {
         'Content-type': 'application/json',
       },
     }
-    const response = await fetch(url, fetchConfig)
-    if (response.ok) {
-      const data = await response.json()
-      setMovie(true)
-    } 
+    await fetch(url, fetchConfig)
+    // if (response.ok) {
+    //   const data = await response.json()
+    //   // setMovie(true)
+    // } 
   }
 
   const getReviews = async () => {
@@ -29,7 +29,7 @@ function ListReviewForMovie(data) {
       const data = await response.json();
       setReviews(data)
       post_data["reviews"] = data
-      setIsLoading(false)
+      // setIsLoading(false)
     } else {
       console.log("Still not ok")
     }
