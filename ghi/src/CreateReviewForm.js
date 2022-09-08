@@ -1,19 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { AiFillStar } from "react-icons/ai";
 import './CreateReviewForm.css';
+import { MainContext } from './MainContext';
+import { getToken } from './token';
 
 
 function CreateReviewForm(props) {
+    // const {userName} = useContext(MainContext);
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const stars = Array(5).fill()
+    const [userName, setUserName] = useState('');
 
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
-    
+
     const submitted = useRef();
     // imdbID is variable from MovieDetail.js
-    submitted["imdb_id"] = props.movie.imdbID 
+    submitted["imdb_id"] = props.movie.imdbID
 
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
@@ -23,26 +27,41 @@ function CreateReviewForm(props) {
         setPost(event.target.value);
     }
 
-    // useEffect (() => {
-    //     async function getMovieData
-    // })
+    useEffect(() => {
+        async function getToken() {
+            const userTokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`
+            const request = await fetch(userTokenUrl, { method: "delete", credentials: "include" })
+
+            if (request.ok) {
+                const responseData = await request.json()
+                setUserName(responseData.token.username)
+                // console.log(responseData.token.username)
+            }
+
+        }
+        getToken()
+    }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        // 
+
+
+        // console.log('****************************data', data)
+
+        // double check this url///////////////////////////////////////////////
+        const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
+        console.log("%%%%%%%%%%%%%%%%%%%%%%review url", reviewUrl)
+
         const data = {
             rating,
             title,
             post,
         }
-        
+
         // append imdb_id to the data being submitted
         data['imdb_id'] = submitted['imdb_id']
-
-        console.log('****************************data', data)
-
-        // double check this url///////////////////////////////////////////////
-        const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/reviews/`;
-        console.log("%%%%%%%%%%%%%%%%%%%%%%review url", reviewUrl)
-        
+        data["user_name"] = userName
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify(data),
