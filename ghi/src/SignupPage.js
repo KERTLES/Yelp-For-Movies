@@ -38,6 +38,7 @@ async function checker()
         const IndAccountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${a.id}`
         const fetchSoldConfig = {
             method: "get",
+            mode: "cors",
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -79,6 +80,7 @@ async function handleSubmit(event){
     const fetchSoldConfig = {
         method: "post",
         body: JSON.stringify(data),
+        mode: "cors",
         headers: {
             'Content-Type': 'application/json',
         },
@@ -95,6 +97,7 @@ async function handleSubmit(event){
             const response = await fetch(url, {
               method: "post",
               credentials: "include",
+              mode: "cors",
               body: form,
             });
             if (response.ok) {
@@ -123,7 +126,7 @@ async function handleSubmit(event){
 useEffect(() => {
 async function getAccounts(){
     const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`
-    const autoResponse = await fetch(Url)
+    const autoResponse = await fetch(Url, {mode: "cors"})
 
     if(autoResponse.ok)
     {
