@@ -14,4 +14,4 @@ COPY account_rest account_rest
 COPY common common
 
 RUN pip install -r requirements.txt
-CMD python manage.py migrate && gunicorn account_project.asgi:account_rest -k uvicorn.workers.UvicornWorker --host 0.0.0.0 --port 8000
+CMD python manage.py migrate && gunicorn account_project.asgi:account_rest -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:443 --log-file -
