@@ -27,14 +27,16 @@ SECRET_KEY = 'django-insecure-0p=3mve68&slozzmupptx(b=+b=9_53p(b64d*x)nrlo67ew2w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # not os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = [
-    ".localhost", 
-    "127.0.0.1", 
-    "account-api", 
-    "reviews-api",
-    "[::1]",
-    os.environ.get("DEPLOYED_HOST", "localhost"),
-]
+# ALLOWED_HOSTS = [
+#     ".localhost", 
+#     "127.0.0.1", 
+#     "account-api", 
+#     "reviews-api",
+#     "[::1]",
+#     os.environ.get("DEPLOYED_HOST", "localhost"),
+# ]
+
+ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
