@@ -44,3 +44,6 @@
 
 ## September 06, 2022 
     Today, we started deployment, but came across a situation where we can't continue with Gitlab until we give credit card credentials. I started working on a rudimentary poller, but I may not use it. I also fixed some formatting issues going on with the frontend.
+
+## September 07, 2022
+    Today, we continued to try to get our site deployed. So far, we managed to get the homepage and some of the login pages to show up on gitlab, though we are getting CORS Header errors. I also added the ability for a user to view their reviews by going to the profile page. I will need to work on formatting it to look better. I also helped a little with getting the review creation functionality to work.

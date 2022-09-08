@@ -312,31 +312,26 @@ async function handleSubmit(event){
 
               </div>
             </div>
-            <p>Reviews</p>
-            <table className="center border border-5 table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">description</th>
-                            <th scope='col'>Movie</th>
-                            <th scope="col">Rating</th>
-                            <th scope="col">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">Your Reviews</p>
+            <div className ="card-columns">
                         {reviews.map((review) => {
                             return (
-                                <tr scope="row" key={review.id}>
-                                    <td><p>{review.title}</p></td>
-                                    <td><p>{review.post}</p></td>
-                                    <td><p>{review.movie.title}</p></td>
-                                    <td><p>{review.rating}</p></td>
-                                    <td><p>{review.date}</p></td>
-                                </tr>
+                              <div className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">
+                                <div scope="row" key={review.id}>
+                                    <div className='card-header h4'>{review.title}</div>
+                                    <div className="card-title">Movie: {review.movie.title}</div>
+                                    <div className = "card-body p-md-5">
+                                    <p className = "card-text">{review.post}</p>
+                                    </div>
+                                    <div className='card-footer'>
+                                    <div>Rating: {review.rating} stars</div>
+                                    <div>created on: {review.date}</div>
+                                    </div>
+                                </div>
+                                </div>
                             );}
                         )}
-                    </tbody>
-                </table>
+              </div>
           </div>
         </div>
       </div>
