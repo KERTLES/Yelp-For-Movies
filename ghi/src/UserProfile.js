@@ -263,7 +263,7 @@ async function handleSubmit(event){
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input placeholder="Password must be at least 8 characters" onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example4c">Password</label>
+                      <label className="form-label" htmlFor="form3Example4c">New Password</label>
                     </div>
                   </div>
 
@@ -304,6 +304,7 @@ async function handleSubmit(event){
                         <tr>
                             <th scope="col">Title</th>
                             <th scope="col">description</th>
+                            <th scope='col'>Movie</th>
                             <th scope="col">Rating</th>
                             <th scope="col">Date</th>
                         </tr>
@@ -314,6 +315,7 @@ async function handleSubmit(event){
                                 <tr scope="row" key={review.id}>
                                     <td><p>{review.title}</p></td>
                                     <td><p>{review.post}</p></td>
+                                    <td><p>{review.movie.title}</p></td>
                                     <td><p>{review.rating}</p></td>
                                     <td><p>{review.date}</p></td>
                                 </tr>
