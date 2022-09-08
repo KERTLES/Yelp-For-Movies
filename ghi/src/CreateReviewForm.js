@@ -72,7 +72,7 @@ function CreateReviewForm(props) {
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             {/* submitted && valid? */}
-                            {/* {submitted ? <div className="success-message">Thanks for your review!</div> : null} */}
+                            {submitted ? <div className="success-message">Thanks for your review!</div> : null}
                             <div className="modal-header">
                                 <h5 className="modal-title" id="staticBackdropLabel">Write your review for MOVIE NAME</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -109,7 +109,7 @@ function CreateReviewForm(props) {
                                         type="text"
                                         className="form-control"
                                         id="title"
-                                        name="title"
+                                        required name="title"
                                         placeholder="What's most important to know?"
                                     />
                                     {/* <span id="title-error">Please enter a title for your movie review</span> */}
@@ -123,7 +123,7 @@ function CreateReviewForm(props) {
                                         type="text"
                                         className="form-control"
                                         id="post"
-                                        name="post"
+                                        required name="post"
                                         placeholder="Enter your review...">
                                     </textarea>
                                     {/* <span id="title-error">Please enter a title for your movie review</span> */}
