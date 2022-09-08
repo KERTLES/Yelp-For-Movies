@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react"
-import { AiOutlineInstagram } from "react-icons/ai";
+import React, { useState, useEffect } from "react";
+import { BsFacebook, BsInstagram, BsLinkedin } from "react-icons/bs";
+import { SiGitlab } from "react-icons/si";
+import { NavLink } from "react-router-dom";
 
 function Footer(props) {
     
@@ -11,25 +13,38 @@ function Footer(props) {
       <span>Get connected with us on social networks:</span>
     </div>
     <div>
-      <a href="" className="me-4 text-reset">
-        <i className="fab fa-facebook-f"></i>
+      <a href="https://facebook.com/yoovies" target="blank_" className="me-4 text-reset">
+        <i className="btn btn-light me-2"><BsFacebook style={{fontSize: "50px", color: "#3b5998"}} /></i>
       </a>
-      <a href="" className="me-4 text-reset">
-        <i className="fab fa-twitter"></i>
+      <a href="https://instagram.com/yoovies" target="blank_" className="me-4 text-reset">
+        <i className="btn btn-light me-2"><BsInstagram style={{fontSize: "50px", color: "#458eff"}} /></i>
       </a>
-      <a href="" className="me-4 text-reset">
-        <i className="fab fa-google"></i>
+      <a href="https://gitlab.com/yoovies/yelp-for-movies" target="blank_" className="me-4 text-reset">
+        <i className="btn btn-light me-2"><SiGitlab style={{fontSize: "50px", color: "#FC6D26"}} /></i>
       </a>
-      <a href="" className="me-4 text-reset">
-        <i className="fab fa-instagram"></i>
-      </a>
-      <a href="" className="me-4 text-reset">
-        <i className="fab fa-linkedin"></i>
-      </a>
-      <a href="" className="me-4 text-reset">
-        <i className="fab fa-github"></i>
-      </a>
-    </div>
+      <div className="dropdown">
+      <i className="btn btn-light me-2 dropdown-toggle " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><BsLinkedin style={{fontSize: "50px", color: " #0A66C2"}} /></i>
+      <ul className="dropdown-menu"  style={{ left: "unset", right: "0" }} aria-labelledby="dropdownMenuButton">
+        <li>
+    <a className="dropdown-item" href="https://www.linkedin.com/in/jiang-kelly/" target="blank_">Kelly</a>
+    </li>
+    <li>
+    <a className="dropdown-item" href="https://www.linkedin.com/in/lndrnz/" target="blank_">Lander</a>
+    </li>
+    <li>
+    <a className="dropdown-item" href="https://www.linkedin.com/in/mihso-soap/" target="blank_">Matthew</a>
+    </li>
+    <li>
+    <a className="dropdown-item" href="https://www.linkedin.com/in/myolin-kha-58396491/" target="blank_">Myolin</a>
+    </li>
+    <li>
+    <a className="dropdown-item" href="https://www.linkedin.com/in/nikanshamaharaj/" target="blank_">Nikansha</a>
+    </li>
+    </ul>
+  </div>
+      </div>
+  
+
   </section>
   <section className="">
     <div className="container text-center text-md-start mt-5">
@@ -81,7 +96,7 @@ function Footer(props) {
           <p><i className="fas fa-home me-3"></i> Los Angeles, CA  90013, US</p>
           <p>
             <i className="fas fa-envelope me-3"></i>
-            Yovies@gmail.com
+            Yoovies@gmail.com
           </p>
           {/* <p><i className="fas fa-phone me-3"></i> + 01 234 567 88</p> */}
           {/* <p><i className="fas fa-print me-3"></i> + 01 234 567 89</p> */}
@@ -89,9 +104,9 @@ function Footer(props) {
       </div>
     </div>
   </section>
-  <div className="text-center p-4" style={{backgroundColor:"rgba(0, 0, 0, 0.05)"}}>
-
-<a className="text-reset fw-bold" href="yovies.com">Yovies.com</a>
+  <div className="text-center p-4" style={{backgroundColor:"rgba(0, 0, 0, 0.0)"}}>
+  <img src="/yooviesblack.png" alt="logo" width="200" height="auto" />
+<a className="text-reset fw-bold" href="yovies.com">Yoovies.com</a>
   </div>
 </footer>
 </>
