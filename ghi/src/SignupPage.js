@@ -3,7 +3,7 @@ import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function SignupPage()
 {
-  const [token, login] = useToken();
+  const [login] = useToken();
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -237,7 +237,7 @@ async function getAccounts(){
                   <div className="form-check d-flex justify-content-center mb-5">
                     <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=K1deYn7OSuN0zHIlY6KpKKbIBvqRUsUA" target="_blank">Terms of service</a>
+                      I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=K1deYn7OSuN0zHIlY6KpKKbIBvqRUsUA" target="_blank" rel="noreferrer">Terms of service</a>
                     </label>
                   </div>
                 {confirmedPassword()}
@@ -252,8 +252,9 @@ async function getAccounts(){
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="/yooviesblack.png"
-                  className="img-fluid" alt="logo" />
+                <a href={`${process.env.PUBLIC_URL}/`}>
+                  <img src={`${process.env.PUBLIC_URL}/yooviesblack.png`} className="img-fluid" alt="logo" />
+                </a>
 
               </div>
             </div>

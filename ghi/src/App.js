@@ -12,9 +12,11 @@ import Footer from './Footer';
 
 
 function App(props) {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, '');
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <DropdownNav />
         <div title="App" className="container" style={{ backgroundColor: "black" }}>
           <Routes>

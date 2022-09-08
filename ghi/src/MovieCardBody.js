@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+// import React, { useState, useEffect } from "react"
 import { Link } from 'react-router-dom';
 
 
@@ -13,12 +13,12 @@ function MovieCardBody(column, col_idx) {
               {movie.poster_path === null 
               ? <>
                 <div style={{height:'353px', backgroundColor: "lightgrey"}}>
-                  <img src={"https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"} className="card-img-top" />
+                  <img src={"https://www.themoviedb.org/assets/2/v4/glyphicons/basic/glyphicons-basic-38-picture-grey-c2ebdbb057f2a7614185931650f8cee23fa137b93812ccb132b9df511df1cfac.svg"} alt="poster placeholder" className="card-img-top" />
                 </div>
                 </>
               : <>
                 <div style={{height:'350px'}}>
-                  <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`} className="card-img-top" />
+                  <img src={`https://www.themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}`} alt={`${movie.title} poster`} className="card-img-top" />
                 </div>
                 </>
               }

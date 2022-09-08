@@ -1,9 +1,11 @@
 import React, { useEffect, useState} from 'react';
-import { AuthContext, useToken } from './token';
+// import { AuthContext, useToken } from './token';
+import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
 function UserProfile(){
   const [accounts, setAccount] = useState([])
-  const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
+  // const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
+  const [login] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -78,12 +80,12 @@ async function handleSubmit(event){
       method: "delete", 
       credentials: "include" })
     let accountUrl = "";
-    let tokenNum = 0
+    // let tokenNum;
       if(request.ok)
         {
           let tokenData = await request.json()
           accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
-          tokenNum = tokenData.token['id']
+          // tokenNum = tokenData.token['id']
         }
         else
         {
@@ -110,7 +112,7 @@ async function handleSubmit(event){
             setFailureU(false)
             setIsActive(false)
             login(username, password)
-            navigate('/')
+            navigate(`${process.env.PUBLIC_URL}/`)
         }
         else{
             console.log("error")
@@ -293,8 +295,9 @@ async function handleSubmit(event){
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="/yooviesblack.png"
-                  className="img-fluid" alt="logo" />
+                <a href={`${process.env.PUBLIC_URL}/`}>
+                  <img src={`${process.env.PUBLIC_URL}/yooviesblack.png`} className="img-fluid" alt="logo" />
+                </a>
 
               </div>
             </div>

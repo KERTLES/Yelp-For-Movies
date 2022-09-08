@@ -1,0 +1,270 @@
+stages:
+  # - test   # Run tests first
+  - build  # Run build after tests
+  - deploy # Deploy the services and front-end
+
+services:
+  - postgres:14.2-bullseye
+
+variables:
+  POSTGRES_PASSWORD: test
+  DATABASE_URL: postgresql://postgres:test@postgres:5432/postgres
+
+# accounts-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd accounts/api
+#     - pip install -r requirements.txt
+#     - python manage.py test
+
+# reviews-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd reviews/api
+#     - pip install -r requirements.txt
+#     - python manage.py test
+
+# reviews-poller-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd reviews/poll
+#     - pip install -r requirements.txt
+
+# lint-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - pip install flake8
+#     - flake8 accounts reviews
+
+build-front-end-job:
+    stage: build
+    image: node:lts-bullseye
+    variables:
+        PUBLIC_URL: https://yoovies.gitlab.io/yelp-for-movies # SEE BELOW HOW TO SET THIS
+    script:
+        - cd ghi  # CHANGE THIS TO THE DIRECTORY THAT HAS package.json
+        - npm install
+        - npm run build
+        - cp build/index.html build/404.html  # Make this a SPA
+    artifacts:
+        paths:
+        - ghi/build/  # Save all of the files in the build path
+
+build-acounts-api-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    # CHANGE THIS TO THE DIRECTORY THAT HAS YOUR Dockerfile
+    - cd accounts/api
+
+    # EVERYWHERE IT SHOWS fastapi_api BELOW, CHANGE THOSE
+    # TO A MORE MEANINGFUL SERVICE NAME (5 PLACES)
+    - docker build -t ${CI_REGISTRY_IMAGE}/accounts_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/accounts_api:latest ${CI_REGISTRY_IMAGE}/accounts_api:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/accounts_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/accounts_api:latest
+
+build-reviews-api-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    # CHANGE THIS TO THE DIRECTORY THAT HAS YOUR Dockerfile
+    - cd reviews/api
+
+    # EVERYWHERE IT SHOWS fastapi_api BELOW, CHANGE THOSE
+    # TO A MORE MEANINGFUL SERVICE NAME (5 PLACES)
+    - docker build -t ${CI_REGISTRY_IMAGE}/reviews_api:latest .
+    - docker tag ${CI_REGISTRY_IMAGE}/reviews_api:latest ${CI_REGISTRY_IMAGE}/reviews_api:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/reviews_api:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/reviews_api:latest
+
+build-reviews-poller-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    # CHANGE THIS TO THE DIRECTORY THAT HAS YOUR Dockerfile
+    - cd reviews
+
+    # EVERYWHERE IT SHOWS fastapi_api BELOW, CHANGE THOSE
+    # TO A MORE MEANINGFUL SERVICE NAME (5 PLACES)
+    - docker build -t ${CI_REGISTRY_IMAGE}/reviews_poller:latest -f Dockerfile.poller .
+    - docker tag ${CI_REGISTRY_IMAGE}/reviews_poller:latest ${CI_REGISTRY_IMAGE}/reviews_poller:$CI_JOB_ID
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push ${CI_REGISTRY_IMAGE}/reviews_poller:$CI_JOB_ID
+    - docker push ${CI_REGISTRY_IMAGE}/reviews_poller:latest
+
+deploy-accounts-api-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: deploy
+  image: docker:20.10.16
+  needs:
+    # CHANGE THIS TO THE JOB NAME FROM THE LAST STEP
+    - build-acounts-api-image-job
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+    # EVERYWHERE IT SHOWS fastapi_api BELOW, CHANGE THOSE
+    # TO THE NAME YOU CHOSE FOR THE BUILD STEP (2 PLACES)
+
+    # EVERYWHERE IT SHOWS HEROKU_SERVICE_APP BELOW, CHANGE
+    # THOSE TO THE VARIABLE NAME YOU CREATED FOR THE CI/CD
+    # SETTINGS (2 PLACES)
+
+    # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
+    # CHANGE /web TO /worker (2 PLACES)
+    - docker pull ${CI_REGISTRY_IMAGE}/accounts_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/accounts_api:latest registry.heroku.com/$HEROKU_ACCOUNTS_API_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_ACCOUNTS_API_APP/web:latest
+
+deploy-reviews-api-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: deploy
+  image: docker:20.10.16
+  needs:
+    # CHANGE THIS TO THE JOB NAME FROM THE LAST STEP
+    - build-reviews-api-image-job
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+    # EVERYWHERE IT SHOWS fastapi_api BELOW, CHANGE THOSE
+    # TO THE NAME YOU CHOSE FOR THE BUILD STEP (2 PLACES)
+
+    # EVERYWHERE IT SHOWS HEROKU_SERVICE_APP BELOW, CHANGE
+    # THOSE TO THE VARIABLE NAME YOU CREATED FOR THE CI/CD
+    # SETTINGS (2 PLACES)
+
+    # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
+    # CHANGE /web TO /worker (2 PLACES)
+    - docker pull ${CI_REGISTRY_IMAGE}/reviews_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/reviews_api:latest registry.heroku.com/$HEROKU_REVIEWS_API_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_REVIEWS_API_APP/web:latest
+
+deploy-reviews-poller-image-job:  # RENAME THIS
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  stage: deploy
+  image: docker:20.10.16
+  needs:
+    # CHANGE THIS TO THE JOB NAME FROM THE LAST STEP
+    - build-reviews-poller-image-job
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+    # EVERYWHERE IT SHOWS fastapi_api BELOW, CHANGE THOSE
+    # TO THE NAME YOU CHOSE FOR THE BUILD STEP (2 PLACES)
+
+    # EVERYWHERE IT SHOWS HEROKU_SERVICE_APP BELOW, CHANGE
+    # THOSE TO THE VARIABLE NAME YOU CREATED FOR THE CI/CD
+    # SETTINGS (2 PLACES)
+
+    # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
+    # CHANGE /web TO /worker (2 PLACES)
+    - docker pull ${CI_REGISTRY_IMAGE}/reviews_api:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/reviews_api:latest registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
+    - docker push registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
+
+release-accounts-api-image-job:  # RENAME THIS
+  stage: deploy
+  image: node:10.17-alpine
+  needs:
+    # CHANGE THIS TO THE JOB NAME FROM THE LAST STEP
+    - deploy-accounts-api-image-job
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - apk add curl bash
+    - curl https://cli-assets.heroku.com/install.sh | sh
+  script:
+    # EVERYWHERE IT SHOWS HEROKU_SERVICE_APP BELOW, CHANGE
+    # THOSE TO THE VARIABLE NAME YOU CREATED FOR THE CI/CD
+    # SETTINGS (1 PLACE)
+
+    # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
+    # CHANGE web TO worker (1 PLACE)
+    - heroku container:release web --app $HEROKU_ACCOUNTS_API_APP
+
+release-reviews-api-image-job:  # RENAME THIS
+  stage: deploy
+  image: node:10.17-alpine
+  needs:
+    # CHANGE THIS TO THE JOB NAME FROM THE LAST STEP
+    - deploy-reviews-api-image-job
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - apk add curl bash
+    - curl https://cli-assets.heroku.com/install.sh | sh
+  script:
+    # EVERYWHERE IT SHOWS HEROKU_SERVICE_APP BELOW, CHANGE
+    # THOSE TO THE VARIABLE NAME YOU CREATED FOR THE CI/CD
+    # SETTINGS (1 PLACE)
+
+    # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
+    # CHANGE web TO worker (1 PLACE)
+    - heroku container:release web --app $HEROKU_REVIEWS_API_APP
+
+release-reviews-poller-image-job:  # RENAME THIS
+  stage: deploy
+  image: node:10.17-alpine
+  needs:
+    # CHANGE THIS TO THE JOB NAME FROM THE LAST STEP
+    - deploy-reviews-poller-image-job
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  before_script:
+    - apk add curl bash
+    - curl https://cli-assets.heroku.com/install.sh | sh
+  script:
+    # EVERYWHERE IT SHOWS HEROKU_SERVICE_APP BELOW, CHANGE
+    # THOSE TO THE VARIABLE NAME YOU CREATED FOR THE CI/CD
+    # SETTINGS (1 PLACE)
+
+    # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
+    # CHANGE web TO worker (1 PLACE)
+    - heroku container:release worker --app $HEROKU_REVIEWS_POLLER_APP
+
+pages:  # THIS STEP MUST BE NAME PAGES
+    stage: deploy
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    dependencies:
+        - build-front-end-job
+    needs:
+        - build-front-end-job
+    script:
+        # THE FIRST PART OF THIS COMMAND MUST BE THE DIRECTORY
+        # THAT YOU cd INTO TO BUILD IT PLUS THE build/ AT THE
+        # END
+        - mv ghi/build/ public
+    artifacts:
+        paths:
+        - public
