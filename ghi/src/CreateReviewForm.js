@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AiFillStar } from "react-icons/ai";
-// import MovieDetail from './MovieDetail';
 import './CreateReviewForm.css';
 
 
-function CreateReviewForm() {
+function CreateReviewForm(props) {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const stars = Array(5).fill()
 
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
-    const [submitted, setSubmitted] = useState('');
-    // const [valid, setValid] = useState(false)
+    
+    const submitted = useRef();
+    // imdbID is variable from MovieDetail.js
+    submitted["imdb_id"] = props.movie.imdbID 
 
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
@@ -22,6 +23,9 @@ function CreateReviewForm() {
         setPost(event.target.value);
     }
 
+    // useEffect (() => {
+    //     async function getMovieData
+    // })
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {
@@ -29,10 +33,16 @@ function CreateReviewForm() {
             title,
             post,
         }
+        
+        // append imdb_id to the data being submitted
+        data['imdb_id'] = submitted['imdb_id']
+
         console.log('****************************data', data)
 
         // double check this url///////////////////////////////////////////////
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/reviews/`;
+        console.log("%%%%%%%%%%%%%%%%%%%%%%review url", reviewUrl)
+        
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify(data),
@@ -62,7 +72,7 @@ function CreateReviewForm() {
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             {/* submitted && valid? */}
-                            {submitted ? <div className="success-message">Thanks for your review!</div> : null}
+                            {/* {submitted ? <div className="success-message">Thanks for your review!</div> : null} */}
                             <div className="modal-header">
                                 <h5 className="modal-title" id="staticBackdropLabel">Write your review for MOVIE NAME</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -88,7 +88,7 @@ function MovieDetail() {
                 <div className="row">
                     <div className="col-xl-3 ">
                         <img src={poster.current} alt="poster" width='275' height='auto' />
-                        <CreateReviewForm />
+                        {movie["Title"] ? < CreateReviewForm movie={movie} /> : null}
                     </div>
                     <div className="col-9">
                         <div>
@@ -138,7 +138,7 @@ function MovieDetail() {
                         <div className="mt-2">
                             {checkIfRatings(ratings)}
                         </div>
-                    </div >
+                    </div>
                     <div className="text-black">
                         {movie["Title"] ? < ListReviewForMovie movie={movie} /> : null}
                     </div>
