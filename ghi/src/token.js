@@ -11,7 +11,7 @@ export async function getTokenInternal() {
   try {
     const response = await fetch(url, {
       credentials: "include",
-      mode: "no-cors"
+      mode: "cors"
     });
     if (response.ok) {
       const data = await response.json();
