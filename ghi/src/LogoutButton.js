@@ -15,7 +15,9 @@ function LogoutButton(){
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/check/`;
     const request = await fetch(tokenUrl, { 
       method: "delete", 
-      credentials: "include" })
+      credentials: "include",
+      mode: "cors",
+    })
       if(request.ok)
       {
       const toDa = await request.json()
@@ -61,12 +63,13 @@ function user_visibility() {
     const response = await fetch(url, {
       method: "delete",
       credentials: "include",
+      mode: "cors",
     });
     if (response.ok) {
       // For Django services, use this one
       try {
           logout()
-          navigate('/')
+          navigate("/")
           setAuth(false)
       } catch (e) {
         console.log('error')

@@ -23,6 +23,7 @@ async function clogin(username, password) {
   const response = await fetch(url, {
     method: "post",
     credentials: "include",
+    mode: "cors",
     body: form,
   });
   if (response.ok) {
@@ -33,6 +34,7 @@ async function clogin(username, password) {
     try {
       const response = await fetch(tokenUrl, {
         credentials: "include",
+        mode: "cors",
       });
       if (response.ok) {
         // const data = await response.json();
@@ -41,7 +43,7 @@ async function clogin(username, password) {
         setPassword('')
         setSuccess(true)
         setIsActive(false)
-        navigate(`${process.env.PUBLIC_URL}/`)
+        navigate("/")
       }
     } catch (e) {}
     return false;
