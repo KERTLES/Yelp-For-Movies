@@ -29,6 +29,7 @@ async function clogin(username, password) {
   });
   if (response.ok) {
     // For Django services, use this one
+    console.log(response.json())
     login(username, password)
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
