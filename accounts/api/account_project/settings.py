@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+!3vzjusw@pf)h9xssbaete35vmb6fp4&b@fj%cz!(h4*b70ar'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # not os.environ.get("DEBUG")
+DEBUG = not os.environ.get("DEBUG")
 
 AUTH_USER_MODEL = "account_rest.Account"
 # Application definition
