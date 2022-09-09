@@ -4,6 +4,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from "react-router-dom";
 
 function LogoutButton(){
+    // eslint-disable-next-line
     const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
     const [auth, setAuth] = useState([]);
     const navigate = useNavigate();
@@ -14,7 +15,9 @@ function LogoutButton(){
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/check/`;
     const request = await fetch(tokenUrl, { 
       method: "delete", 
-      credentials: "include" })
+      credentials: "include",
+      mode: "cors",
+    })
       if(request.ok)
       {
       const toDa = await request.json()
@@ -29,6 +32,7 @@ function LogoutButton(){
       setAuth(false)
     }
     }authen();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]
 )
 function user_visibility() {
@@ -40,14 +44,14 @@ function user_visibility() {
             <NavDropdown.Item onClick={() => clogout()}>
               Sign Out
               </NavDropdown.Item>
-            <NavDropdown.Item href='myprofile'>My Profile</NavDropdown.Item>
+            <NavDropdown.Item href={`${process.env.PUBLIC_URL}/myprofile`}>My Profile</NavDropdown.Item>
             </>
           ) }
         else {
           return (
             <>
-            <NavDropdown.Item href='/Login'>Login</NavDropdown.Item>
-              <NavDropdown.Item href='/SignupPage'>Signup</NavDropdown.Item>
+            <NavDropdown.Item href={`${process.env.PUBLIC_URL}/Login`}>Login</NavDropdown.Item>
+              <NavDropdown.Item href={`${process.env.PUBLIC_URL}/SignupPage`}>Signup</NavDropdown.Item>
               </>
           )
         }
@@ -59,12 +63,13 @@ function user_visibility() {
     const response = await fetch(url, {
       method: "delete",
       credentials: "include",
+      mode: "cors",
     });
     if (response.ok) {
       // For Django services, use this one
       try {
           logout()
-          navigate('/')
+          navigate("/")
           setAuth(false)
       } catch (e) {
         console.log('error')

@@ -26,7 +26,7 @@ class MovieEncoder(ModelEncoder):
 
 class ReviewsEncoder(ModelEncoder):
     model = Review
-    properties = ["title", "post", "rating", "date", "movie", "user"]
+    properties = ["id","title", "post", "rating", "date", "movie", "user"]
 
     encoders = {"movie": MovieEncoder(), "user": UserVOEncoder()}
 
@@ -88,8 +88,8 @@ def api_list_reviews_by_imdb_id(request, imdb_id=None):
 @require_http_methods(["GET", "POST"])
 def api_list_reviews(request, movie_id=None):
     if request.method == "GET":
-        movies = Movie.objects.all()
-        return JsonResponse(movies, encoder=MovieEncoder, safe=False)
+        movies = Review.objects.all()
+        return JsonResponse(movies, encoder=ReviewsEncoder, safe=False)
 
     else:
         content = json.loads(request.body)

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +25,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0p=3mve68&slozzmupptx(b=+b=9_53p(b64d*x)nrlo67ew2w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True # not os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = ['localhost', 'reviews-api', 'account-api'] 
+# ALLOWED_HOSTS = [
+#     ".localhost", 
+#     "127.0.0.1", 
+#     "account-api", 
+#     "reviews-api",
+#     "[::1]",
+#     "yoovies-accounts-api.herokuapp.com",
+#     "yoovies-reviews-api.herokuapp.com",
+#     os.environ.get("DEPLOYED_HOST", "localhost"),
+# ]
+
+ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
@@ -35,6 +47,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    os.environ.get("CORS_HOST", "http://localhost:3001")
 ]
 
 # Application definition

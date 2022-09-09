@@ -27,4 +27,10 @@ Today I worked on adding bug fixes to the sign up feature, such as creating a fe
 ## September 2, 2022
 Today I worked on fully merging with our group. We had this issue where our login.js was conflicting with our files on gitlab stating it was Login.js, but for some reason we would not use git add . and the terminal would not recognize the change between the capitalization. We were forced to use git push --force and that seemed to fix the problem. For the time being I got some work on a footer, but I plan on making it smaller and streamlined as well as adding some links for instagram,facebook,youtube, and linkedin.
 
-## September 6, 20222
+## September 6, 2022
+Today my team and I worked on fully merging with our group as well as continuing further implementation of heroku and getting all of the urls down correctly.
+
+## September 7, 2022
+
+## September 8, 2022
+I added some more features to the footers

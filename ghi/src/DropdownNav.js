@@ -18,21 +18,23 @@ function DropdownNav() {
     (async () => {
         const genresResponse = await fetch(`${tmdbURL}/genre/movie/list?api_key=${apiKey}&language=en-US`)
         console.log(genresResponse)
+        console.log(token)
         if (genresResponse.ok) {
             const genresData = await genresResponse.json()
             setGenres(genresData.genres)
           }
       })()
+  // eslint-disable-next-line react-hooks/exhaustive-deps    
   }, [])
   
 
   return (
     <Navbar fixed="top" variant="dark" expand="lg" bg="dark">
       <Container fluid>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href={`${process.env.PUBLIC_URL}/`}>
           <img
               alt=""
-              src="/yoovieswhite.png"
+              src={`${process.env.PUBLIC_URL}/yoovieswhite.png`}
               width="85"
               height="auto"
               className="d-inline-block align-top"
@@ -44,7 +46,7 @@ function DropdownNav() {
             <NavDropdown title="Genre" id="basic-nav-dropdown" menuVariant="dark">
               {genres.map(genre => {
                 return (
-                  <NavDropdown.Item key={genre.id} href={`/${genre.name.toLowerCase()}/${genre.id}`}>{genre.name}</NavDropdown.Item>
+                  <NavDropdown.Item key={genre.id} href={`${process.env.PUBLIC_URL}/${genre.name.toLowerCase()}/${genre.id}`}>{genre.name}</NavDropdown.Item>
                 )
               })}
             </NavDropdown>

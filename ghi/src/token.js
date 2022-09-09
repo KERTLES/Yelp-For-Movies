@@ -11,6 +11,7 @@ export async function getTokenInternal() {
   try {
     const response = await fetch(url, {
       credentials: "include",
+      mode: "cors"
     });
     if (response.ok) {
       const data = await response.json();
@@ -76,7 +77,7 @@ export function useToken() {
   async function logout() {
     if (token) {
       const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/token/refresh/logout/`;
-      await fetch(url, { method: "delete", credentials: "include" });
+      await fetch(url, { method: "delete", credentials: "include", mode: "cors", });
       internalToken = null;
       setToken(null);
       navigate("/");
@@ -91,6 +92,7 @@ export function useToken() {
     const response = await fetch(url, {
       method: "post",
       credentials: "include",
+      mode: "cors",
       body: form,
     });
     if (response.ok) {
@@ -106,6 +108,7 @@ export function useToken() {
     const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
     const response = await fetch(url, {
       method: "post",
+      mode: "cors",
       body: JSON.stringify({
         'username' : username,
         'password' : password,
@@ -129,6 +132,7 @@ export function useToken() {
     const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${person_id}`;
     const response = await fetch(url, {
       method: "put",
+      mode: "cors",
       body: JSON.stringify({
         username,
         password,
