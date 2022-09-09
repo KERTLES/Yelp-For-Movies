@@ -81,12 +81,13 @@ async function handleSubmit(event){
       method: "delete", 
       credentials: "include" })
     let accountUrl = "";
-     // eslint-disable-next-line
+    // eslint-disable-next-line
     let tokenNum = 0;
       if(request.ok)
         {
           let tokenData = await request.json()
           accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
+          // eslint-disable-next-line
           tokenNum = tokenData.token['id']
         }
         else
@@ -118,7 +119,7 @@ async function handleSubmit(event){
             const form = new FormData();
             form.append("username", username);
             form.append("password", password);
-          // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line
             const response = await fetch(url, {
               method: "post",
               credentials: "include",
@@ -319,7 +320,7 @@ async function handleSubmit(event){
                         {reviews.map((review) => {
                             return (
                               <div className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">
-                                <div scope="row" key={review.id}>
+                                <div key={review.id}>
                                     <div className='card-header h4'>{review.title}</div>
                                     <div className="card-title">Movie: {review.movie.title}</div>
                                     <div className = "card-body p-md-5">
