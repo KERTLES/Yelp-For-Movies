@@ -139,7 +139,7 @@ function MovieDetail() {
                             {checkIfRatings(ratings)}
                         </div>
                     </div>
-                    <div className="text-black">
+                    <div>
                         {movie["Title"] ? < ListReviewForMovie movie={movie} /> : null}
                     </div>
                 </div>
