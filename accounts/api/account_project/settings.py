@@ -76,14 +76,18 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'account_project.wsgi.application'
-ALLOWED_HOSTS = [
-    ".localhost", 
-    "127.0.0.1", 
-    "account-api", 
-    "reviews-api",
-    "[::1]",
-    os.environ.get("DEPLOYED_HOST", "localhost"),
-]
+# ALLOWED_HOSTS = [
+#     ".localhost", 
+#     "127.0.0.1", 
+#     "account-api", 
+#     "reviews-api",
+#     "[::1]",
+#     "yoovies-accounts-api.herokuapp.com",
+#     "yoovies-reviews-api.herokuapp.com",
+#     os.environ.get("DEPLOYED_HOST", "localhost"),
+# ]
+
+ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
