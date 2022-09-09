@@ -65,10 +65,4 @@ class Review(models.Model):
 
 
     def __str__(self):
-        return str("@"+self.user.user_name) + " review for " + str(self.movie.title)
-
-
-
-    
-    
-
+        return str(self.user.user_name) + " review for " + str(self.movie.title)
