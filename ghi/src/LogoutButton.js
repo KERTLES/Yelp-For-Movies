@@ -69,7 +69,7 @@ function user_visibility() {
       // For Django services, use this one
       try {
           logout()
-          navigate(`${process.env.PUBLIC_URL}/`)
+          navigate("/")
           setAuth(false)
       } catch (e) {
         console.log('error')

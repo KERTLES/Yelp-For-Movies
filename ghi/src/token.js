@@ -80,7 +80,7 @@ export function useToken() {
       await fetch(url, { method: "delete", credentials: "include", mode: "cors", });
       internalToken = null;
       setToken(null);
-      navigate(`${process.env.PUBLIC_URL}/`);
+      navigate("/");
     }
   }
 

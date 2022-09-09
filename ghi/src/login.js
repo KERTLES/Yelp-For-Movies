@@ -43,7 +43,7 @@ async function clogin(username, password) {
         setPassword('')
         setSuccess(true)
         setIsActive(false)
-        navigate(`${process.env.PUBLIC_URL}/`)
+        navigate("/")
       }
     } catch (e) {}
     return false;
