@@ -28,8 +28,8 @@ async function clogin(username, password) {
     body: form,
   });
   if (response.ok) {
-    // For Django services, use this one
-    console.log(response.json())
+    console.log(response.ok)
+    // For Djangor services, use this one
     login(username, password)
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
@@ -39,7 +39,6 @@ async function clogin(username, password) {
         mode: "cors",
       });
       if (response.ok) {
-        console.log(response)
         // const data = await response.json();
         // const token = data.token;
         setUsername('')
@@ -69,21 +68,6 @@ function confirmedPassword()
       </div>)
     }
 }
-
-// useEffect(() => {
-// async function getAccounts(){
-//   const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-//   const autoResponse = await fetch(Url)
-
-//   if(autoResponse.ok)
-//   {
-//       const autoData = await autoResponse.json()
-//       setAccounts(autoData.accounts)
-//   }
-
-// }
-// getAccounts();
-// }, [])
 
 function handleSubmit(event)
  {

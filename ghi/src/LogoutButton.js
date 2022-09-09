@@ -10,7 +10,8 @@ function LogoutButton(){
     const navigate = useNavigate();
    useEffect(() => {
     async function authen(){
-      if(token !== null)
+      console.log(token)
+    if(token !== null)
       {
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/check/`;
     const request = await fetch(tokenUrl, { 
