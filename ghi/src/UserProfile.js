@@ -81,6 +81,7 @@ async function handleSubmit(event){
       method: "delete", 
       credentials: "include" })
     let accountUrl = "";
+     // eslint-disable-next-line
     let tokenNum = 0;
       if(request.ok)
         {
@@ -181,7 +182,7 @@ async function handleSubmit(event){
       if(request.ok)
       { 
         const data = await request.json()
-        const filteredReviews = data.filter(rev => {return rev.user.user_name == username2})
+        const filteredReviews = data.filter(rev => {return rev.user.user_name === username2})
         console.log(filteredReviews)
         setReviews(filteredReviews)
       }

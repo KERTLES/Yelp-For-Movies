@@ -3,13 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+ // eslint-disable-next-line
 import { AuthContext, useToken } from "./token";
 import LogoutButton from "./LogoutButton";
+ // eslint-disable-next-line
 import UserProfile from './UserProfile';
 
 
 function DropdownNav() {
   const [genres, setGenres] = useState([])
+   // eslint-disable-next-line
   const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
   const apiKey = process.env.REACT_APP_TMDB_API_KEY
   const tmdbURL = process.env.REACT_APP_TMDB_URL
