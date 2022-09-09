@@ -23,10 +23,7 @@ function CreateReviewForm(props) {
 
     const submitted = useRef();
     // imdbID is variable from MovieDetail.js
-    submitted["imdb_id"] = props.movie.imdbID
-    console.log(props)
-    console.log(props.movie.imdbID)
-    console.log("MOVIE " + props["movie"]["Title"])
+
 
 
     const handleTitleInputChange = (event) => {
@@ -51,25 +48,17 @@ function CreateReviewForm(props) {
         }
         getToken()
         handleSubmit()
-        
+
 
     }, [])
     const handleSubmit = async (event) => {
         event.preventDefault();
         setClicked(true)
 
-        // 
-
-
-        // console.log('****************************data', data)
-
-        // double check this url///////////////////////////////////////////////
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
         console.log("%%%%%%%%%%%%%%%%%%%%%%review url", reviewUrl)
         console.log(clicked)
         if (rating !== 0) {
-
-
 
             setCheckRating(true)
 
@@ -92,8 +81,12 @@ function CreateReviewForm(props) {
             const response = await fetch(reviewUrl, fetchConfig)
             if (response.ok) {
                 const newReview = await response.json()
+                
                 console.log('------new review: ', newReview)
                 setValid(true)
+                setTitle('')
+                setPost('')
+                setRating(0)
             }
         } else {
             console.log(checkRating)
@@ -102,11 +95,6 @@ function CreateReviewForm(props) {
     }
 
     function renderForm() {
-
-        // <div className="form-container">
-        //     {/* button to trigger modal pop up */}
-
-        // </div>
 
         return (
             <div className="form-container">
@@ -120,7 +108,7 @@ function CreateReviewForm(props) {
                                 {rating == 0 && clicked ? <div className='text-black'>please submit a rating!</div> : null}
 
 
-                                {submitted && valid ? <div className="success-message">Thanks for your review!</div> : null}
+                                {valid ? <div className="success-message">Thanks for your review!</div> : null}
                                 <div className="modal-header">
                                     <h5 className="modal-title" id="staticBackdropLabel">Write your review for {props["movie"]["Title"]}</h5>
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -197,8 +185,10 @@ function CreateReviewForm(props) {
             <button type="button" className="create-review-button btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Create A Review
             </button>
+            <div>
 
-            {submitted && valid && clicked ? null : renderForm()}
+                {valid && clicked ? null : renderForm()}
+            </div>
         </div>
 
 

@@ -74,9 +74,9 @@ function ListReviewForMovie(data) {
     return (
       <>
         <div className="star-rating">
-          {[...Array(rating)].map((star) => {
+          {[...Array(rating)].map((star, i) => {
             return (
-              <span className="star">&#9733;</span>
+              <span key={i} className="star">&#9733;</span>
             );
           })}
         </div>
