@@ -20,7 +20,7 @@ function SignupPage()
 
 function confirmedPassword()
 {
-    if(password === password2 && password !== "" && is_active === true && password.length >= 8)
+    if(password === password2 && password !== "" && is_active === true)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -225,7 +225,7 @@ async function getAccounts(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input placeholder="Password must be at least 8 characters" onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
+                      <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
                     </div>
                   </div>
@@ -241,7 +241,7 @@ async function getAccounts(){
                   <div className="form-check d-flex justify-content-center mb-5">
                     <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=K1deYn7OSuN0zHIlY6KpKKbIBvqRUsUA" target="_blank" rel="noreferrer">Terms of service</a>
+                      I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=kmboCeBX0HORqXN4Nx6D8fluQPkkZYD2" target="_blank">Terms of service</a>
                     </label>
                   </div>
                 {confirmedPassword()}

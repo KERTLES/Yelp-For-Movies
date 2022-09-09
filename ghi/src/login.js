@@ -58,7 +58,7 @@ async function clogin(username, password) {
 }
 function confirmedPassword()
 {
-    if(password !== "" && is_active === true)
+    if(password !== "")
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -136,12 +136,7 @@ function handleSubmit(event)
                     </div>
                   </div>
 
-                  <div className="form-check d-flex justify-content-center mb-5">
-                    <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
-                    <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
-                    </label>
-                  </div>
+                  
                 {confirmedPassword()}
 
                 </form>
