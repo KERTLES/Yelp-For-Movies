@@ -24,7 +24,7 @@ function Footer(props) {
       </a>
       <div className="dropdown">
       <i className="btn btn-dark me-2 dropdown-toggle " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><BsLinkedin style={{fontSize: "50px", color: " #0A66C2"}} /></i>
-      <ul className="dropdown-menu"  style={{ left: "unset", right: "0" }} aria-labelledby="dropdownMenuButton">
+      <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li>
     <a className="dropdown-item" href="https://www.linkedin.com/in/jiang-kelly/" target="blank_">Kelly</a>
     </li>
@@ -54,7 +54,7 @@ function Footer(props) {
             <i className="fas fa-gem me-3"></i>About us
           </h6>
           <p>
-          Yovies is dedicated to providing movie-goers the best place to share their opinions on up and coming movies.
+          Yoovies is dedicated to providing movie-goers the best place to share their opinions on up and coming movies.
           </p>
         </div>
         {/* <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
