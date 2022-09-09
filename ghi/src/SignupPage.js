@@ -114,7 +114,7 @@ async function handleSubmit(event){
             setFailureE(false)
             setFailureU(false)
             setIsActive(false)
-            navigate('/')
+            navigate(`${process.env.PUBLIC_URL}/`)
         }
         else{
             console.log("error")

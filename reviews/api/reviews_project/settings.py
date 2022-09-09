@@ -33,6 +33,8 @@ DEBUG = True # not os.environ.get("DEBUG")
 #     "account-api", 
 #     "reviews-api",
 #     "[::1]",
+#     "yoovies-accounts-api.herokuapp.com",
+#     "yoovies-reviews-api.herokuapp.com",
 #     os.environ.get("DEPLOYED_HOST", "localhost"),
 # ]
 

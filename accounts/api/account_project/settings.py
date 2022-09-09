@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'account_project.wsgi.application'
 #     "reviews-api",
 #     "[::1]",
 #     "yoovies-accounts-api.herokuapp.com",
+#     "yoovies-reviews-api.herokuapp.com",
 #     os.environ.get("DEPLOYED_HOST", "localhost"),
 # ]
 
