@@ -48,7 +48,7 @@ def get_some_data(request):
 @auth.jwt_login_required
 def check_user(request):
     if request.user is not None:
-        return JsonResponse({"authenticated" : request.Account.is_authenticated})
+        return JsonResponse({"authenticated" : request.user.is_authenticated})
     else:
         return JsonResponse({"message": "not found"})
 
