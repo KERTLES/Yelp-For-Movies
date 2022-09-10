@@ -39,7 +39,7 @@ function LogoutButton(){
   },[]
 )
 function user_visibility() {
-
+  {console.log(auth)}
         if (auth)
         {
           return (
