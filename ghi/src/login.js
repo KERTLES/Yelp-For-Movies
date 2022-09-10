@@ -28,7 +28,7 @@ async function clogin(username, password) {
     body: form,
   });
   if (response.ok) {
-    userdata = await response.json()
+    const userdata = await response.json()
     console.log(userdata)
     // For Djangor services, use this one
     login(username, password)
