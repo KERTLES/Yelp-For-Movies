@@ -178,7 +178,7 @@ async function handleSubmit(event){
   }, [])
 
   async function getReviews(username2){
-      const tokenUrl = `http://localhost:8090/api/create/review/`;
+      const tokenUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
       const request = await fetch(tokenUrl, { 
         method: "get", mode: "cors"}
       
