@@ -21,11 +21,13 @@ function LogoutButton(){
     })
       if(request.ok)
       {
+        console.log("got it")
       const toDa = await request.json()
       setAuth(toDa['authenticated'])
       }
       else
       {
+        console.log("not got it")
         setAuth(false)
       }
     }

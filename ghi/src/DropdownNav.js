@@ -21,7 +21,6 @@ function DropdownNav() {
     (async () => {
         const genresResponse = await fetch(`${tmdbURL}/genre/movie/list?api_key=${apiKey}&language=en-US`)
         console.log(genresResponse)
-        console.log(token)
         if (genresResponse.ok) {
             const genresData = await genresResponse.json()
             setGenres(genresData.genres)
