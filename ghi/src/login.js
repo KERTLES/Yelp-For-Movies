@@ -28,7 +28,8 @@ async function clogin(username, password) {
     body: form,
   });
   if (response.ok) {
-    console.log(response.ok)
+    userdata = await response.json()
+    console.log(userdata)
     // For Djangor services, use this one
     login(username, password)
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
