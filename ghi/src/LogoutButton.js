@@ -27,19 +27,20 @@ function LogoutButton(){
       }
       else
       {
-        console.log("not got it")
+        console.log("not got")
         setAuth(false)
       }
     }
     else{
       setAuth(false)
     }
+    console.log(auth)
     }authen();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]
 )
 function user_visibility() {
-  {console.log(auth)}
+
         if (auth)
         {
           return (
