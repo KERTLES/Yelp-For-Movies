@@ -13,9 +13,9 @@ function LogoutButton(){
       console.log(token)
     if(token !== null)
       {
-    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine`;
+    const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/check/`;
     const request = await fetch(tokenUrl, { 
-      method: "get", 
+      method: "delete", 
       credentials: "include",
       mode: "cors",
     })
@@ -24,13 +24,7 @@ function LogoutButton(){
         console.log("got it")
       const toDa = await request.json()
       console.log(toDa['authenticated'])
-      if(toDa['token'] === token){
-      setAuth(true)
-      }
-      else
-      {
-        setAuth(false)
-      }
+      setAuth(toDa['authenticated'])
       }
       else
       {
