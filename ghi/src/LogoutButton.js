@@ -23,6 +23,7 @@ function LogoutButton(){
       {
         console.log("got it")
       const toDa = await request.json()
+      console.log(toDa)
       setAuth(toDa['authenticated'])
       }
       else
