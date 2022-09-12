@@ -50,3 +50,6 @@
 
 ## September 08, 2022
     Today, we did mostly fixed the cors issue and mostly got the site to work. I also discovered that the Heroku doesn't apply the djwto migrations and I need to figure out how to get that to work. It is clear that accounts are being created, since I get the correct messages when signing up using already used credentials. 
+
+## September 09, 2022
+    Today, we managed to get the login feature to work properly on the deployed side of the project. I had to make adjustments to the way the site checked the user in order for the logout and profile pages to show up. I will have to check with the other team members to see if anything else needs to be adjusted. I was suggested to move away from using Django for login functionality and exclusively use DJWTO.
