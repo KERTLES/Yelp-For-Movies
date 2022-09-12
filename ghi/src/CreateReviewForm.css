@@ -25,6 +25,8 @@
     color: #080808;
 }
 
-.modal-content {
-    
+.req-rating {
+    background-color: red;
+    font-weight: bold; 
+    text-align: center;
 }

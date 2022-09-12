@@ -1,24 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AiFillStar } from "react-icons/ai";
 import './CreateReviewForm.css';
-// import { Navigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 function CreateReviewForm(props) {
 
-    // const {userName} = useContext(MainContext);
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const stars = Array(5).fill()
     const [userName, setUserName] = useState('');
-
-
+    
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
     const [valid, setValid] = useState(false)
     const [checkRating, setCheckRating] = useState('')
     const [clicked, setClicked] = useState(false)
-
+    // const navigate = useNavigate();
+    
     const submitted = useRef();
     // imdbID is variable from MovieDetail.js
     submitted["imdb_id"] = props.movie.imdbID
@@ -38,6 +37,7 @@ function CreateReviewForm(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setClicked(true)
+        // navigate();
 
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
         // console.log("%%%%%%%%%%%%%%%%%%%%%%review url", reviewUrl)
@@ -103,8 +103,7 @@ function CreateReviewForm(props) {
                     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabi="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content">
-                                {rating == 0 && clicked ? <div className='text-black'>Please provide a rating!</div> : null}
-
+                                {rating == 0 && clicked ? <div className='req-rating'>Please provide a rating!</div> : null}
 
                                 {submitted && valid ? <div className="success-message">Thanks for your review!</div> : null}
                                 <div className="modal-header">
@@ -166,7 +165,7 @@ function CreateReviewForm(props) {
 
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary">Submit Review</button>
+                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Submit Review</button>
                                 </div>
                             </div>
                         </div>
