@@ -7,6 +7,7 @@ function Login(){
   // const [login] = useToken();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  // eslint-disable-next-line
   const [is_active, setIsActive] = useState(false)
   const [success, setSuccess] = useState('')
   // const [accounts, setAccounts] = useState([])
@@ -27,7 +28,9 @@ async function clogin(username, password) {
     body: form,
   });
   if (response.ok) {
-    // For Django services, use this one
+    const userdata = await response.json()
+    console.log(userdata)
+    // For Djangor services, use this one
     login(username, password)
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
@@ -66,21 +69,6 @@ function confirmedPassword()
       </div>)
     }
 }
-
-// useEffect(() => {
-// async function getAccounts(){
-//   const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-//   const autoResponse = await fetch(Url)
-
-//   if(autoResponse.ok)
-//   {
-//       const autoData = await autoResponse.json()
-//       setAccounts(autoData.accounts)
-//   }
-
-// }
-// getAccounts();
-// }, [])
 
 function handleSubmit(event)
  {

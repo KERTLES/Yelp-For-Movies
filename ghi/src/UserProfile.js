@@ -42,6 +42,7 @@ async function checker()
             method: "get",
             headers: {
                 'Content-Type': 'application/json',
+            mode: "cors",
             },
             };
             const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
@@ -79,13 +80,16 @@ async function handleSubmit(event){
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
     const request = await fetch(tokenUrl, { 
       method: "delete", 
-      credentials: "include" })
+      credentials: "include",
+      mode: "cors", })
     let accountUrl = "";
+    // eslint-disable-next-line
     let tokenNum = 0;
       if(request.ok)
         {
           let tokenData = await request.json()
           accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
+          // eslint-disable-next-line
           tokenNum = tokenData.token['id']
         }
         else
@@ -98,6 +102,7 @@ async function handleSubmit(event){
         headers: {
             'Content-Type': 'application/json',
         },
+        mode: "cors",
         };
         const Response = await fetch(accountUrl, fetchSoldConfig);
         if (Response.ok) {
@@ -117,11 +122,12 @@ async function handleSubmit(event){
             const form = new FormData();
             form.append("username", username);
             form.append("password", password);
-          // eslint-disable-next-line react-hooks/exhaustive-deps
+            // eslint-disable-next-line
             const response = await fetch(url, {
               method: "post",
               credentials: "include",
               body: form,
+              cors: "cors",
             });
             login(username, password)
             navigate("/")
@@ -141,7 +147,8 @@ async function handleSubmit(event){
         const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
         const request = await fetch(tokenUrl, { 
           method: "delete", 
-          credentials: "include" }
+          credentials: "include",
+          mode: "cors", }
         
       
           // Other fetch options, like method and body, if applicable
@@ -156,6 +163,7 @@ async function handleSubmit(event){
           if(autoResponse.ok)
           { 
             const autoData = await autoResponse.json()
+            console.log(autoData)
               setAccount(autoData)
               setEmail(autoData.email)
               setFirstName(autoData.first_name)
@@ -170,9 +178,9 @@ async function handleSubmit(event){
   }, [])
 
   async function getReviews(username2){
-      const tokenUrl = `http://localhost:8090/api/create/review/`;
+      const tokenUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
       const request = await fetch(tokenUrl, { 
-        method: "get"}
+        method: "get", mode: "cors"}
       
     
         // Other fetch options, like method and body, if applicable
@@ -181,7 +189,7 @@ async function handleSubmit(event){
       if(request.ok)
       { 
         const data = await request.json()
-        const filteredReviews = data.filter(rev => {return rev.user.user_name == username2})
+        const filteredReviews = data.filter(rev => {return rev.user.user_name === username2})
         console.log(filteredReviews)
         setReviews(filteredReviews)
       }
@@ -313,12 +321,12 @@ async function handleSubmit(event){
 
               </div>
             </div>
-            <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">Your Reviews</p>
+            <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">My Reviews</p>
             <div className ="card-columns">
                         {reviews.map((review) => {
                             return (
                               <div className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">
-                                <div scope="row" key={review.id}>
+                                <div key={review.id}>
                                     <div className='card-header h4'>{review.title}</div>
                                     <div className="card-title">Movie: {review.movie.title}</div>
                                     <div className = "card-body p-md-5">

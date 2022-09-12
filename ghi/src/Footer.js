@@ -1,6 +1,8 @@
+ // eslint-disable-next-line
 import React, { useState, useEffect } from "react";
 import { BsFacebook, BsInstagram, BsLinkedin } from "react-icons/bs";
 import { SiGitlab } from "react-icons/si";
+ // eslint-disable-next-line
 import { NavLink } from "react-router-dom";
 
 function Footer(props) {
