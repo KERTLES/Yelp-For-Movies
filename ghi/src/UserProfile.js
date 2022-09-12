@@ -1,11 +1,14 @@
 import React, { useEffect, useState} from 'react';
-import { AuthContext, useToken } from './token';
+// import { AuthContext, useToken } from './token';
+import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
 
 
 function UserProfile(){
   const [accounts, setAccount] = useState([])
+  // eslint-disable-next-line
   const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
+  // const [login] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -16,6 +19,7 @@ function UserProfile(){
   const [success, setSuccess] = useState('');
   const [failuree, setFailureE] = useState(false);
   const [failureu, setFailureU] = useState(false);
+  const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
 
 function confirmedPassword()
@@ -40,6 +44,7 @@ async function checker()
             method: "get",
             headers: {
                 'Content-Type': 'application/json',
+            mode: "cors",
             },
             };
             const newResponse = await fetch(IndAccountUrl, fetchSoldConfig);
@@ -77,13 +82,16 @@ async function handleSubmit(event){
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
     const request = await fetch(tokenUrl, { 
       method: "delete", 
-      credentials: "include" })
+      credentials: "include",
+      mode: "cors", })
     let accountUrl = "";
-    let tokenNum = 0
+    // eslint-disable-next-line
+    let tokenNum = 0;
       if(request.ok)
         {
           let tokenData = await request.json()
           accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
+          // eslint-disable-next-line
           tokenNum = tokenData.token['id']
         }
         else
@@ -96,6 +104,7 @@ async function handleSubmit(event){
         headers: {
             'Content-Type': 'application/json',
         },
+        mode: "cors",
         };
         const Response = await fetch(accountUrl, fetchSoldConfig);
         if (Response.ok) {
@@ -110,8 +119,20 @@ async function handleSubmit(event){
             setFailureE(false)
             setFailureU(false)
             setIsActive(false)
+            const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
+
+            const form = new FormData();
+            form.append("username", username);
+            form.append("password", password);
+            // eslint-disable-next-line
+            const response = await fetch(url, {
+              method: "post",
+              credentials: "include",
+              body: form,
+              cors: "cors",
+            });
             login(username, password)
-            navigate('/')
+            navigate("/")
         }
         else{
             console.log("error")
@@ -128,7 +149,8 @@ async function handleSubmit(event){
         const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
         const request = await fetch(tokenUrl, { 
           method: "delete", 
-          credentials: "include" }
+          credentials: "include",
+          mode: "cors", }
         
       
           // Other fetch options, like method and body, if applicable
@@ -143,17 +165,37 @@ async function handleSubmit(event){
           if(autoResponse.ok)
           { 
             const autoData = await autoResponse.json()
+            console.log(autoData)
               setAccount(autoData)
               setEmail(autoData.email)
               setFirstName(autoData.first_name)
               setLastName(autoData.last_name)
-              setUsername(autoData.username)
+              setUsername(autoData.username) 
+              getReviews(autoData.username)
           }
         }
       
       }
       getAccount();
   }, [])
+
+  async function getReviews(username2){
+      const tokenUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
+      const request = await fetch(tokenUrl, { 
+        method: "get", mode: "cors"}
+      
+    
+        // Other fetch options, like method and body, if applicable
+      ); 
+
+      if(request.ok)
+      { 
+        const data = await request.json()
+        const filteredReviews = data.filter(rev => {return rev.user.user_name === username2})
+        console.log(filteredReviews)
+        setReviews(filteredReviews)
+      }
+    }
 
     let successful
     let failure
@@ -245,7 +287,7 @@ async function handleSubmit(event){
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input placeholder="Password must be at least 8 characters" onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example4c">Password</label>
+                      <label className="form-label" htmlFor="form3Example4c">New Password</label>
                     </div>
                   </div>
 
@@ -275,11 +317,32 @@ async function handleSubmit(event){
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="/yooviesblack.png"
-                  className="img-fluid" alt="logo" />
+                <a href={`${process.env.PUBLIC_URL}/`}>
+                  <img src={`${process.env.PUBLIC_URL}/yooviesblack.png`} className="img-fluid" alt="logo" />
+                </a>
 
               </div>
             </div>
+            <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">My Reviews</p>
+            <div className ="card-columns">
+                        {reviews.map((review) => {
+                            return (
+                              <div className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">
+                                <div key={review.id}>
+                                    <div className='card-header h4'>{review.title}</div>
+                                    <div className="card-title">Movie: {review.movie.title}</div>
+                                    <div className = "card-body p-md-5">
+                                    <p className = "card-text">{review.post}</p>
+                                    </div>
+                                    <div className='card-footer'>
+                                    <div>Rating: {review.rating} stars</div>
+                                    <div>created on: {review.date}</div>
+                                    </div>
+                                </div>
+                                </div>
+                            );}
+                        )}
+              </div>
           </div>
         </div>
       </div>

@@ -10,14 +10,14 @@ function CreateReviewForm(props) {
     const [hoverRating, setHoverRating] = useState(0);
     const stars = Array(5).fill()
     const [userName, setUserName] = useState('');
-    
+
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
     const [valid, setValid] = useState(false)
     const [checkRating, setCheckRating] = useState('')
     const [clicked, setClicked] = useState(false)
     // const navigate = useNavigate();
-    
+
     const submitted = useRef();
     // imdbID is variable from MovieDetail.js
     submitted["imdb_id"] = props.movie.imdbID
@@ -88,7 +88,7 @@ function CreateReviewForm(props) {
         }
         getToken()
         // handleSubmit()
-        
+
 
     }, [])
 
@@ -115,7 +115,7 @@ function CreateReviewForm(props) {
                                     <div className="stars">
                                         {stars.map((star, i) => rating >= i + 1 || hoverRating >= i + 1 ? (
                                             <AiFillStar
-                                                key = {i}
+                                                key={i}
                                                 // while hovering over the stars
                                                 onMouseOver={() => !rating && setHoverRating(i + 1)}
                                                 onMouseLeave={() => setHoverRating('')}
@@ -125,7 +125,7 @@ function CreateReviewForm(props) {
                                             />
                                         ) : (
                                             <AiFillStar
-                                                key = {i}
+                                                key={i}
                                                 onMouseOver={() => !rating && setHoverRating(i + 1)}
                                                 onMouseLeave={() => setHoverRating('')}
                                                 color={"#A9A9A9"}
@@ -188,3 +188,4 @@ function CreateReviewForm(props) {
     );
 }
 export default CreateReviewForm;
+
