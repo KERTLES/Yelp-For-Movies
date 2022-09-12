@@ -1,6 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import { AuthContext, useToken } from './token';
 import { useNavigate } from "react-router-dom";
+
+
 function UserProfile(){
   const [accounts, setAccount] = useState([])
   const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
@@ -169,7 +171,7 @@ async function handleSubmit(event){
     {
         failure = "alert alert-danger mb-0"
     }
-   else{
+    else{
         failure = "alert alert-danger d-none mb-0"
     } 
     if (failuree === true)

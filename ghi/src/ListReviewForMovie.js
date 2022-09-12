@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import './style.css'
 function ListReviewForMovie(data) {
+  console.log(data)
   const [reviews, setReviews] = useState([])
   const [movie, setMovie] = useState([false])
   const [reviewLoading, setIsLoading] = useState([true])
@@ -20,7 +22,7 @@ function ListReviewForMovie(data) {
     if (response.ok) {
       const data = await response.json()
       setMovie(true)
-    } 
+    }
   }
 
   const getReviews = async () => {
@@ -44,24 +46,37 @@ function ListReviewForMovie(data) {
     if (reviews.length == 0) {
       return (
         <>
-          <div>
-            No reviews for this movie yet. Click here to create one!
+          <div className="shadow p-2 mb-5 bg-grey">
+            <div>
+              No reviews for this movie yet. Click here to create one!
+            </div>
           </div>
+
         </>
       )
     } else {
       return (
+       
+
         reviews.map((review, i) => {
           return (
-            <div className="text" key={i}>
-              <br />
-              <h6 key={i}> {review.title}</h6>
-              <span className="user">@{review.user.user_name}</span>
-              <span className="style">{'\t'}{review.date}</span>
-              {checkIfRatings(review.rating)}
-              {review.post}
-              <br />
-            </div>
+            
+            <div className='text'>
+              {i !== 0?<br></br>: null}
+                
+                <span className="user">{'@'+review.user.user_name}</span>
+                
+                <span className="style">{'\t'}{review.date}</span>
+                {checkIfRatings(review.rating)}
+                <h className="h" key={i}> {review.title}</h>
+                <br></br>
+                <span>{review.post}</span>
+                <br/>
+                
+              {/* </div> */}
+           
+             </div>
+             
           )
         }
         )
@@ -73,10 +88,10 @@ function ListReviewForMovie(data) {
   const checkIfRatings = (rating) => {
     return (
       <>
-        <div className="star-rating">
+        <div className="rating-color ratings i">
           {[...Array(rating)].map((star, i) => {
             return (
-              <span key={i} className="star">&#9733;</span>
+              <span className="star" key={i}>&#9733;</span>
             );
           })}
         </div>
@@ -85,15 +100,16 @@ function ListReviewForMovie(data) {
   }
 
   return (
-    <div className="mt-4">
-      <div className="flex-grow-1 flex-shrink-1">
-        <div className="shadow p-2 mb-5 bg-white rounded">
-          <div className="p-3 mb-3 mb-md-0 mr-md-3 bg-light text-black scroller">
-            {ReviewExists(reviews)}
-          </div>
-        </div>
-      </div>
-    </div >
+
+    <div className="mt-100px bg-black scroll">
+   {/* <div className="shadow p-2 mb-5 bg"> */}
+        <div className= "review-box">
+        <br />
+      {ReviewExists(reviews)}
+       </div>
+      {/* </div>  */}
+    </div>
+
   )
 }
 export default ListReviewForMovie

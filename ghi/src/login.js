@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
+
+
 function Login(){
   const [token, login, logout] = useToken();
   const [username, setUsername] = useState('')
@@ -78,8 +80,7 @@ async function getAccounts(){
 getAccounts();
 }, [])
 
-function handleSubmit(event)
- {
+function handleSubmit(event) {
     event.preventDefault();
     clogin(username, password)
   };
@@ -98,7 +99,7 @@ function handleSubmit(event)
     {
         failure = "alert alert-danger mb-0"
     }
-   else{
+    else{
         failure = "alert alert-danger d-none mb-0"
     } 
 
