@@ -48,7 +48,7 @@ def get_some_data(request):
 @auth.jwt_login_required
 def check_user(request):
     if request.user is not None:
-        return JsonResponse({"authenticated" : request.userj.is_authenticated})
+        return JsonResponse({"authenticated" : request.user.is_authenticated})
     else:
         return JsonResponse({"message": "not found"})
 
@@ -63,7 +63,6 @@ def api_list_accounts(request):
     else:
         try:
             content = json.loads(request.body)
-            # account = Account.objects.create(**content)
             nusername = content["username"]
             npassword = content["password"]
             nfirstname = content["first_name"]
@@ -120,8 +119,7 @@ def neo_authenticate(request):
     user = authenticate(request, username=nusername, password=npassword)
     if user is not None:
         login(request, user)
-        # logout(request)
-        # print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
+        print(request.user.is_authenticated) #used to test if login and logout actually changed authenticaiotn, noticed that sessionid in cookies would be removed if logout, could use as replacedment for jwt access token
         return JsonResponse({'message':'got it'})
     else:
         response = JsonResponse(
