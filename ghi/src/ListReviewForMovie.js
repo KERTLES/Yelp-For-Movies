@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 function ListReviewForMovie(data) {
   const [reviews, setReviews] = useState([])
-  // const [movie, setMovie] = useState([false])
-  // const [reviewLoading, setIsLoading] = useState([true])
   const post_data = useRef()
+  const review_api = process.env.REACT_APP_REVIEWS_HOST
   post_data["imdb_id"] = data.movie.imdbID
   post_data["title"] = data.movie["Title"]
 
@@ -17,19 +16,14 @@ function ListReviewForMovie(data) {
       },
     }
     await fetch(url, fetchConfig)
-    // if (response.ok) {
-    //   const data = await response.json()
-    //   // setMovie(true)
-    // } 
   }
 
   const getReviews = async () => {
-    const response = await fetch(`http://localhost:8090/api/reviews/${data.movie.imdbID}/`)
+    const response = await fetch(`${review_api}/api/reviews/${data.movie.imdbID}/`)
     if (response.ok) {
       const data = await response.json();
       setReviews(data)
       post_data["reviews"] = data
-      // setIsLoading(false)
     } else {
       console.log("Still not ok")
     }
