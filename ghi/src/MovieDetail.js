@@ -64,7 +64,7 @@ function MovieDetail() {
                         return (
                             <div key={index}>
                                 <span>
-                                    <span className="p-2 border bg-dark border-white rounded">
+                                    <span className="p-2 border bg-dark border-white rounded text-white">
                                         {rating.Source}
                                     </span>{' '}
                                     <span className="p-2 text-white border border-white bg-danger rounded">{rating.Value}</span>
