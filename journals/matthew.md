@@ -41,3 +41,12 @@
 
 ## September 01, 2022
     Today, I fixed some more errors with the log in system that the rest of my team noticed now that it has been pushed to the main branch. I also began further experimentations with react testing and managed to get two pyTests working on the Django side. Those two tests see if a list of accounts can be retrieved and if a new account can be created. It took a bit to figure out the formatting of the pytests, but I should now be able to create more relatively quickly.
+
+## September 06, 2022 
+    Today, we started deployment, but came across a situation where we can't continue with Gitlab until we give credit card credentials. I started working on a rudimentary poller, but I may not use it. I also fixed some formatting issues going on with the frontend.
+
+## September 07, 2022
+    Today, we continued to try to get our site deployed. So far, we managed to get the homepage and some of the login pages to show up on gitlab, though we are getting CORS Header errors. I also added the ability for a user to view their reviews by going to the profile page. I will need to work on formatting it to look better. I also helped a little with getting the review creation functionality to work.
+
+## September 08, 2022
+    Today, we did mostly fixed the cors issue and mostly got the site to work. I also discovered that the Heroku doesn't apply the djwto migrations and I need to figure out how to get that to work. It is clear that accounts are being created, since I get the correct messages when signing up using already used credentials. 

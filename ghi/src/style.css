@@ -56,6 +56,8 @@ div {
 
 
 .text {
+    padding-top: 13px;
+    padding-bottom: 13px;
     color: black;
     font-size: 21px;
     padding-left: 13px;
@@ -82,4 +84,12 @@ div {
     font-style: italic;
     font-weight: 400;
 
+}
+
+.empty-reviews {
+    background-color: white; 
+    color: black;
+    margin-top: 10px;
+    font-size: 21px;
+    
 }

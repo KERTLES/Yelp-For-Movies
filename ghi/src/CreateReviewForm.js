@@ -7,18 +7,17 @@ import ListReviewForMovie from './ListReviewForMovie';
 
 function CreateReviewForm(props) {
 
-    // const {userName} = useContext(MainContext);
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const stars = Array(5).fill()
     const [userName, setUserName] = useState('');
-
 
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
     const [valid, setValid] = useState(false)
     const [checkRating, setCheckRating] = useState('')
     const [clicked, setClicked] = useState(false)
+    // const navigate = useNavigate();
 
     const submitted = useRef();
     // imdbID is variable from MovieDetail.js
@@ -39,6 +38,7 @@ function CreateReviewForm(props) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         setClicked(true)
+        // navigate();
 
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
         // console.log("%%%%%%%%%%%%%%%%%%%%%%review url", reviewUrl)
@@ -91,7 +91,7 @@ function CreateReviewForm(props) {
         }
         getToken()
         // handleSubmit()
-        
+
 
     }, [])
 
@@ -106,8 +106,7 @@ function CreateReviewForm(props) {
                     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabi="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content">
-                                {rating == 0 && clicked ? <div className='text-black'>Please provide a rating!</div> : null}
-
+                                {rating == 0 && clicked ? <div className='req-rating'>Please provide a rating!</div> : null}
 
                                 {submitted && valid ? <div className="success-message">Thanks for your review!</div> : null}
                                 <div className="modal-header">
@@ -119,7 +118,7 @@ function CreateReviewForm(props) {
                                     <div className="stars">
                                         {stars.map((star, i) => rating >= i + 1 || hoverRating >= i + 1 ? (
                                             <AiFillStar
-                                                key = {i}
+                                                key={i}
                                                 // while hovering over the stars
                                                 onMouseOver={() => !rating && setHoverRating(i + 1)}
                                                 onMouseLeave={() => setHoverRating('')}
@@ -129,7 +128,7 @@ function CreateReviewForm(props) {
                                             />
                                         ) : (
                                             <AiFillStar
-                                                key = {i}
+                                                key={i}
                                                 onMouseOver={() => !rating && setHoverRating(i + 1)}
                                                 onMouseLeave={() => setHoverRating('')}
                                                 color={"#A9A9A9"}
@@ -169,7 +168,7 @@ function CreateReviewForm(props) {
 
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary">Submit Review</button>
+                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Submit Review</button>
                                 </div>
                             </div>
                         </div>

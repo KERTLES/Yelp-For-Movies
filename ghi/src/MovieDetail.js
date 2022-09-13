@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import ListReviewForMovie from "./ListReviewForMovie";
-import Badge from 'react-bootstrap/Badge';
+// import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
 import CreateReviewForm from "./CreateReviewForm";
 import { Link } from "react-router-dom";
@@ -47,6 +47,7 @@ function MovieDetail() {
 
     useEffect(() => {
         getImdbID()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const checkIfRatings = (ratings) => {

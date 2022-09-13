@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import dj_database_url
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+!3vzjusw@pf)h9xssbaete35vmb6fp4&b@fj%cz!(h4*b70ar'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False #not os.environ.get("DEBUG")
 
 AUTH_USER_MODEL = "account_rest.Account"
 # Application definition
@@ -75,10 +76,23 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'account_project.wsgi.application'
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "account-api", "reviews-api"]
+# ALLOWED_HOSTS = [
+#     ".localhost", 
+#     "127.0.0.1", 
+#     "account-api", 
+#     "reviews-api",
+#     "[::1]",
+#     "yoovies-accounts-api.herokuapp.com",
+#     "yoovies-reviews-api.herokuapp.com",
+#     os.environ.get("DEPLOYED_HOST", "localhost"),
+# ]
+
+ALLOWED_HOSTS = ["*"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://yoovies.gitlab.io",
+    os.environ.get("CORS_HOST", "http://localhost:3001")
 ]
 CORS_ALLOW_CREDENTIALS = True
 
