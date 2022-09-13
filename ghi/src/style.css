@@ -1,9 +1,3 @@
-/* div {
-    color: black;
-} */
-
-
-
 .height-100 {
     height: 100vh;
 }
@@ -47,21 +41,6 @@
     
 
 }
-
-body::-webkit-scrollbar {
-    width: 12px;
-    /* width of the entire scrollbar */
-}
-
-body::-webkit-scrollbar-thumb {
-    background-color: blue;
-    /* color of the scroll thumb */
-    border-radius: 20px;
-    /* roundness of the scroll thumb */
-    border: 3px solid orange;
-    /* creates padding around scroll thumb */
-}
-
 
 .text {
     padding-top: 20px;
