@@ -2,6 +2,8 @@ import React, { useEffect, useState} from 'react';
 // import { AuthContext, useToken } from './token';
 import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
+
+
 function UserProfile(){
   const [accounts, setAccount] = useState([])
   // eslint-disable-next-line
@@ -211,7 +213,7 @@ async function handleSubmit(event){
     {
         failure = "alert alert-danger mb-0"
     }
-   else{
+    else{
         failure = "alert alert-danger d-none mb-0"
     } 
     if (failuree === true)

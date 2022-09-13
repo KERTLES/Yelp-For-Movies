@@ -64,7 +64,7 @@ function MovieDetail() {
                         return (
                             <div key={index}>
                                 <span>
-                                    <span className="p-2 border bg-dark border-white rounded">
+                                    <span className="p-2 border bg-dark border-white rounded text-white">
                                         {rating.Source}
                                     </span>{' '}
                                     <span className="p-2 text-white border border-white bg-danger rounded">{rating.Value}</span>
@@ -89,7 +89,7 @@ function MovieDetail() {
                 <div className="row">
                     <div className="col-xl-3 ">
                         <img src={poster.current} alt="poster" width='275' height='auto' />
-                        <CreateReviewForm />
+                        {movie["Title"] ? < CreateReviewForm movie={movie} /> : null}
                     </div>
                     <div className="col-9">
                         <div>
@@ -139,8 +139,8 @@ function MovieDetail() {
                         <div className="mt-2">
                             {checkIfRatings(ratings)}
                         </div>
-                    </div >
-                    <div className="text-black">
+                    </div>
+                    <div>
                         {movie["Title"] ? < ListReviewForMovie movie={movie} /> : null}
                     </div>
                 </div>

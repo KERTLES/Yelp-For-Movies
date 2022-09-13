@@ -29,8 +29,7 @@ function LogoutButton(){
         setAuth(false)
       }
       }
-      else
-      {
+      else {
         setAuth(false)
       }
     }
@@ -63,8 +62,7 @@ function user_visibility() {
         }
         }
 
-    async function clogout()
-  {
+  async function clogout() {
     const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/logout/`;
     const response = await fetch(url, {
       method: "delete",
@@ -81,12 +79,12 @@ function user_visibility() {
         console.log('error')
       }
     }
-    else{
+    else {
       console.log("hello")
     }
     // DO SOMETHING WITH THE ERROR, IF YOU WANT
   }
-return user_visibility()
+  return user_visibility()
 }
 
 export default LogoutButton

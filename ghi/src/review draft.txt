@@ -1,0 +1,247 @@
+import React, { useState, useEffect, useRef } from 'react';
+import './style.css'
+function ListReviewForMovie(data) {
+  const [reviews, setReviews] = useState([])
+  const post_data = useRef()
+  const review_api = process.env.REACT_APP_REVIEWS_HOST
+  post_data["imdb_id"] = data.movie.imdbID
+  post_data["title"] = data.movie["Title"]
+
+  const getMovies = async () => {
+    const url = `${review_api}/api/movies/`
+    const fetchConfig = {
+      method: "post",
+      body: JSON.stringify(post_data),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    }
+    await fetch(url, fetchConfig)
+  }
+
+  const getReviews = async () => {
+    const response = await fetch(`${review_api}/api/reviews/${data.movie.imdbID}/`)
+    if (response.ok) {
+      const data = await response.json();
+      setReviews(data)
+      post_data["reviews"] = data
+    } else {
+      console.log("Still not ok")
+    }
+  }
+
+  useEffect(() => {
+    getMovies()
+    getReviews()
+  }, [])
+
+  function ReviewExists(reviews) {
+    if (reviews.length == 0) {
+      return (
+        <>
+          <div className="text">
+            <div className='text-white'>
+              No reviews for this movie yet. Click here to create one!
+            </div>
+          </div>
+        </>
+      )
+    } else if (reviews.length <= 2) {
+      return (
+
+        <div className='review-box2'>
+          {reviews.map((review, i) => {
+            return (
+              <div key={i} className='text'>
+                <span className="user">{'@' + review.user.user_name}</span>
+                <span className="style">{'\t'}{review.date}</span>
+                {checkIfRatings(review.rating)}
+                <h className="h" key={i}> {review.title}</h>
+                <br></br>
+                <span>{review.post}</span>
+              </div>
+            )
+          })}
+
+        </div>
+
+      )
+
+    } else {
+      return (
+
+        <div className='review-box scroll'>
+          {reviews.map((review, i) => {
+            return (
+              <div key={i} className=' text'>
+                {/* {i !== 0 ? <br></br> : null} */}
+                <span className="user">{'@' + review.user.user_name}</span>
+                <span className="style">{'\t'}{review.date}</span>
+                {checkIfRatings(review.rating)}
+                <h className="h" key={i}> {review.title}</h>
+                <br></br>
+                <span>{review.post}</span>
+                {/* <br /> */}
+              </div>
+            )
+          })}
+
+
+        </div>
+
+
+
+      )
+
+    }
+
+
+  }
+
+
+  const checkIfRatings = (rating) => {
+    return (
+      <>
+        <div className="rating-color ratings i">
+          {[...Array(rating)].map((star, i) => {
+            return (
+              <span className="star" key={i}>&#9733;</span>
+            );
+          })}
+        </div>
+      </>
+    )
+  }
+
+  return (
+    // <div className="mt-100px bg-black scroll">
+    <div>
+      {/* <br /> */}
+      {ReviewExists(reviews)}
+    </div>
+    // </div>
+  )
+}
+export default ListReviewForMovie
+
+
+
+
+div {
+    color: black;
+}
+
+.movie-card {
+    row-gap: 10px;
+    margin-top:  100px;
+    
+    /* row mt-5 mb-5 */
+}
+
+.height-100 {
+    height: 100vh;
+}
+
+.card {
+    width: 380px;
+    border: none;
+    height: 100px;
+}
+
+.ratings {
+    margin-right: 10px;
+}
+
+.ratings i {
+
+    color: #cecece;
+    font-size: 32px;
+}
+
+.rating-color {
+    color: #fbc634 !important;
+}
+
+.review-count {
+    font-weight: 400;
+    margin-bottom: 2px;
+    font-size: 24px !important;
+}
+
+.small-ratings i {
+    color: #cecece;
+}
+
+.review-stat {
+    font-weight: 300;
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+
+.scroll {
+
+    overflow-y: auto;
+    /* scrollbar-color: rebeccapurple green; */
+    scrollbar-width: thin;
+
+}
+
+
+.text {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: black;
+    font-size: 21px;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+.h {
+    font-size: 620;
+    /* font-style: oblique; */
+    font-weight: 200;
+
+}
+
+.review-box {
+    border-radius:5px;
+    width: 100%;
+    height: 400px;
+    margin-top: 50px;
+    /* margin-left: 10px; */
+    margin-right: 10px;
+    margin-bottom: 50px;
+    
+    border-width: 10px;
+    border-color: white;
+    background-color: white;
+}
+.review-box2 {
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    margin-right: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
+
+.user {
+    color: rgb(64, 60, 55);
+    font-weight: 500;
+}
+
+.style {
+    color: #20240bd7;
+    font-style: italic;
+    font-weight: 400;
+
+}
+
+.empty-reviews {
+    background-color: white; 
+    color: black;
+    margin-top: 10px;
+    font-size: 21px;
+    
+}
