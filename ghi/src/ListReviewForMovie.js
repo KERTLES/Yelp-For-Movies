@@ -111,12 +111,4 @@ function ListReviewForMovie(data) {
 export default ListReviewForMovie
 
 
-{/* <div className="mt-4">
-<div className="flex-grow-1 flex-shrink-1">
-  <div className="shadow p-2 mb-5 bg-white rounded">
-    <div className="p-3 mb-3 mb-md-0 mr-md-3 bg-light scroll">
-      {ReviewExists(reviews)}
-    </div>
-  </div>
-</div>
-</div > */}
+
