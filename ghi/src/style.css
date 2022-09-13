@@ -1,10 +1,7 @@
-/* body {
-    background-color: #eef3f4;
-} */
- 
 div {
-color: black;
+    color: black;
 }
+
 .height-100 {
     height: 100vh;
 }
@@ -46,22 +43,52 @@ color: black;
 }
 
 .scroll {
-    width: 100%;
-    height: 500px;
-    overflow-y: scroll;
-    scrollbar-color: rebeccapurple green;
+
+    overflow-y: auto;
+    /* scrollbar-color: rebeccapurple green; */
     scrollbar-width: thin;
-  }
+
+}
+
 
 .text {
-    color:#000000cd;
-    font-weight: 400;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: black;
+    font-size: 21px;
+    padding-left: 13px;
+    padding-right: 13px;
+}
+.h {
+    font-size: 620;
+    /* font-style: oblique; */
+    font-weight: 200;
+
 }
 
-h6{
-    font-weight: 600;
+.review-box {
+    border-radius:5px;
+    width: 100%;
+    height: 400px;
+    margin-top: 50px;
+    /* margin-left: 10px; */
+    margin-right: 10px;
+    margin-bottom: 50px;
     
+    border-width: 10px;
+    border-color: white;
+    background-color: white;
 }
+.review-box2 {
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    margin-right: 10px;
+    background-color: rgb(255, 255, 255);
+}
+
 
 .user {
     color: rgb(64, 60, 55);
@@ -69,11 +96,16 @@ h6{
 }
 
 .style {
-    
-    color:#20240bd7;
+    color: #20240bd7;
     font-style: italic;
     font-weight: 400;
-   
+
+}
+
+.empty-reviews {
+    background-color: white; 
+    color: black;
+    margin-top: 10px;
+    font-size: 21px;
     
-    
-  }
+}
