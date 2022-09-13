@@ -43,21 +43,17 @@ div {
 }
 
 .scroll {
-    width: 100%;
-    height: 400px;
-    margin-top: 50px;
-    margin-left: 10px;
-    margin-right: 10px;
-    overflow-y: scroll;
-    scrollbar-color: rebeccapurple green;
+
+    overflow-y: auto;
+    /* scrollbar-color: rebeccapurple green; */
     scrollbar-width: thin;
 
 }
 
 
 .text {
-    padding-top: 13px;
-    padding-bottom: 13px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     color: black;
     font-size: 21px;
     padding-left: 13px;
@@ -71,8 +67,28 @@ div {
 }
 
 .review-box {
+    border-radius:5px;
+    width: 100%;
+    height: 400px;
+    margin-top: 50px;
+    /* margin-left: 10px; */
+    margin-right: 10px;
+    margin-bottom: 50px;
+    
+    border-width: 10px;
+    border-color: white;
+    background-color: white;
+}
+.review-box2 {
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+    margin-right: 10px;
     background-color: rgb(255, 255, 255);
 }
+
 
 .user {
     color: rgb(64, 60, 55);

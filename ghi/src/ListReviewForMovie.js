@@ -46,8 +46,30 @@ function ListReviewForMovie(data) {
           </div>
         </>
       )
+    } else if (reviews.length <= 2) {
+      return (
+
+        <div className='review-box2'>
+          {reviews.map((review, i) => {
+            return (
+              <div key={i} className='text'>
+                <span className="user">{'@' + review.user.user_name}</span>
+                <span className="style">{'\t'}{review.date}</span>
+                {checkIfRatings(review.rating)}
+                <h className="h" key={i}> {review.title}</h>
+                <br></br>
+                <span>{review.post}</span>
+              </div>
+            )
+          })}
+
+        </div>
+
+      )
+
     } else {
       return (
+
         <div className='review-box scroll'>
           {reviews.map((review, i) => {
             return (
@@ -96,7 +118,7 @@ function ListReviewForMovie(data) {
     <div>
       {/* <br /> */}
       {ReviewExists(reviews)}
-     </div>
+    </div>
     // </div>
   )
 }
