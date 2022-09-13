@@ -20,3 +20,17 @@ I was dealing with debugging the whole day as I was trying to figure out why my 
 
 ## August 31, 2022
 Today I finally got the roadblock fixed, I changed the docker.yaml from ghi to react within the volumes as well as did a makemigrations for my account container. Apparantly I was missing a migration from djwto with some file called jetblack. I felt so much better now that the logout feature was now working and now I will be working on the view user profile feature. For some reason we cannot use my-profile as a href for the dropdown nav as it would somehow try to link to the api. Ask myo about this later..
+
+## September 1, 2022
+Today I worked on adding bug fixes to the sign up feature, such as creating a few if blocks in order to make sure that the password the user makes is 8 characters long and is unique. On top of that I added some features to the front end part of the pages adding placeholders design changes like color, as well as created a terms of service page to reflect the usage of our website. I will look into adding a footer later on.
+
+## September 2, 2022
+Today I worked on fully merging with our group. We had this issue where our login.js was conflicting with our files on gitlab stating it was Login.js, but for some reason we would not use git add . and the terminal would not recognize the change between the capitalization. We were forced to use git push --force and that seemed to fix the problem. For the time being I got some work on a footer, but I plan on making it smaller and streamlined as well as adding some links for instagram,facebook,youtube, and linkedin.
+
+## September 6, 2022
+Today my team and I worked on fully merging with our group as well as continuing further implementation of heroku and getting all of the urls down correctly.
+
+## September 7, 2022
+
+## September 8, 2022
+I added some more features to the footers

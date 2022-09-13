@@ -8,7 +8,7 @@ import requests
 sys.path.append("")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "reviews_project.settings")
 django.setup()
-from reviews_rest.models import UserVO
+from account_rest.models import UserVO
 
 
 def get_users():
@@ -24,7 +24,7 @@ def get_users():
    
     
 
-    for account in content["accounts"]:
+    for review in content["reviewss"]:
         UserVO.objects.update_or_create(user_name=account["username"])
         
     print(UserVO.objects.all())

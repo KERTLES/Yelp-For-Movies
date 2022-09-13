@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function Login(){
-  const [token, login, logout] = useToken();
+  // eslint-disable-next-line
+  const [token, login] = useToken();
+  // const [login] = useToken();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  // eslint-disable-next-line
   const [is_active, setIsActive] = useState(false)
   const [success, setSuccess] = useState('')
-  const [accounts, setAccounts] = useState([])
+  // const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
 
 async function clogin(username, password) {
@@ -21,25 +24,29 @@ async function clogin(username, password) {
   const response = await fetch(url, {
     method: "post",
     credentials: "include",
+    mode: "cors",
     body: form,
   });
   if (response.ok) {
-    // For Django services, use this one
+    const userdata = await response.json()
+    console.log(userdata)
+    // For Djangor services, use this one
     login(username, password)
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
     try {
       const response = await fetch(tokenUrl, {
         credentials: "include",
+        mode: "cors",
       });
       if (response.ok) {
-        const data = await response.json();
-        const token = data.token;
+        // const data = await response.json();
+        // const token = data.token;
         setUsername('')
         setPassword('')
         setSuccess(true)
         setIsActive(false)
-        navigate('/')
+        navigate("/")
       }
     } catch (e) {}
     return false;
@@ -48,13 +55,13 @@ async function clogin(username, password) {
     setUsername('')
     setPassword('')
     setSuccess(false)
-    let error = await response.json();
+    // let error = await response.json();
   }
   // DO SOMETHING WITH THE ERROR, IF YOU WANT
 }
 function confirmedPassword()
 {
-    if(password !== "" && is_active === true)
+    if(password !== "")
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -62,21 +69,6 @@ function confirmedPassword()
       </div>)
     }
 }
-
-useEffect(() => {
-async function getAccounts(){
-  const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-  const autoResponse = await fetch(Url)
-
-  if(autoResponse.ok)
-  {
-      const autoData = await autoResponse.json()
-      setAccounts(autoData.accounts)
-  }
-
-}
-getAccounts();
-}, [])
 
 function handleSubmit(event)
  {
@@ -132,12 +124,7 @@ function handleSubmit(event)
                     </div>
                   </div>
 
-                  <div className="form-check d-flex justify-content-center mb-5">
-                    <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
-                    <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
-                    </label>
-                  </div>
+                  
                 {confirmedPassword()}
 
                 </form>
@@ -150,8 +137,9 @@ function handleSubmit(event)
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="/yooviesblack.png"
-                  className="img-fluid" alt="logo" />
+                <a href={`${process.env.PUBLIC_URL}/`}>
+                  <img src={`${process.env.PUBLIC_URL}/yooviesblack.png`} className="img-fluid" alt="logo" />
+                </a>
 
               </div>
             </div>

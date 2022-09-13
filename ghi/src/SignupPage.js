@@ -3,6 +3,7 @@ import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function SignupPage()
 {
+  // eslint-disable-next-line
   const [token, login] = useToken();
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
@@ -19,7 +20,7 @@ function SignupPage()
 
 function confirmedPassword()
 {
-    if(password === password2 && password !== "" && is_active === true && password.length >= 8)
+    if(password === password2 && password !== "" && is_active === true)
     {
         return (     
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -37,6 +38,7 @@ async function checker()
         const IndAccountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${a.id}`
         const fetchSoldConfig = {
             method: "get",
+            mode: "cors",
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -78,6 +80,7 @@ async function handleSubmit(event){
     const fetchSoldConfig = {
         method: "post",
         body: JSON.stringify(data),
+        mode: "cors",
         headers: {
             'Content-Type': 'application/json',
         },
@@ -94,6 +97,7 @@ async function handleSubmit(event){
             const response = await fetch(url, {
               method: "post",
               credentials: "include",
+              mode: "cors",
               body: form,
             });
             if (response.ok) {
@@ -110,7 +114,7 @@ async function handleSubmit(event){
             setFailureE(false)
             setFailureU(false)
             setIsActive(false)
-            navigate('/')
+            navigate("/")
         }
         else{
             console.log("error")
@@ -122,7 +126,7 @@ async function handleSubmit(event){
 useEffect(() => {
 async function getAccounts(){
     const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`
-    const autoResponse = await fetch(Url)
+    const autoResponse = await fetch(Url, {mode: "cors"})
 
     if(autoResponse.ok)
     {
@@ -221,7 +225,7 @@ async function getAccounts(){
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input placeholder="Password must be at least 8 characters" onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
+                      <input onChange={e => setPassword(e.target.value)} value={password} type="password" id="form3Example4c" className="form-control" />
                       <label className="form-label" htmlFor="form3Example4c">Password</label>
                     </div>
                   </div>
@@ -237,7 +241,7 @@ async function getAccounts(){
                   <div className="form-check d-flex justify-content-center mb-5">
                     <input onChange={e => setIsActive(e.target.checked)} value={is_active} className="form-check-input me-2" type="checkbox" id="form2Example3c" />
                     <label className="form-check-label" htmlFor="form2Example3">
-                      I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=K1deYn7OSuN0zHIlY6KpKKbIBvqRUsUA">Terms of service</a>
+                      I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=kmboCeBX0HORqXN4Nx6D8fluQPkkZYD2" target="_blank" rel="noreferrer">Terms of service</a>
                     </label>
                   </div>
                 {confirmedPassword()}
@@ -252,8 +256,9 @@ async function getAccounts(){
               </div>
               <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                <img src="/yooviesblack.png"
-                  className="img-fluid" alt="logo" />
+                <a href={`${process.env.PUBLIC_URL}/`}>
+                  <img src={`${process.env.PUBLIC_URL}/yooviesblack.png`} className="img-fluid" alt="logo" />
+                </a>
 
               </div>
             </div>

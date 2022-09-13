@@ -11,8 +11,8 @@ function CreateReviewForm() {
 
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
-    const [submitted, setSubmitted] = useState(false);
-    const [valid, setValid] = useState(false)
+    // const [submitted, setSubmitted] = useState('');
+    // const [valid, setValid] = useState(false)
 
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
@@ -22,13 +22,32 @@ function CreateReviewForm() {
         setPost(event.target.value);
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        if(title && post && rating) {
-            setValid(true)
+        const data = {
+            rating,
+            title,
+            post,
         }
-        setSubmitted(true);
+        console.log('****************************data', data)
+
+        // double check this url///////////////////////////////////////////////
+        const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/reviews/`;
+        const fetchConfig = {
+            method: 'post',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+        };
+        const response = await fetch(reviewUrl, fetchConfig)
+        if (response.ok) {
+            const newReview = await response.json()
+            console.log('------new review: ', newReview)
+        }
     }
+
 
     return (
 
@@ -43,7 +62,8 @@ function CreateReviewForm() {
                 <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabi="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
-                            {submitted && valid ? <div className="success-message">Thanks for your review!</div> : null}
+                            {/* submitted && valid? */}
+                            {/* {submitted ? <div className="success-message">Thanks for your review!</div> : null} */}
                             <div className="modal-header">
                                 <h5 className="modal-title" id="staticBackdropLabel">Write your review for MOVIE NAME</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
