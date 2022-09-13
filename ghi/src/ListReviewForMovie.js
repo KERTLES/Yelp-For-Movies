@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { censors } from './fun'
 
 function ListReviewForMovie(data) {
   const [reviews, setReviews] = useState([])
@@ -39,6 +40,8 @@ function ListReviewForMovie(data) {
     }
   }
 
+
+
   useEffect(() => {
     getMovies()
     getReviews()
@@ -64,7 +67,7 @@ function ListReviewForMovie(data) {
               <span className="user">@{review.user.user_name}</span>
               <span className="style">{'\t'}{review.date}</span>
               {checkIfRatings(review.rating)}
-              {review.post}
+              {censors(review.post)}
               <br />
             </div>
           )

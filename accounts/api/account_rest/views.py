@@ -27,6 +27,7 @@ class AccountDetailEncoder(ModelEncoder):
         "password",
         "is_active",
         "date_joined",
+        "censored",
 
     ]
 
@@ -42,6 +43,7 @@ def api_user_token(request):
 @auth.jwt_login_required
 def get_some_data(request):
     token_data = request.payload
+    print(token_data)
     response = JsonResponse({"token": token_data['user']})
     return response
 
@@ -103,8 +105,9 @@ def api_show_account(request, pk):
         nfirstname = content["first_name"]
         nlastname = content["last_name"]
         nemail= content["email"]
+        ncensor = content['censored']
 
-        Account.objects.filter(id=pk).update(username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname)
+        Account.objects.filter(id=pk).update(username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname, censored = ncensor)
 
         account = Account.objects.get(id=pk)
         return JsonResponse(

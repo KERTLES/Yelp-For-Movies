@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {censors, setting} from "./fun"
 // import { AuthContext, useToken } from './token';
 import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
@@ -10,6 +11,7 @@ function UserProfile() {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [censoring, setCensoring] = useState('')
   const [is_active, setIsActive] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -68,7 +70,8 @@ function UserProfile() {
       'first_name': first_name,
       'last_name': last_name,
       'email': email,
-      'password': password
+      'password': password,
+      'censored': censoring
     };
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
     const request = await fetch(tokenUrl, {
@@ -103,6 +106,7 @@ function UserProfile() {
       setLastName('');
       setEmail('');
       setUsername('');
+      setCensoring(censoring);
       setPassword('');
       setPassword2('');
       setSuccess(true);
@@ -132,6 +136,26 @@ function UserProfile() {
     }
   }
 
+  async function setSetting(value){
+    setting(value)
+    setCensoring(value)
+    console.log(value)
+  }
+
+  function switchFunctionality()
+  {
+    if(censoring === true){
+      return(
+        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch" checked/>
+      )
+    }
+    else{
+      return(
+        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch"/>
+      )
+    }
+  }
+
   useEffect(() => {
     async function getAccount() {
 
@@ -144,18 +168,19 @@ function UserProfile() {
 
       if (request.ok) {
         const tokenData = await request.json()
+        console.log(tokenData)
         const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
         const autoResponse = await fetch(Url)
 
         if (autoResponse.ok) {
           const autoData = await autoResponse.json()
-          console.log(autoData)
           setAccount(autoData)
           setEmail(autoData.email)
           setFirstName(autoData.first_name)
           setLastName(autoData.last_name)
           setUsername(autoData.username)
           getReviews(autoData.username)
+          setCensoring(autoData.censored)
         }
       }
 
@@ -167,16 +192,11 @@ function UserProfile() {
     const tokenUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
     const request = await fetch(tokenUrl, {
       method: "get", mode: "cors"
-    }
-
-
-      // Other fetch options, like method and body, if applicable
-    );
+    });
 
     if (request.ok) {
       const data = await request.json()
       const filteredReviews = data.filter(rev => { return rev.user.user_name === username2 })
-      console.log(filteredReviews)
       setReviews(filteredReviews)
     }
   }
@@ -285,6 +305,12 @@ function UserProfile() {
                           I accept these changes
                         </label>
                       </div>
+                      <div className="form-check form-switch d-flex justify-content-center mb-5">
+                        {switchFunctionality()}
+                        <label className="form-check-label" htmlFor="switch">
+                          change censor settings.
+                        </label>
+                      </div>
                       {confirmedPassword()}
 
                     </form>
@@ -307,12 +333,12 @@ function UserProfile() {
                 <div className="card-columns">
                   {reviews.map((review) => {
                     return (
-                      <div className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">
-                        <div key={review.id}>
+                      <div key={review.id} className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">
+                        <div>
                           <div className='card-header h4'>{review.title}</div>
                           <div className="card-title">Movie: {review.movie.title}</div>
                           <div className="card-body p-md-5">
-                            <p className="card-text">{review.post}</p>
+                            <p className="card-text">{censors(review.post)}</p>
                           </div>
                           <div className='card-footer'>
                             <div>Rating: {review.rating} stars</div>

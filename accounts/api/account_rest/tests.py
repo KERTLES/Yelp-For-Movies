@@ -58,7 +58,8 @@ class accountsTester(TestCase):
         "first_name" : "matthew", 
         "last_name" : "Oshima", 
 	    "password" : "tatasddasdime",
-	    "username": "lucky"
+	    "username": "lucky",
+        "censor" : True
         }
         self.client.put('/api/accounts/1',data ,content_type="application/json")
         response4 = self.client.get('/api/accounts/1')

@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiFillStar } from "react-icons/ai";
 // import MovieDetail from './MovieDetail';
 import './CreateReviewForm.css';
-
+import { useToken } from "./token"
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useNavigate } from "react-router-dom";
 
 function CreateReviewForm() {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
     const stars = Array(5).fill()
-
+    const [failure, setFailure] = useState(false)
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
     // const [submitted, setSubmitted] = useState('');
     // const [valid, setValid] = useState(false)
-
+    const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
+    const [auth, setAuth] = useState([]);
+    const navigate = useNavigate();
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
     }
@@ -22,8 +26,39 @@ function CreateReviewForm() {
         setPost(event.target.value);
     }
 
+    useEffect(() => {
+        async function authen() {
+          if (token !== null) {
+            const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine`;
+            const request = await fetch(tokenUrl, {
+              method: "get",
+              credentials: "include",
+              mode: "cors",
+            })
+            if (request.ok) {
+              const toDa = await request.json()
+              if (toDa['token'] === token) {
+                setAuth(true)
+              }
+              else {
+                setAuth(false)
+              }
+            }
+            else {
+              setAuth(false)
+            }
+          }
+          else {
+            setAuth(false)
+          }
+        } authen();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []
+      )
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if(auth){
         const data = {
             rating,
             title,
@@ -46,9 +81,21 @@ function CreateReviewForm() {
             const newReview = await response.json()
             console.log('------new review: ', newReview)
         }
+        else{
+                setFailure(true)
+        }
     }
+    }
+    let failuree = '';
 
-
+    if(failure === true)
+    {
+        failuree = "alert alert-danger mb-0"
+    }
+    else
+    {
+        failuree = "alert alert-danger d-none mb-0" 
+    }
     return (
 
         <div className="form-container">
@@ -125,6 +172,9 @@ function CreateReviewForm() {
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary">Submit Review</button>
                             </div>
+                            <div className={failuree} id="failure-message">
+                            Some inputs have been left empty, please fill them in.
+                          </div>
                         </div>
                     </div>
                 </div>
