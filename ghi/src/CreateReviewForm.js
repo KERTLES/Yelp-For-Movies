@@ -38,7 +38,8 @@ function CreateReviewForm() {
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            mode: 'cors',
         };
         const response = await fetch(reviewUrl, fetchConfig)
         if (response.ok) {
