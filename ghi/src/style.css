@@ -32,15 +32,13 @@
     margin-bottom: 2px;
 }
 
-.scroll {
+.scroll  {
+    overflow-y: overlay;
+    /* overflow-y: auto; */
 
-    overflow-y: auto;
-
-    /* scrollbar-color: rebeccapurple green; */
-    scrollbar-width: thin;
-    
-
+    /* scrollbar-width: thin; */
 }
+::-webkit-scrollbar {display:none;}
 
 .text {
     padding-top: 20px;
@@ -53,25 +51,28 @@
 
 .h {
     font-size: 620;
-    /* font-style: oblique; */
     font-weight: 200;
 
 }
 
+
 .review-box {
+    border-color: gray;
     border-radius: 3px;
     width: 100%;
     height: 400px;
     margin-top: 50px;
-    /* margin-left: 10px; */
     margin-right: 10px;
     margin-bottom: 50px;
 
     border-width: 10px;
     border-color: white;
-    background-color: white;
+    background-color: black;
 }
 
+.review-box.div:last-child { 
+    margin-bottom: 0;
+} 
 .review-box2 {
     width: 100%;
     height: auto;
