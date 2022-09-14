@@ -20,7 +20,13 @@ function ListReviewForMovie(data) {
         'Content-type': 'application/json',
       },
     }
-    await fetch(url, fetchConfig)
+    const response = await fetch(url, fetchConfig)
+    if(response.ok){
+      console.log("movie item created")
+    }
+    else{
+      console.log("movie not created")
+    }
   }
 
   const getReviews = async () => {
