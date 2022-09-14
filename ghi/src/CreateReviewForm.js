@@ -92,7 +92,11 @@ function CreateReviewForm(props) {
             if (response.ok) {
                 // eslint-disable-next-line
                 const newReview = await response.json()
+                console.log(newReview)
                 setValid(true)
+            }
+            else{
+                console.log(response.json())
             }
         } else {
             setCheckRating(false)

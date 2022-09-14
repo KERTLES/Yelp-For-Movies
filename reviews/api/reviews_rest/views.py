@@ -99,6 +99,7 @@ def api_list_reviews(request, movie_id=None):
             print(content["movie"])
 
         except Movie.DoesNotExist:
+            print("no movie")
             return JsonResponse(
                 {"ERROR MESSAGE": "Sorry, this movie doesn't exist in the database"},
                 status=400
@@ -109,6 +110,7 @@ def api_list_reviews(request, movie_id=None):
             del content["user_name"]
 
         except UserVO.DoesNotExist:
+            print("no user")
             return JsonResponse(
                 {
                     "message": "invalid username",
