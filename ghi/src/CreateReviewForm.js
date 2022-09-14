@@ -18,6 +18,7 @@ function CreateReviewForm(props) {
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
     const [valid, setValid] = useState(false)
+    // eslint-disable-next-line
     const [checkRating, setCheckRating] = useState('')
     const [clicked, setClicked] = useState(false)
     // const navigate = useNavigate();
@@ -29,12 +30,14 @@ function CreateReviewForm(props) {
     // console.log(props.movie.imdbID)
     // console.log("MOVIE " + props["movie"]["Title"])
 
-
+    // eslint-disable-next-line
     const [failure, setFailure] = useState(false)
     // const [submitted, setSubmitted] = useState('');
     // const [valid, setValid] = useState(false)
+    // eslint-disable-next-line
     const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
     const [auth, setAuth] = useState([]);
+    // eslint-disable-next-line
     const navigate = useNavigate();
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
@@ -111,10 +114,11 @@ function CreateReviewForm(props) {
             };
             const response = await fetch(reviewUrl, fetchConfig)
             if (response.ok) {
+                // eslint-disable-next-line
                 const newReview = await response.json()
                 // console.log('------new review: ', newReview)
                 setValid(true)
-                {<ListReviewForMovie/>}
+                {ListReviewForMovie}
 
             }
         } else {
@@ -154,7 +158,7 @@ function CreateReviewForm(props) {
                     <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabi="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-centered">
                             <div className="modal-content">
-                                {rating == 0 && clicked ? <div className='req-rating'>Please provide a rating!</div> : null}
+                                {rating === 0 && clicked ? <div className='req-rating'>Please provide a rating!</div> : null}
 
                                 {submitted && valid ? <div className="success-message">Thanks for your review!</div> : null}
                                 <div className="modal-header">
