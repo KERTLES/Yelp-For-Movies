@@ -10,6 +10,7 @@ function Login() {
   // eslint-disable-next-line
   const [is_active, setIsActive] = useState(false)
   const [success, setSuccess] = useState('')
+  // eslint-disable-next-line
   const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
 
