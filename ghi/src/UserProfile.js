@@ -8,13 +8,13 @@ function UserProfile() {
   // eslint-disable-next-line
   const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
   // const [login] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
-  const [first_name, setFirstName] = useState('1');
-  const [last_name, setLastName] = useState('1');
-  const [email, setEmail] = useState('1');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [tokenID, setID] = useState('');
-  const [censoring, setCensoring] = useState(true)
+  const [censoring, setCensoring] = useState('')
   const [is_active, setIsActive] = useState(false);
-  const [username, setUsername] = useState('1');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [success, setSuccess] = useState('');
@@ -157,20 +157,6 @@ function UserProfile() {
       console.log("censorship status has been changed")
     }
     console.log(value)
-  }
-
-  function switchFunctionality()
-  {
-    if(censoring === true){
-      return(
-        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch" checked/>
-      )
-    }
-    else{
-      return(
-        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch"/>
-      )
-    }
   }
 
   useEffect(() => {
@@ -323,7 +309,7 @@ function UserProfile() {
                         </label>
                       </div>
                       <div className="form-check form-switch d-flex justify-content-center mb-5">
-                        {switchFunctionality()}
+                      <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" checked={!! censoring} type="checkbox" id="switch"/>
                         <label className="form-check-label" htmlFor="switch">
                           change censor settings.
                         </label>
