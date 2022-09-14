@@ -56,7 +56,7 @@ function Login() {
     if (password !== "") {
       return (
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-          <button className="btn btn-primary btn-lg">Sign In</button>
+          <button className="btn btn-outline-primary btn-lg">Sign In</button>
         </div>)
     }
   }

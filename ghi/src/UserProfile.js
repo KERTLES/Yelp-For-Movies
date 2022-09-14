@@ -25,7 +25,7 @@ function UserProfile() {
     if (password === password2 && password !== "" && is_active === true) {
       return (
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-          <button className="btn btn-primary btn-lg">Submit</button>
+          <button className="btn btn-outline-primary btn-lg">Submit</button>
         </div>)
     }
   }

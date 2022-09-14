@@ -215,7 +215,7 @@ function CreateReviewForm(props) {
                                 Please provide your review.
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button type="submit">Submit form</Button>
+                        <Button type="submit" variant="outline-primary">Submit form</Button>
                     </Form>
                 </Modal.Body>
 
