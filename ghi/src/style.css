@@ -34,11 +34,11 @@
 
 .scroll  {
     overflow-y: overlay;
-    /* overflow-y: auto; */
-
-    /* scrollbar-width: thin; */
 }
-::-webkit-scrollbar {display:none;}
+
+#scrolling::-webkit-scrollbar {
+    display: none;
+}
 
 .text {
     padding-top: 20px;
