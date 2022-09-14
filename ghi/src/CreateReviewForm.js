@@ -3,13 +3,17 @@ import { AiFillStar } from "react-icons/ai";
 import './CreateReviewForm.css';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
+import { useToken } from "./token"
+import { useNavigate } from "react-router-dom";
 
 
 function CreateReviewForm(props) {
+
+    const [token, login, logout] = useToken();
+    const [auth, setAuth] = useState([]);
+    const navigate = useNavigate();
+
     const [validated, setValidated] = useState(false);
     const [show, setShow] = useState(false);
 
@@ -21,9 +25,16 @@ function CreateReviewForm(props) {
 
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
-    const stars = Array(5).fill()
+    const stars = [1, 2, 3, 4, 5];
 
     const [userName, setUserName] = useState('');
+
+    const [checkRating, setCheckRating] = useState('');
+    const [clicked, setClicked] = useState(false);
+
+    const [submitForm, setSubmitForm] = useState(false);
+    const [valid, setValid] = useState(false);
+
 
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
@@ -38,8 +49,15 @@ function CreateReviewForm(props) {
     submitted["imdb_id"] = props.movie.imdbID
     // console.log("MOVIE " + props["movie"]["Title"])
 
+    const showModal = () => { 
+        if (auth) {
+            handleShow()
+        } else {
+            navigate("/Login");
+        }
+    };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -47,20 +65,95 @@ function CreateReviewForm(props) {
         }
         setValidated(true);
 
+        if (title && post && rating) {
+            setValid(true);
+        }
+        setSubmitForm(true);
+        setClicked(true)
+
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
 
-        const data = {
-            rating,
-            title,
-            post,
-        }
+        if (rating != 0) {
+            setCheckRating(true)
+            console.log('check rating 11111111111111111111', setCheckRating)
 
+            const data = {
+                rating,
+                title,
+                post,
+            }
+            // append imdb_id to the data being submitted
+            data['imdb_id'] = submitted['imdb_id']
+            data["user_name"] = userName
+            const fetchConfig = {
+                method: 'post',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            };
+            const response = await fetch(reviewUrl, fetchConfig)
+            if (response.ok) {
+                const newReview = await response.json()
+                // console.log('------new review: ', newReview)
+                setValid(true)
+            }
+        } else {
+            setCheckRating(false)
+            console.log('check rating 22222222222222222222222', setCheckRating)
+        }            
     };
+
+    // gets the username
+    useEffect(() => {
+        async function getToken() {
+            const userTokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`
+            const request = await fetch(userTokenUrl, { method: "delete", credentials: "include" })
+
+            if (request.ok) {
+                const responseData = await request.json()
+                setUserName(responseData.token.username)
+                // console.log(responseData.token.username)
+            }
+        }
+        getToken()
+    }, [])
+
+    // gets cookies from browser, and compares to token JS
+    useEffect(() => {
+        async function authen() {
+            if (token !== null) {
+                const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine`;
+                const request = await fetch(tokenUrl, {
+                    method: "get",
+                    credentials: "include",
+                    mode: "cors",
+                })
+                if (request.ok) {
+                    const toDa = await request.json()
+                    if (toDa['token'] === token) {
+                        setAuth(true)
+                    }
+                    else {
+                        setAuth(false)
+                    }
+                }
+                else {
+                    setAuth(false)
+                }
+            }
+            else {
+                setAuth(false)
+            }
+        } authen();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []
+    )
 
 
     return (
         <>
-            <Button variant="light create-review-button" onClick={handleShow}>Create A Review</Button>
+            <Button variant="light create-review-button" onClick={showModal}>Create A Review</Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -71,48 +164,30 @@ function CreateReviewForm(props) {
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
 
                         <Form.Group className="mb-3" controlId="validationCustom01">
-                            {['radio'].map((type) => (
-                                <div key={`inline-${type}`} className="mb-3">
-                                    <Form.Check
-                                        inline
-                                        label="1"
-                                        name="group1"
-                                        type={type}
-                                        id={`inline-${type}-1`}
+                            {rating === 0 && clicked ? <div className='req-rating'>Please provide a rating!</div> : null}
+                            <div className="stars">
+                                {stars.map((star, i) => rating >= i + 1 || hoverRating >= i + 1 ? (
+                                    <AiFillStar
+                                        key={i}
+                                        // while hovering over the stars
+                                        onMouseOver={() => !rating && setHoverRating(i + 1)}
+                                        onMouseLeave={() => setHoverRating('')}
+                                        color={"#FFD700"}
+                                        size={50}
+                                        onClick={() => setRating(i + 1)}
                                     />
-                                    <Form.Check
-                                        inline
-                                        label="2"
-                                        name="group1"
-                                        type={type}
-                                        id={`inline-${type}-2`}
+                                ) : (
+                                    <AiFillStar
+                                        key={i}
+                                        onMouseOver={() => !rating && setHoverRating(i + 1)}
+                                        onMouseLeave={() => setHoverRating('')}
+                                        color={"#A9A9A9"}
+                                        size={50}
+                                        onClick={() => setRating(i + 1)}
                                     />
-                                    <Form.Check
-                                        inline
-                                        label="3"
-                                        name="group1"
-                                        type={type}
-                                        id={`inline-${type}-3`}
-                                    />
-                                    <Form.Check
-                                        inline
-                                        label="4"
-                                        name="group1"
-                                        type={type}
-                                        id={`inline-${type}-4`}
-                                    />
-                                    <Form.Check
-                                        inline
-                                        label="5"
-                                        name="group1"
-                                        type={type}
-                                        id={`inline-${type}-5`}
-                                    />
-                                </div>
-                            ))}
-                            <Form.Control.Feedback type="invalid">
-                                Please provide a rating.
-                            </Form.Control.Feedback>
+                                )
+                                )}
+                            </div>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="validationCustom02">
@@ -122,6 +197,7 @@ function CreateReviewForm(props) {
                                 onChange={handleTitleInputChange}
                                 value={title}
                                 type="text"
+                                name="title"
                                 placeholder="What's most important to know?"
                             />
                             <Form.Control.Feedback type="invalid">
@@ -129,14 +205,16 @@ function CreateReviewForm(props) {
                             </Form.Control.Feedback>
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="validationCustom03">
+                        <Form.Group className="mb-3">
                             <Form.Label>What did you think?</Form.Label>
                             <Form.Control
                                 required
+                                onChange={handlePostInputChange}
                                 as="textarea"
                                 rows={3}
-                                onChange={handlePostInputChange}
                                 value={post}
+                                name="post"
+                                id="post"
                                 placeholder="Enter your review..."
                             />
                             <Form.Control.Feedback type="invalid">
