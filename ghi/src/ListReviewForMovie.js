@@ -15,6 +15,7 @@ function ListReviewForMovie(data) {
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(post_data),
+      mode: "cors",
       headers: {
         'Content-type': 'application/json',
       },
@@ -23,7 +24,7 @@ function ListReviewForMovie(data) {
   }
 
   const getReviews = async () => {
-    const response = await fetch(`${review_api}/api/reviews/${data.movie.imdbID}/`)
+    const response = await fetch(`${review_api}/api/reviews/${data.movie.imdbID}/`, {mode: "cors"})
     if (response.ok) {
       const data = await response.json();
       setReviews(data)
@@ -53,7 +54,7 @@ function ListReviewForMovie(data) {
                 </div>
               </div>
             </div>
-          </div >
+          </div>
         </>
       )
     } else {
