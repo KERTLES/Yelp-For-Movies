@@ -1,7 +1,5 @@
 // import React, { useState, useEffect } from "react"
 import { Link } from 'react-router-dom';
-
-
 function MovieCardBody(column, col_idx) {
   return (
     <div key={col_idx} className="col">
