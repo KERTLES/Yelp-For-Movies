@@ -33,12 +33,8 @@
 }
 
 .scroll  {
-    overflow-y: overlay;
-    /* overflow-y: auto; */
-
-    /* scrollbar-width: thin; */
+    overflow: hidden;
 }
-::-webkit-scrollbar {display:none;}
 
 .text {
     padding-top: 20px;
