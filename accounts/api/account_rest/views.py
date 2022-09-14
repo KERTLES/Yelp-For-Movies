@@ -87,6 +87,26 @@ def api_list_accounts(request):
             response.status_code = 400
             return response
 
+
+def update_censors(request, pk):
+    if(request.method == "PUT"):
+        account = Account.objects.get(id=pk)
+        content = json.loads(request.body)
+        ncensor = content['censored']
+
+        Account.objects.filter(id=pk).update(censored = ncensor)
+
+        account = Account.objects.get(id=pk)
+        print(account.censored)
+        return JsonResponse(
+            account,
+            encoder=AccountDetailEncoder,
+            safe=False,
+        )
+    else:
+        return JsonResponse(
+            {"message": "failed"}
+        )
 @require_http_methods(["DELETE", "PUT", "GET"])
 def api_show_account(request, pk):
     if request.method == "GET":

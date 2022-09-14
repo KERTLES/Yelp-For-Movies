@@ -11,6 +11,7 @@ function UserProfile() {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [tokenID, setID] = useState('');
   const [censoring, setCensoring] = useState('')
   const [is_active, setIsActive] = useState(false);
   const [username, setUsername] = useState('');
@@ -70,8 +71,7 @@ function UserProfile() {
       'first_name': first_name,
       'last_name': last_name,
       'email': email,
-      'password': password,
-      'censored': censoring
+      'password': password
     };
     const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`;
     const request = await fetch(tokenUrl, {
@@ -80,13 +80,11 @@ function UserProfile() {
       mode: "cors",
     })
     let accountUrl = "";
-    // eslint-disable-next-line
-    let tokenNum = 0;
     if (request.ok) {
       let tokenData = await request.json()
       accountUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
       // eslint-disable-next-line
-      tokenNum = tokenData.token['id']
+      setID(tokenData.token['id'])
     }
     else {
       console.log("error")
@@ -113,6 +111,7 @@ function UserProfile() {
       setFailureE(false)
       setFailureU(false)
       setIsActive(false)
+      setID(tokenID)
       const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
 
       const form = new FormData();
@@ -133,12 +132,30 @@ function UserProfile() {
       checker()
       setPassword2('')
       setSuccess(false)
+      
     }
   }
 
   async function setSetting(value){
     setting(value)
     setCensoring(value)
+    const data = {
+      'censored': (!censoring)
+    }
+    const censorUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/censor/${tokenID}`;
+    const fetchSoldConfig = {
+      method: "put",
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      mode: "cors",
+    };
+    const censorResponse = await fetch(censorUrl, fetchSoldConfig);
+    if(censorResponse.ok)
+    {
+      console.log("censorship status has been changed")
+    }
     console.log(value)
   }
 
@@ -180,6 +197,7 @@ function UserProfile() {
           setLastName(autoData.last_name)
           setUsername(autoData.username)
           getReviews(autoData.username)
+          setID(tokenData.token['id'])
           setCensoring(autoData.censored)
         }
       }

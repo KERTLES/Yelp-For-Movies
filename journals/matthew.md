@@ -53,3 +53,9 @@
 
 ## September 09, 2022
     Today, we managed to get the login feature to work properly on the deployed side of the project. I had to make adjustments to the way the site checked the user in order for the logout and profile pages to show up. I will have to check with the other team members to see if anything else needs to be adjusted. I was suggested to move away from using Django for login functionality and exclusively use DJWTO.
+
+## September 12, 2022
+    Today, I helped out with trying to figure out how to get the create reviews form to work properly. Right now, when you try to exit the page, it leaves the page in a faded state where you can't click on anything. I also began doing work on a censorship feature that replaces words on a list with symbols.
+
+## September 13, 2022
+    Today, I did a lot of work trying to get my tests In had made earlier to work again. With And's help, we found out that the names for each of the test functions had to be capitalized after the test_ portion and that it has to be a singular word. Neither of us understand why this is the case. I also made some new views functions to make it so that the censorship option is something that can be updated independently of every other update parameter. So, now a use can update their censorship options without changing any of the other parameters.

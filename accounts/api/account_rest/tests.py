@@ -44,25 +44,6 @@ class accountsTester(TestCase):
         response = self.client.get(f'/api/accounts/{self.account2}')
         content=response.json()
         self.assertEqual(content["username"], 'sticker')
-        # response = self.client.get("/api/accounts/2")
-        # content=response.json()
-        # self.assertEqual(content["username"], 'sticker')
-
-    #     data = json.dumps({
-    #     "email": "hekitty@gmail.com", 
-    #     "first_name" : "matthew", 
-    #     "last_name" : "Oshima", 
-	#     "password" : "tatasddasdime",
-	#     "username": "lucky",
-    #     "censored" : True
-    #     })
-    #     response = self.client.put("/api/accounts/1", data, content_type="application/json")
-    #     self.assertEqual(response.status_code, 200)
-    #     response4 = self.client.get("/api/accounts/1")
-    #     content = response4.json()
-    #     self.assertEqual(content["username"], "lucky")
-    #     self.assertEqual(content["first_name"], "matthew")
-
     
     def test_Logabooga(self):
         data = json.dumps({
@@ -70,8 +51,7 @@ class accountsTester(TestCase):
         "first_name" : "matthew", 
         "last_name" : "Oshima", 
 	    "password" : "tatasddasdime",
-	    "username": "lucky",
-        "censored" : True
+	    "username": "lucky"
         })
         response = self.client.put("/api/accounts/1", data, content_type="application/json")
         self.assertEqual(response.status_code, 200)
