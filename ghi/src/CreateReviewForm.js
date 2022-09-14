@@ -1,45 +1,43 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AiFillStar } from "react-icons/ai";
-import './CreateReviewForm.css';
-import ListReviewForMovie from './ListReviewForMovie';
-// import { Navigate } from 'react-router-dom';
-
 import { useToken } from "./token"
-// eslint-disable-next-line
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import './CreateReviewForm.css';
+
 
 function CreateReviewForm(props) {
 
-    const [rating, setRating] = useState(0);
-    const [hoverRating, setHoverRating] = useState(0);
-    const stars = Array(5).fill()
-    const [userName, setUserName] = useState('');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const [token, login, logout] = useToken();
+    const [auth, setAuth] = useState([]);
+    const navigate = useNavigate();
+
+    const [validated, setValidated] = useState(false);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const [title, setTitle] = useState('');
     const [post, setPost] = useState('');
-    const [valid, setValid] = useState(false)
-    // eslint-disable-next-line
-    const [checkRating, setCheckRating] = useState('')
-    const [clicked, setClicked] = useState(false)
-    // const navigate = useNavigate();
 
-    const submitted = useRef();
-    // imdbID is variable from MovieDetail.js
-    submitted["imdb_id"] = props.movie.imdbID
-    // console.log(props)
-    // console.log(props.movie.imdbID)
-    // console.log("MOVIE " + props["movie"]["Title"])
+    const [rating, setRating] = useState(0);
+    const [hoverRating, setHoverRating] = useState(0);
+    const stars = [1, 2, 3, 4, 5];
 
-    // eslint-disable-next-line
-    const [failure, setFailure] = useState(false)
-    // const [submitted, setSubmitted] = useState('');
-    // const [valid, setValid] = useState(false)
-    // eslint-disable-next-line
-    const [token, login, logout] = useToken(); // for some reason, login has to be included here, even if it is never used.
-    const [auth, setAuth] = useState([]);
-    // eslint-disable-next-line
-    const navigate = useNavigate();
+    const [userName, setUserName] = useState('');
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const [checkRating, setCheckRating] = useState('');
+    
+    const clicked = false
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const [valid, setValid] = useState(false);
+
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
     }
@@ -48,53 +46,30 @@ function CreateReviewForm(props) {
         setPost(event.target.value);
     }
 
-    useEffect(() => {
-        async function authen() {
-          if (token !== null) {
-            const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine`;
-            const request = await fetch(tokenUrl, {
-              method: "get",
-              credentials: "include",
-              mode: "cors",
-            })
-            if (request.ok) {
-              const toDa = await request.json()
-              if (toDa['token'] === token) {
-                setAuth(true)
-              }
-              else {
-                setAuth(false)
-              }
-            }
-            else {
-              setAuth(false)
-            }
-          }
-          else {
-            setAuth(false)
-          }
-        } authen();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []
-      )
-    
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setClicked(true)
-        // navigate();
-        if(auth){
-        const data = {
-            rating,
-            title,
-            post,
+    const submitted = useRef();
+    // imdbID is variable from MovieDetail.js
+    submitted["imdb_id"] = props.movie.imdbID
+    // console.log("MOVIE " + props["movie"]["Title"])
+
+    const showModal = () => { 
+        if (auth) {
+            handleShow()
+        } else {
+            navigate("/Login");
         }
-        console.log('****************************data', data)
+    };
+
+    const handleSubmit = async (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        setValidated(true);
 
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
-        // console.log("%%%%%%%%%%%%%%%%%%%%%%review url", reviewUrl)
-        // console.log(clicked)
-        if (rating !== 0) {
 
+        if (rating != 0) {
             setCheckRating(true)
 
             const data = {
@@ -102,7 +77,6 @@ function CreateReviewForm(props) {
                 title,
                 post,
             }
-
             // append imdb_id to the data being submitted
             data['imdb_id'] = submitted['imdb_id']
             data["user_name"] = userName
@@ -115,22 +89,16 @@ function CreateReviewForm(props) {
             };
             const response = await fetch(reviewUrl, fetchConfig)
             if (response.ok) {
-                // eslint-disable-next-line
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 const newReview = await response.json()
-                // console.log('------new review: ', newReview)
                 setValid(true)
-                // eslint-disable-next-line
-                {<ListReviewForMovie/>}
-
             }
         } else {
-            // console.log(checkRating)
             setCheckRating(false)
-        }
-    }
-    }
-    let failuree = '';
+        }            
+    };
 
+    // gets the username
     useEffect(() => {
         async function getToken() {
             const userTokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`
@@ -141,191 +109,119 @@ function CreateReviewForm(props) {
                 setUserName(responseData.token.username)
                 // console.log(responseData.token.username)
             }
-
         }
         getToken()
-        // handleSubmit()
-
-
     }, [])
 
-    function renderForm() {
+    // gets cookies from browser, and compares to token JS
+    useEffect(() => {
+        async function authen() {
+            if (token !== null) {
+                const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine`;
+                const request = await fetch(tokenUrl, {
+                    method: "get",
+                    credentials: "include",
+                    mode: "cors",
+                })
+                if (request.ok) {
+                    const toDa = await request.json()
+                    if (toDa['token'] === token) {
+                        setAuth(true)
+                    }
+                    else {
+                        setAuth(false)
+                    }
+                }
+                else {
+                    setAuth(false)
+                }
+            }
+            else {
+                setAuth(false)
+            }
+        } authen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []
+    )
 
-        return (
-            <div className="form-container">
-                {/* button to trigger modal pop up */}
 
-                <form onSubmit={handleSubmit} id="review-form">
-                    {/* modal */}
-                    <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabi="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div className="modal-dialog modal-dialog-centered">
-                            <div className="modal-content">
-                                {rating === 0 && clicked ? <div className='req-rating'>Please provide a rating!</div> : null}
-
-                                {submitted && valid ? <div className="success-message">Thanks for your review!</div> : null}
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="staticBackdropLabel">Write your review for {props["movie"]["Title"]}</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-
-                                <div className="modal-body">
-                                    <div className="stars">
-                                        {stars.map((star, i) => rating >= i + 1 || hoverRating >= i + 1 ? (
-                                            <AiFillStar
-                                                key={i}
-                                                // while hovering over the stars
-                                                onMouseOver={() => !rating && setHoverRating(i + 1)}
-                                                onMouseLeave={() => setHoverRating('')}
-                                                color={"#FFD700"}
-                                                size={50}
-                                                onClick={() => setRating(i + 1)}
-                                            />
-                                        ) : (
-                                            <AiFillStar
-                                                key={i}
-                                                onMouseOver={() => !rating && setHoverRating(i + 1)}
-                                                onMouseLeave={() => setHoverRating('')}
-                                                color={"#A9A9A9"}
-                                                size={50}
-                                                onClick={() => setRating(i + 1)}
-                                            />
-                                        )
-                                        )}
-                                    </div>
-
-                                    <div className="mb-4">
-                                        <label htmlFor="headline-prompt" className="form-label">Headline</label>
-                                        <input
-                                            onChange={handleTitleInputChange}
-                                            required value={title}
-                                            type="text"
-                                            className="form-control"
-                                            id="title"
-                                            name="title"
-                                            placeholder="What's most important to know?"
-                                        />
-                                    </div>
-
-                                    <div className="mb-4">
-                                        <label htmlFor="post-prompt" className="form-label">What did you think?</label>
-                                        <textarea
-                                            onChange={handlePostInputChange}
-                                            required value={post}
-                                            type="text"
-                                            className="form-control"
-                                            id="post"
-                                            name="post"
-                                            placeholder="Enter your review...">
-                                        </textarea>
-                                    </div>
-                                </div>
-
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Submit Review</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-            </div>
-        )
-    }
-
-    if(failure === true)
-    {
-        failuree = "alert alert-danger mb-0"
-    }
-    else
-    {
-        failuree = "alert alert-danger d-none mb-0" 
-    }
     return (
-        <div>
-            <button type="button" className="create-review-button btn btn-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Create A Review
-            </button>
+        <>
+            <Button variant="light create-review-button" onClick={showModal}>Create A Review</Button>
 
-            {submitted && valid && clicked ? null : renderForm()}
-            <form onSubmit={handleSubmit} id="review-form">
-                {/* modal */}
-                <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabi="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
-                            {/* submitted && valid? */}
-                            {/* {submitted ? <div className="success-message">Thanks for your review!</div> : null} */}
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="staticBackdropLabel">Write your review for MOVIE NAME</h5>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Write your review for {props["movie"]["Title"]}</Modal.Title>
+                </Modal.Header>
 
-                            <div className="modal-body">
-                                <div className="stars">
-                                    {stars.map((star, i) => rating >= i + 1 || hoverRating >= i + 1 ? (
-                                        <AiFillStar
-                                            // while hovering over the stars
-                                            onMouseOver={() => !rating && setHoverRating(i + 1)}
-                                            onMouseLeave={() => setHoverRating('')}
-                                            color={"#FFD700"}
-                                            size={50}
-                                            onClick={() => setRating(i + 1)}
-                                        />
-                                    ) : (
-                                        <AiFillStar
-                                            onMouseOver={() => !rating && setHoverRating(i + 1)}
-                                            onMouseLeave={() => setHoverRating('')}
-                                            color={"#A9A9A9"}
-                                            size={50}
-                                            onClick={() => setRating(i + 1)}
-                                        />
-                                    )
-                                    )}
-                                </div>
+                <Modal.Body>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
 
-                                <div className="mb-4">
-                                    <label htmlFor="headline-prompt" className="form-label">Headline</label>
-                                    <input
-                                        onChange={handleTitleInputChange}
-                                        value={title}
-                                        type="text"
-                                        className="form-control"
-                                        id="title"
-                                        name="title"
-                                        placeholder="What's most important to know?"
+                        <Form.Group className="mb-3" controlId="validationCustom01">
+                            {rating === 0 && clicked ? <div className='req-rating'>Please provide a rating!</div> : null}
+                            <div className="stars">
+                                {stars.map((star, i) => rating >= i + 1 || hoverRating >= i + 1 ? (
+                                    <AiFillStar
+                                        key={i}
+                                        // while hovering over the stars
+                                        onMouseOver={() => !rating && setHoverRating(i + 1)}
+                                        onMouseLeave={() => setHoverRating('')}
+                                        color={"#FFD700"}
+                                        size={50}
+                                        onClick={() => setRating(i + 1)}
                                     />
-                                    {/* <span id="title-error">Please enter a title for your movie review</span> */}
-                                </div>
-
-                                <div className="mb-4">
-                                    <label htmlFor="post-prompt" className="form-label">What did you think?</label>
-                                    <textarea
-                                        onChange={handlePostInputChange}
-                                        value={post}
-                                        type="text"
-                                        className="form-control"
-                                        id="post"
-                                        name="post"
-                                        placeholder="Enter your review...">
-                                    </textarea>
-                                    {/* <span id="title-error">Please enter a title for your movie review</span> */}
-                                </div>
+                                ) : (
+                                    <AiFillStar
+                                        key={i}
+                                        onMouseOver={() => !rating && setHoverRating(i + 1)}
+                                        onMouseLeave={() => setHoverRating('')}
+                                        color={"#A9A9A9"}
+                                        size={50}
+                                        onClick={() => setRating(i + 1)}
+                                    />
+                                )
+                                )}
                             </div>
+                        </Form.Group>
 
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" className="btn btn-primary">Submit Review</button>
-                            </div>
-                            <div className={failuree} id="failure-message">
-                            Some inputs have been left empty, please fill them in.
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
+                        <Form.Group className="mb-3" controlId="validationCustom02">
+                            <Form.Label>Headline</Form.Label>
+                            <Form.Control
+                                required
+                                onChange={handleTitleInputChange}
+                                value={title}
+                                type="text"
+                                name="title"
+                                placeholder="What's most important to know?"
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide a title for your post.
+                            </Form.Control.Feedback>
+                        </Form.Group>
 
+                        <Form.Group className="mb-3">
+                            <Form.Label>What did you think?</Form.Label>
+                            <Form.Control
+                                required
+                                onChange={handlePostInputChange}
+                                as="textarea"
+                                rows={3}
+                                value={post}
+                                name="post"
+                                id="post"
+                                placeholder="Enter your review..."
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Please provide your review.
+                            </Form.Control.Feedback>
+                        </Form.Group>
+                        <Button type="submit">Submit form</Button>
+                    </Form>
+                </Modal.Body>
+
+            </Modal>
+        </>
     );
 }
-export default CreateReviewForm;
 
+export default CreateReviewForm;
