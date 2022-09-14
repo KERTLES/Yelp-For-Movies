@@ -33,12 +33,12 @@
 }
 
 .scroll  {
-    overflow-y: overlay;
-    /* overflow-y: auto; */
+    overflow-y: show;
+} 
 
-    /* scrollbar-width: thin; */
-}
-::-webkit-scrollbar {display:none;}
+.scroll2  {
+    overflow-y: hidden;
+} 
 
 .text {
     padding-top: 20px;
