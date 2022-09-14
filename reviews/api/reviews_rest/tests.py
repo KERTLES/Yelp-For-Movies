@@ -1,7 +1,7 @@
 
 from django.test import TestCase
 from .views import api_list_movies
-from models import Movie
+from .models import Movie
 import random
 import json
 import os
@@ -33,12 +33,14 @@ class MovieTest(TestCase):
 
         response = self.client.post(
             "/api/movies/", data, content_type="application/json",)
-        
+        #self.
         response_movie = self.client.get("/api/movies/tt150231/")
         content = response_movie.json()
         self.assertEqual(content["imdb_id"],data["imdb_id"])
     
-    def test_get_specific_movie(self):
-        response = self.client.get("/api/movies/" + self.movie["imdb_id"])
+    def test_Getspecificmovie(self):
+        
+        response = self.client.get(f'/api/movies/{self.movie.imdb_id}/')
         content = response.json()
-        self.assertEqual(content["imdb_id"],self.movie["imdb_id"])
+   
+        self.assertEqual(content["imdb_id"],self.movie.imdb_id)

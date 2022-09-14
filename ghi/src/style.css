@@ -32,13 +32,11 @@
     margin-bottom: 2px;
 }
 
-.scroll  {
-    overflow-y: overlay;
-    /* overflow-y: auto; */
-
-    /* scrollbar-width: thin; */
+.scroller  {
+    overflow: hidden;
 }
-::-webkit-scrollbar {display:none;}
+
+
 
 .text {
     padding-top: 20px;
