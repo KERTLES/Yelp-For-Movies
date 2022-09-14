@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './style.css'
+import { censors } from './fun'
 
 function ListReviewForMovie(data) {
   const [reviews, setReviews] = useState([])
@@ -31,6 +32,8 @@ function ListReviewForMovie(data) {
       console.log("Still not ok")
     }
   }
+
+
 
   useEffect(() => {
     getMovies()
@@ -64,7 +67,7 @@ function ListReviewForMovie(data) {
                 {checkIfRatings(review.rating)}
                 <h className="h" key={i}> {review.title}</h>
                 <br></br>
-                <span>{review.post}</span>
+                <span>{censors(review.post)}</span>
               </div>
             )
           })}

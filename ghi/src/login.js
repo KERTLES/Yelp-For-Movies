@@ -1,8 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
-
-
 function Login() {
   // eslint-disable-next-line
   const [token, login] = useToken();
@@ -42,8 +40,6 @@ function Login() {
           mode: "cors",
         });
         if (response.ok) {
-          // const data = await response.json();
-          // const token = data.token;
           setUsername('')
           setPassword('')
           setSuccess(true)
@@ -57,9 +53,7 @@ function Login() {
       setUsername('')
       setPassword('')
       setSuccess(false)
-      // let error = await response.json();
     }
-    // DO SOMETHING WITH THE ERROR, IF YOU WANT
   }
   function confirmedPassword() {
     if (password !== "") {
