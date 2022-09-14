@@ -63,20 +63,6 @@ function Login() {
     }
   }
 
-  useEffect(() => {
-    async function getAccounts() {
-      const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-      const autoResponse = await fetch(Url)
-
-      if (autoResponse.ok) {
-        const autoData = await autoResponse.json()
-        setAccounts(autoData.accounts)
-      }
-
-    }
-    getAccounts();
-  }, [])
-
   function handleSubmit(event) {
     event.preventDefault();
     clogin(username, password)
@@ -154,6 +140,6 @@ function Login() {
       </div>
     </section>
 
-  )
+  );
 }
-export default Login
+export default Login;
