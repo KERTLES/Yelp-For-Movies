@@ -1,10 +1,9 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function Login() {
   // eslint-disable-next-line
   const [token, login] = useToken();
-  // const [login] = useToken();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   // eslint-disable-next-line
@@ -29,9 +28,6 @@ function Login() {
       body: form,
     });
     if (response.ok) {
-      const userdata = await response.json()
-      console.log(userdata)
-      // For Djangor services, use this one
       login(username, password)
       const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
@@ -60,7 +56,7 @@ function Login() {
     if (password !== "") {
       return (
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-          <button className="btn btn-primary btn-lg">Sign In</button>
+          <button className="btn btn-outline-primary btn-lg">Sign In</button>
         </div>)
     }
   }
@@ -115,11 +111,11 @@ function Login() {
                           <label className="form-label" htmlFor="form3Example4c">Password</label>
                         </div>
                       </div>
-
-
                       {confirmedPassword()}
-
                     </form>
+                    <div className="text-center">
+                      Don't have an account? <a href={`${process.env.PUBLIC_URL}/SignupPage`}>Signup</a>
+                    </div>
                     <div className={successful} id="success-message">
                       Successfully Logged In Account
                     </div>

@@ -59,15 +59,15 @@ function ListReviewForMovie(data) {
       )
     } else {
       return (
-        <div className='review-box scroll webkit-scrollbar'>
+
+        <div className='review-box scroll' id="scrolling">
           {reviews.map((review, i) => {
             return (
-              <div key={i}className='bg-white mb-4 rounded-3 border border-dark text'>
+              <div key={i} className='bg-white mb-4 rounded-3 border border-dark text'>
                 <span className="user">{'@' + review.user.user_name}</span>
                 <span className="style">{'\t'}{review.date}</span>
                 {checkIfRatings(review.rating)}
-                <h className="h" key={i}> {review.title}</h>
-                <br></br>
+                <div key={i}> {review.title}</div>
                 <span>{censors(review.post)}</span>
               </div>
             )
@@ -82,9 +82,9 @@ function ListReviewForMovie(data) {
     return (
       <>
         <div className="rating-color ratings i">
-          {[...Array(rating)].map((star) => {
+          {[...Array(rating)].map((star, i) => {
             return (
-              <span className="star">&#9733;</span>
+              <span key={i} className="star">&#9733;</span>
             );
           })}
         </div>

@@ -6,7 +6,7 @@ urlpatterns = [
     path("movies/", api_list_movies, name="create_movie"),
     # checks if movie at id exists in database. If it doesn't, create one.
 
-    path("movies/", api_list_movies, name="list_movies"),
+    path("movies/<str:imdb_id>/", api_list_movies, name="list_movies"),
     path("reviews/<str:imdb_id>/", api_list_reviews_by_imdb_id, name="list_reviews"),
     # path("reviews/<int:movie_id>/", api_list_reviews, name="review_by_id"),
     

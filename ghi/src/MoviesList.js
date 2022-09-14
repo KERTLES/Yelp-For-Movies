@@ -3,7 +3,7 @@ import MovieCardBody from "./MovieCardBody"
 
 
 function MoviesList(props) {
-    const [movieColumns, setMovieColumns] = useState([[],[],[],[],[]]) //(Array(5).fill([]))
+    const [movieColumns, setMovieColumns] = useState([[],[],[],[],[]])
     const [movies, setMovies] = useState([])
     const apiKey = process.env.REACT_APP_TMDB_API_KEY
     const tmdbURL = process.env.REACT_APP_TMDB_URL
@@ -28,7 +28,7 @@ function MoviesList(props) {
     
 
     useEffect(() => {
-        const columns = [[],[],[],[],[]] //Array(5).fill([])
+        const columns = [[],[],[],[],[]]
         let i = 0
         for (const movie of movies) {
             columns[i].push(movie)
