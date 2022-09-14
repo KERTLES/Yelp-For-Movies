@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './style.css'
+import { censors } from './fun'
 
 function ListReviewForMovie(data) {
   const [reviews, setReviews] = useState([])
@@ -32,6 +33,8 @@ function ListReviewForMovie(data) {
     }
   }
 
+
+
   useEffect(() => {
     getMovies()
     getReviews()
@@ -55,15 +58,15 @@ function ListReviewForMovie(data) {
       )
     } else {
       return (
-        <div className='review-box scroll webkit-scrollbar'>
+        <div className='review-box scroll' id="scrolling">
           {reviews.map((review, i) => {
             return (
               <div key={i} className='bg-white mb-4 rounded-3 border border-dark text'>
                 <span className="user">{'@' + review.user.user_name}</span>
                 <span className="style">{'\t'}{review.date}</span>
                 {checkIfRatings(review.rating)}
-                <div key={i}> {review.title}</div>
-                <span>{review.post}</span>
+                <div className="h" key={i}> {review.title}</div>
+                <span>{censors(review.post)}</span>
               </div>
             )
           })}

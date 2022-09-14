@@ -1,8 +1,7 @@
+// eslint-disable-next-line
 import React, { useState, useEffect} from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
-
-
 function Login() {
   // eslint-disable-next-line
   const [token, login] = useToken();
@@ -12,6 +11,7 @@ function Login() {
   // eslint-disable-next-line
   const [is_active, setIsActive] = useState(false)
   const [success, setSuccess] = useState('')
+  // eslint-disable-next-line
   const [accounts, setAccounts] = useState([])
   const navigate = useNavigate();
 
@@ -30,9 +30,7 @@ function Login() {
       body: form,
     });
     if (response.ok) {
-      const userdata = await response.json()
-      console.log(userdata)
-      // For Djangor services, use this one
+      //const userdata = await response.json()
       login(username, password)
       const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
@@ -42,8 +40,6 @@ function Login() {
           mode: "cors",
         });
         if (response.ok) {
-          // const data = await response.json();
-          // const token = data.token;
           setUsername('')
           setPassword('')
           setSuccess(true)
@@ -57,9 +53,7 @@ function Login() {
       setUsername('')
       setPassword('')
       setSuccess(false)
-      // let error = await response.json();
     }
-    // DO SOMETHING WITH THE ERROR, IF YOU WANT
   }
   function confirmedPassword() {
     if (password !== "") {
@@ -69,20 +63,6 @@ function Login() {
         </div>)
     }
   }
-
-  useEffect(() => {
-    async function getAccounts() {
-      const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-      const autoResponse = await fetch(Url)
-
-      if (autoResponse.ok) {
-        const autoData = await autoResponse.json()
-        setAccounts(autoData.accounts)
-      }
-
-    }
-    getAccounts();
-  }, [])
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -134,11 +114,11 @@ function Login() {
                           <label className="form-label" htmlFor="form3Example4c">Password</label>
                         </div>
                       </div>
-
-
                       {confirmedPassword()}
-
                     </form>
+                    <div className="text-center">
+                      Don't have an account? <a href={`${process.env.PUBLIC_URL}/SignupPage`}>Signup</a>
+                    </div>
                     <div className={successful} id="success-message">
                       Successfully Logged In Account
                     </div>
@@ -161,6 +141,6 @@ function Login() {
       </div>
     </section>
 
-  )
+  );
 }
-export default Login
+export default Login;
