@@ -15,7 +15,7 @@ function UserProfile() {
   const [censoring, setCensoring] = useState(true)
   const [is_active, setIsActive] = useState(false);
   const [username, setUsername] = useState('1');
-  const [password, setPassword] = useState('1');
+  const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [success, setSuccess] = useState('');
   const [failuree, setFailureE] = useState(false);
