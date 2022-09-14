@@ -230,22 +230,22 @@ function SignupPage() {
                           I agree all statements in <a href="https://www.termsofservicegenerator.net/live.php?token=kmboCeBX0HORqXN4Nx6D8fluQPkkZYD2" target="_blank" rel="noreferrer">Terms of service</a>
                         </label>
                       </div>
-                      {confirmedPassword()}
 
                     </form>
-                    <div className={successful} id="success-message">
-                      Successfully Created Account
-                    </div>
-                    <div className={failure} id="failure-message">
-                      Failed Creating Account
-                    </div>
+
                   </div>
                   <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
                     <a href={`${process.env.PUBLIC_URL}/`}>
                       <img src={`${process.env.PUBLIC_URL}/yooviesblack.png`} className="img-fluid" alt="logo" />
                     </a>
-
+                    {confirmedPassword()}
+                    <div className={successful} id="success-message">
+                      Successfully Created Account
+                    </div>
+                    <div className={failure} id="failure-message">
+                      Failed Creating Account
+                    </div>
                   </div>
                 </div>
               </div>
