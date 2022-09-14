@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
-
-
 function Login() {
   // eslint-disable-next-line
   const [token, login] = useToken();
@@ -69,20 +67,6 @@ function Login() {
         </div>)
     }
   }
-
-  useEffect(() => {
-    async function getAccounts() {
-      const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/`;
-      const autoResponse = await fetch(Url)
-
-      if (autoResponse.ok) {
-        const autoData = await autoResponse.json()
-        setAccounts(autoData.accounts)
-      }
-
-    }
-    getAccounts();
-  }, [])
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -161,6 +145,6 @@ function Login() {
       </div>
     </section>
 
-  )
+  );
 }
-export default Login
+export default Login;
