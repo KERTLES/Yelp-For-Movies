@@ -125,9 +125,8 @@ def api_show_account(request, pk):
         nfirstname = content["first_name"]
         nlastname = content["last_name"]
         nemail= content["email"]
-        ncensor = content['censored']
 
-        Account.objects.filter(id=pk).update(username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname, censored = ncensor)
+        Account.objects.filter(id=pk).update(username=nusername, password=npassword, email=nemail, first_name = nfirstname, last_name = nlastname)
 
         account = Account.objects.get(id=pk)
         return JsonResponse(
