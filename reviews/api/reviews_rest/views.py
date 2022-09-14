@@ -1,4 +1,3 @@
-import re
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
@@ -45,7 +44,7 @@ def api_list_accountVOs(request):
 @require_http_methods(["POST", "GET"])
 def api_list_movies(request, imdb_id=None):
     if request.method == "GET":
-        if id is None:
+        if imdb_id is None:
 
             movies = Movie.objects.all()
             print(movies)
