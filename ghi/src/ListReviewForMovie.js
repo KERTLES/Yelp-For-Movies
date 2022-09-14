@@ -58,7 +58,7 @@ function ListReviewForMovie(data) {
       )
     } else {
       return (
-        <div className='review-box scroll' id="scrolling">
+        <div className='review-box scroll'>
           {reviews.map((review, i) => {
             return (
               <div key={i}className='bg-white mb-4 rounded-3 border border-dark text'>
