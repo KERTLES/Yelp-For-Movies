@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import {censors, setting} from "./fun"
-// import { AuthContext, useToken } from './token';
 import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
 function UserProfile() {
   const [accounts, setAccount] = useState([])
   // eslint-disable-next-line
   const [token, login, logout, signUp, update] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
-  // const [login] = useToken(); //apparently, to use these functions, they need to be placed in the exact same order as the return from token.js
-  const [first_name, setFirstName] = useState('1');
-  const [last_name, setLastName] = useState('1');
-  const [email, setEmail] = useState('1');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [tokenID, setID] = useState('');
   const [censoring, setCensoring] = useState(true)
   const [is_active, setIsActive] = useState(false);
-  const [username, setUsername] = useState('1');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [success, setSuccess] = useState('');
@@ -27,7 +25,7 @@ function UserProfile() {
     if (password === password2 && password !== "" && is_active === true) {
       return (
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-          <button className="btn btn-primary btn-lg">Submit</button>
+          <button className="btn btn-outline-primary btn-lg">Submit</button>
         </div>)
     }
   }

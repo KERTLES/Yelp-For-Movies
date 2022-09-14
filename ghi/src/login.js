@@ -1,11 +1,9 @@
-// eslint-disable-next-line
-import React, { useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import { useToken } from "./token";
 import { useNavigate } from "react-router-dom";
 function Login() {
   // eslint-disable-next-line
   const [token, login] = useToken();
-  // const [login] = useToken();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   // eslint-disable-next-line
@@ -30,7 +28,6 @@ function Login() {
       body: form,
     });
     if (response.ok) {
-      //const userdata = await response.json()
       login(username, password)
       const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
@@ -59,7 +56,7 @@ function Login() {
     if (password !== "") {
       return (
         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-          <button className="btn btn-primary btn-lg">Sign In</button>
+          <button className="btn btn-outline-primary btn-lg">Sign In</button>
         </div>)
     }
   }
