@@ -39,6 +39,26 @@ function LogoutButton() {
   )
   function user_visibility() {
 
+    if (auth) {
+      return (
+        <>
+          <NavDropdown.Item onClick={() => clogout()}>
+            Sign Out
+          </NavDropdown.Item>
+          <NavDropdown.Item href={`${process.env.PUBLIC_URL}/myprofile`}>My Profile</NavDropdown.Item>
+        </>
+      )
+    }
+    else {
+      return (
+        <>
+          <NavDropdown.Item href={`${process.env.PUBLIC_URL}/Login`}>Login</NavDropdown.Item>
+          <NavDropdown.Item href={`${process.env.PUBLIC_URL}/SignupPage`}>Signup</NavDropdown.Item>
+        </>
+      )
+    }
+  }
+
   async function clogout() {
     const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/logout/`;
     const response = await fetch(url, {
@@ -61,5 +81,5 @@ function LogoutButton() {
   }
   return user_visibility()
 }
-}
+
 export default LogoutButton
