@@ -185,7 +185,6 @@ function UserProfile() {
 
       if (request.ok) {
         const tokenData = await request.json()
-        console.log(tokenData)
         const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
         const autoResponse = await fetch(Url)
 
