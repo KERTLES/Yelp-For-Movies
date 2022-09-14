@@ -114,7 +114,6 @@ def api_list_reviews(request, movie_id=None):
             return JsonResponse(
                 {
                     "message": "invalid username",
-
                 },
                 status=400
             )
