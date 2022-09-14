@@ -1,3 +1,33 @@
+## September 8, 2022
+Today we worked:
+- Figuring out our blocker from yesteday during deployment and continuing with the deployment process
+
+We submitted a help desk ticket today in regards to the blocker we had yesterday. Andrew was able to come and assist us with our problem. It took a while to pinpoint the exact issue, but we learned that the cause of the problem might have been because Matthew had removed gunicorn in the requirements.txt file and replaced that with uvicorn instead. He had originally thought that we were supposed to use uvicorn for our deployment process. And since our Dockerfile for deployment was set up (by Learn's instruction) to use gunicorn instead, that had caused us to keep getting a cors error, even though it was actually not really a cors related issue. A few things I had learned during our debugging process was that Heroku automatically created an environment variable called $PORT in its system that can automatically map it to whatever port it is we needed our application to listen on in the Dockerfile. Another thing that I had learned was that a safe approach was to add a "mode" attribute that had a value as "cors" in our fetch config for our fetch requests in order to prevent any cors related issue to come up. I also learned that we should assigned DEBUG in our settings.py file to be True for now even though we were in deployment. But because we were trying to pinpoint the correct error message,it was essential to set DEBUG to True so that we could view the logs in our deployment container on Heroku. And when we are finally ready to deploy, with all the functionalities working properly, we can then change DEBUG back to False. There was some other small bugs that we had encountered after that, which we hadn't been able to figure out yet. Matthew was going to continue working on it more later today to try and figure out a fix for it.
+
+
+## September 7, 2022
+Today we worked on:
+- Continuing our deployment process and getting started with running the pipelines on gitlab
+
+I added a feature so that our logo can redirect back to Home Page when clicked on. One issue we encountered while running the pipeline was that there were a lot of unused variables throughout our application. And that was also one of the reasons why our react image was not getting built properly, causing the pipeline to keep crashing and failing. So we spent a lot of our time going through the files that did not pass the linter and made adjustments to those. Although because there were a lot of unsed variables that we actually needed to be placed in some of our files, we had to find a way for that to be possible without the linters interupting our build process. Through some research, we learned that adding "// eslint-disable-next-line" above a specific line of code would allow the linter to skip linting that line of code and not cause an error for deployment. Another issue we had ran into was that the url was not getting populated correctly on certain pages while testing out on our deployed web page. But we learned that by modifying our urls in out front-end files so that it uses the "PUBLIC_URL" environment varible set up in the .gitlab-ci.yml fixed that issue. Towards the end of the day, we ran into another bug that appeared to be a cors header issue that we were not able to figure out a solution for; even though everything had been working fine in development. And because of that, we could not really pinpoint where the issue was coming from in deployment. That was also our biggest blocker at the moment, we were planning on submitting a help desk ticket tomorrow and hope to get it resolved.
+
+
+## September 6, 2022
+Today we worked on:
+- Continuing our merging process (as a group) and setting up our CI/CD for deployment
+
+We began our group working with everyone pulling down the final merge to main that Kelly did on Friday of last week; as well as updated our additional progress to main. Matthew and I ran into a few issues while merging due to our login.js file was renamed before, causing git to no be able to commit and push no matter how many times we tried to commit it. I later found out through some research that I could use git restore to discard any uncommit changes, and that was able to get rid of the issue. 
+
+In regards to our initial set up for deployment, we pretty much just following the instruction on Learn to set up our .gitlab-ci.yml file and the Dockerfile for deployment for each microservice. There was not that many issues that we had besides just figuring out the correct places to put what and name what. Kelly had to fix up some of the urls where she had harded coded them originally, and changing it so that the domain got stored in an environment variable in the docker-compose file.
+
+
+## September 2, 2022
+Today we worked on:
+- Merging our progress up to now together again (as a group)
+
+It was quite a short day today so we mainly focused on merging what we'd had so far together as a group to the main branch so that we could start on deployment next week. We did this process pretty slowly and taking turns pushing our progress to main and pulling as we went, hoping not to run into too many issues. Everything was going pretty smoothly besides some merge conflicts here and there. Kelly ran into some quite a lot of merge conflicts during our merging process; although that was not a big issue and we were able to complete our merges at the end of the day with everything working the way it was supposed to. We were planning on continuing our merging process on Tuesday before starting our deployment process.
+
+
 ## September 1, 2022
 Today I worked on:
 -  Making some small other adjustments to the design of our application
@@ -7,13 +37,14 @@ I added the logo to our Nav Bar and got rid of manual name that we originally ha
 
 ## August 31, 2022
 Today we worked on:
-- Merging out progress up to now together
+- Merging out progress up to now together (with Matthew and Lander)
 
 I started merging what I had been working on with Matthew and Lander's progress at the beginning, but ran into an inconsistent migration issue caused by the use of our custom User model rather than Django model. I had tried testing out different solutions such as deleting my migrations, containers, images, and volume and building everything back from scratch; and even tried running the container separately in the hope that the migrations would be made and applied properly; but nothing was really working. I had also tried researching which I found a solution on stack overflow. Unfortunately, I wasn't awared that there was one step that I missed which caused the solution I found to not be working. However, I was able to get help from Phil (our seir) to fix the problem. And that was when I realized that I was missing a final step. 
 
 Later in the day, I helped Kelly with a poller bug that she was having. She kept getting a 400 Response error while trying to make an API call from her reviews microservice to the accounts microservice. It turned out the bug had been because the Allow Host variable wasn't set up properly in the accounts' setting.py file. For some reason there was 2 Allow Host variables in the file. THe bug was fixed once we removed one of the two variables and set up to allow the host from the reviews microservice to access the accounts microservice.
 
 One other thing I was able to get done on my part was adding the logo to our application. I learned that if I placed the image inside the public directory, I only needed to write "/some-image" and react would automatically know to look into the public directory to locate the image. I had originally tried a variety of ways (ie. "../public/some-image", "./public/some-image, etc.) and nothing was working out; until I learned that that was just how react works.
+
 
 ## August 30, 2022
 Today I worked on:

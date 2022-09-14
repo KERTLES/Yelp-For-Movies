@@ -32,11 +32,21 @@
     margin-bottom: 2px;
 }
 
+<<<<<<< HEAD
 .scroller  {
     overflow: hidden;
 }
 
 
+=======
+.scroll  {
+    overflow-y: overlay;
+}
+
+#scrolling::-webkit-scrollbar {
+    display: none;
+}
+>>>>>>> main
 
 .text {
     padding-top: 20px;
