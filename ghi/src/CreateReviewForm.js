@@ -118,7 +118,8 @@ function CreateReviewForm(props) {
                 const newReview = await response.json()
                 // console.log('------new review: ', newReview)
                 setValid(true)
-                {ListReviewForMovie}
+                // eslint-disable-next-line
+                {<ListReviewForMovie/>}
 
             }
         } else {
