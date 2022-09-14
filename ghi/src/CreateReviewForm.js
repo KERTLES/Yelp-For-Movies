@@ -10,7 +10,7 @@ import './CreateReviewForm.css';
 
 function CreateReviewForm(props) {
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const [token, login, logout] = useToken();
     const [auth, setAuth] = useState([]);
     const navigate = useNavigate();
@@ -30,12 +30,12 @@ function CreateReviewForm(props) {
 
     const [userName, setUserName] = useState('');
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const [checkRating, setCheckRating] = useState('');
     
     const clicked = false
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const [valid, setValid] = useState(false);
 
     const handleTitleInputChange = (event) => {
@@ -69,7 +69,7 @@ function CreateReviewForm(props) {
 
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
 
-        if (rating != 0) {
+        if (rating !== 0) {
             setCheckRating(true)
 
             const data = {
@@ -89,7 +89,7 @@ function CreateReviewForm(props) {
             };
             const response = await fetch(reviewUrl, fetchConfig)
             if (response.ok) {
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // eslint-disable-next-line
                 const newReview = await response.json()
                 setValid(true)
             }
