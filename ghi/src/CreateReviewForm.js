@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function CreateReviewForm(props) {
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const [token, login, logout] = useToken();
     const [auth, setAuth] = useState([]);
     const navigate = useNavigate();
@@ -29,10 +30,13 @@ function CreateReviewForm(props) {
 
     const [userName, setUserName] = useState('');
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const [checkRating, setCheckRating] = useState('');
     const [clicked, setClicked] = useState(false);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const [submitForm, setSubmitForm] = useState(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const [valid, setValid] = useState(false);
 
 
@@ -65,17 +69,10 @@ function CreateReviewForm(props) {
         }
         setValidated(true);
 
-        if (title && post && rating) {
-            setValid(true);
-        }
-        setSubmitForm(true);
-        setClicked(true)
-
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
 
         if (rating != 0) {
             setCheckRating(true)
-            console.log('check rating 11111111111111111111', setCheckRating)
 
             const data = {
                 rating,
@@ -94,13 +91,12 @@ function CreateReviewForm(props) {
             };
             const response = await fetch(reviewUrl, fetchConfig)
             if (response.ok) {
+                // eslint-disable-next-line react-hooks/exhaustive-deps
                 const newReview = await response.json()
-                // console.log('------new review: ', newReview)
                 setValid(true)
             }
         } else {
             setCheckRating(false)
-            console.log('check rating 22222222222222222222222', setCheckRating)
         }            
     };
 
