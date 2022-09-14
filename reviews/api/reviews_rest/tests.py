@@ -1,7 +1,4 @@
-
 from django.test import TestCase
-from .views import api_list_movies
-from .models import Movie
 from .models import Review, Movie, UserVO
 import json
 import os
