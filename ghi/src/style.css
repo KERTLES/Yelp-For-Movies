@@ -33,7 +33,11 @@
 }
 
 .scroll  {
-    overflow: hidden;
+    overflow-y: overlay;
+}
+
+#scrolling::-webkit-scrollbar {
+    display: none;
 }
 
 .text {
