@@ -231,6 +231,9 @@ function SignupPage() {
                         </label>
                       </div>
                       {confirmedPassword()}
+                      <div className="text-center">
+                      Have an account already? <a href={`${process.env.PUBLIC_URL}/Login`}>Login</a>
+                    </div>
                     <div className={successful} id="success-message">
                       Successfully Created Account
                     </div>
@@ -238,7 +241,6 @@ function SignupPage() {
                       Failed Creating Account
                     </div>
                     </form>
-
                   </div>
 
                   <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">

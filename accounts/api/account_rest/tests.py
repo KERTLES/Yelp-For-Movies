@@ -34,6 +34,9 @@ class accountsTester(TestCase):
 	    username= "sticker",
 	    password= "slammer"
         )
+        testPut = self.client.post('/api/accounts/', data)
+        testResponse = testPut.json()
+        self.assertEqual(testResponse.status_code,200)
         response = self.client.get("/api/accounts/")
         content = response.json()
         for account in content["accounts"]:
@@ -45,7 +48,7 @@ class accountsTester(TestCase):
         content=response.json()
         self.assertEqual(content["username"], 'sticker')
     
-    def test_Logabooga(self):
+    def test_UpdatingTheAccount(self):
         data = json.dumps({
         "email": "hekitty@gmail.com", 
         "first_name" : "matthew", 

@@ -29,7 +29,7 @@ function Login() {
       body: form,
     });
     if (response.ok) {
-      const userdata = await response.json()
+      //const userdata = await response.json()
       login(username, password)
       const tokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/tokens/mine/`;
 
@@ -113,11 +113,11 @@ function Login() {
                           <label className="form-label" htmlFor="form3Example4c">Password</label>
                         </div>
                       </div>
-
-
                       {confirmedPassword()}
-
                     </form>
+                    <div className="text-center">
+                      Don't have an account? <a href={`${process.env.PUBLIC_URL}/SignupPage`}>Signup</a>
+                    </div>
                     <div className={successful} id="success-message">
                       Successfully Logged In Account
                     </div>
