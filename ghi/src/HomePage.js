@@ -6,7 +6,6 @@ import MoviesList from "./MoviesList";
 
 function HomePage() {
   const [movieName, setMovieName] = useState("")
-addd
   const handleSubmit = (event) => {
     event.preventDefault()
     setMovieName(event.target.movie.value.toLowerCase())
