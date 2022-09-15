@@ -1,4 +1,3 @@
-import re
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
@@ -45,7 +44,7 @@ def api_list_accountVOs(request):
 @require_http_methods(["POST", "GET"])
 def api_list_movies(request, imdb_id=None):
     if request.method == "GET":
-        if id is None:
+        if imdb_id is None:
 
             movies = Movie.objects.all()
             print(movies)
@@ -100,6 +99,7 @@ def api_list_reviews(request, movie_id=None):
             print(content["movie"])
 
         except Movie.DoesNotExist:
+            print("no movie")
             return JsonResponse(
                 {"ERROR MESSAGE": "Sorry, this movie doesn't exist in the database"},
                 status=400
@@ -110,10 +110,10 @@ def api_list_reviews(request, movie_id=None):
             del content["user_name"]
 
         except UserVO.DoesNotExist:
+            print("no user")
             return JsonResponse(
                 {
                     "message": "invalid username",
-
                 },
                 status=400
             )

@@ -83,6 +83,7 @@ function CreateReviewForm(props) {
             const fetchConfig = {
                 method: 'post',
                 body: JSON.stringify(data),
+                mode: "cors",
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -91,7 +92,11 @@ function CreateReviewForm(props) {
             if (response.ok) {
                 // eslint-disable-next-line
                 const newReview = await response.json()
+                console.log(newReview)
                 setValid(true)
+            }
+            else{
+                console.log(response.json())
             }
         } else {
             setCheckRating(false)
@@ -102,7 +107,11 @@ function CreateReviewForm(props) {
     useEffect(() => {
         async function getToken() {
             const userTokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`
-            const request = await fetch(userTokenUrl, { method: "delete", credentials: "include" })
+            const request = await fetch(userTokenUrl, { 
+                method: "delete", 
+                credentials: "include", 
+                mode: "cors", 
+            })
 
             if (request.ok) {
                 const responseData = await request.json()
@@ -215,7 +224,7 @@ function CreateReviewForm(props) {
                                 Please provide your review.
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button type="submit">Submit form</Button>
+                        <Button type="submit" variant="outline-primary">Submit form</Button>
                     </Form>
                 </Modal.Body>
 

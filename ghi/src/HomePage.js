@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { HiOutlineSearch } from "react-icons/hi";
 import { FaArrowRight } from "react-icons/fa";
 import MoviesList from "./MoviesList";
-// import Footer from "./Footer";
 
 
 function HomePage() {
