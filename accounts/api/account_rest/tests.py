@@ -60,5 +60,27 @@ class accountsTester(TestCase):
         self.assertEqual(response.status_code, 200)
         response4 = self.client.get("/api/accounts/1")
         content = response4.json()
-        self.assertEqual(content["username"], "lucky")
-        self.assertEqual(content["first_name"], "matthew")
+        self.assertEqual(content['username'], "lucky")
+        self.assertEqual(content['first_name'], "matthew")
+    
+    def test_account_unique(self):
+        account_one = {
+        "email": "batty@gmail.com",
+	    "first_name": "tham",
+	    "last_name": "Oshi",
+	    "username": "Billybob",
+	    "password": "slammer"
+        }
+        account_two = {
+        "email": "batty@gmail.com",
+	    "first_name": "Billy",
+	    "last_name": "Bob",
+	    "username": "Billybob",
+	    "password": "secretpassword"
+        }
+
+        account_one_response = self.client.post("/api/accounts/", account_one, content_type = "application/json")
+        account_two_response = self.client.post("/api/accounts/", account_two, content_type = "application/json")
+
+        if account_one["username"] == account_two["username"] or account_one["email"] == account_two["email"]:
+            self.assertNotEqual(account_two_response.status_code, 200)
