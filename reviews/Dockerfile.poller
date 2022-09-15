@@ -3,13 +3,13 @@ RUN python -m pip install --upgrade pip
 WORKDIR /app
 
 # Copy the top-level files
-COPY requirements.txt requirements.txt
-COPY poller.py poller.py
+COPY poll/requirements.txt requirements.txt
+COPY poll/poller.py poller.py
 
 # Copy the Django project and all Django apps
-COPY ../api/reviews_project reviews_project
-COPY ../api/reviews_rest reviews_rest
-COPY ../api/common common
+COPY api/reviews_project reviews_project
+COPY api/reviews_rest reviews_rest
+COPY api/common common
 
 RUN pip install -r requirements.txt
 CMD python poller.py
