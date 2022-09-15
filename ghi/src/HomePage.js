@@ -27,8 +27,7 @@ function HomePage() {
               aria-label="Search" 
               className="form-control form-control-lg mx-2"
             />
-            <button 
-              className="btn btn-light rounded-circle p-2" type="submit" style={{outline: "none", border: "none"}}>
+            <button className="btn btn-light rounded-circle p-2" type="submit">
               <IoArrowForwardOutline style={{fontSize: "35px"}} />
             </button>
         </form>
