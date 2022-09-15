@@ -63,19 +63,19 @@ services:
             ACCOUNT_SERVICE_URL: http://account-api:8000
             DATABASE_URL: postgresql://reviews:password@database:5432/reviews
             WAIT_HOSTS: database:5432
-    # reviews-poller:
-    #     build:
-    #         context: ./reviews/poll
-    #         dockerfile: ./Dockerfile.dev
-    #     volumes:
-    #         - ./reviews/poll:/app
-    #         - ./reviews/api/reviews_project:/app/reviews_project
-    #         - ./reviews/api/reviews_rest:/app/reviews_rest
-    #     depends_on:
-    #         - database
-    #         - reviews-api
-    #     environment:
-    #         ACCOUNT_SERVICE_URL: http://account-api:8000
-    #         DATABASE_URL: postgresql://reviews:password@database:5432/reviews
-    #         WAIT_HOSTS: database:5432, reviews-api:8000
-    #         WAIT_TIMEOUT: 240
+    reviews-poller:
+        build:
+            context: ./reviews/poll
+            dockerfile: ./Dockerfile.dev
+        volumes:
+            - ./reviews/poll:/app
+            - ./reviews/api/reviews_project:/app/reviews_project
+            - ./reviews/api/reviews_rest:/app/reviews_rest
+        depends_on:
+            - database
+            - reviews-api
+        environment:
+            ACCOUNT_SERVICE_URL: http://account-api:8000
+            DATABASE_URL: postgresql://reviews:password@database:5432/reviews
+            WAIT_HOSTS: database:5432, reviews-api:8000
+            WAIT_TIMEOUT: 240
