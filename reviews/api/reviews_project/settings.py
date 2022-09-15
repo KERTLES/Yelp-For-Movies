@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'reviews_rest.apps.ReviewsRestConfig',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django_crontab',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -74,7 +75,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+CRONJOBS = [
+    ('* * * * *', 'reviews_rest.cron.get_users','>> /tmp/reviews_poller.log 2>&1')
+]
 ROOT_URLCONF = 'reviews_project.urls'
 
 TEMPLATES = [
