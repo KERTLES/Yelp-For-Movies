@@ -27,26 +27,33 @@ class accountsTester(TestCase):
                 self.assertEqual(account['first_name'], 'matthew')
     
     def test_create_account(self): # tests if accounts can be created
-        data = Account.objects.create(
-        email= "batty@gmail.com",
-	    first_name= "tham",
-	    last_name= "Oshi",
-	    username= "sticker",
-	    password= "slammer"
-        )
-        testPut = self.client.post('/api/accounts/', data)
-        testResponse = testPut.json()
-        self.assertEqual(testResponse.status_code,200)
+        # data = Account.objects.create(
+        # email= "batty@gmail.com",
+	    # first_name= "tham",
+	    # last_name= "Oshi",
+	    # username= "sticker",
+	    # password= "slammer"
+        # )
+
+        data_two = {
+        "email": "batty@gmail.com", 
+        "first_name" : "tham", 
+        "last_name" : "Oshi", 
+	    "password" : "sticker",
+	    "username": "slammer"
+        }
+        response_two = self.client.post("/api/accounts/", data_two, content_type = "application/json")
+        self.assertEqual(response_two.status_code,200)
         response = self.client.get("/api/accounts/")
         content = response.json()
         for account in content["accounts"]:
             if account["first_name"] == "tham":
-                self.assertEqual(account['id'], data.id)
+                self.assertEqual(account['first_name'], data_two['first_name'])
                 self.account2 = account['id']
 
         response = self.client.get(f'/api/accounts/{self.account2}')
         content=response.json()
-        self.assertEqual(content["username"], 'sticker')
+        self.assertEqual(content["username"], 'slammer')
     
     def test_UpdatingTheAccount(self):
         data = json.dumps({

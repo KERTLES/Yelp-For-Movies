@@ -99,7 +99,7 @@ CORS_ALLOW_CREDENTIALS = True
 DJWTO_MODE = 'TWO-COOKIES'
 DJWTO_CSRF = False
 DJWTO_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", 'https://yoovies-accounts-api.herokuapp.com']
 # Your DEBUG value MUST be False in production
 DJWTO_SAME_SITE = "LAX" if DEBUG else "NONE"
 # Database

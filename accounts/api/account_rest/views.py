@@ -84,7 +84,7 @@ def api_list_accounts(request):
             response = JsonResponse(
                 {"message": "Some credentials are not unique. Please try again to place new credentials."}
             )
-            response.status_code = 400
+            response.status_code = 405
             return response
 
 
