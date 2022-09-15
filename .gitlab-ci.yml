@@ -101,7 +101,7 @@ build-reviews-poller-image-job:  # RENAME THIS
     - docker:20.10.16-dind
   script:
     # CHANGE THIS TO THE DIRECTORY THAT HAS YOUR Dockerfile
-    - cd reviews
+    - cd reviews/poll
 
     # EVERYWHERE IT SHOWS fastapi_api BELOW, CHANGE THOSE
     # TO A MORE MEANINGFUL SERVICE NAME (5 PLACES)
