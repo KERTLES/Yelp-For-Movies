@@ -109,7 +109,7 @@ def api_list_reviews(request, movie_id=None):
             content["user"] = userVO
             del content["user_name"]
 
-        except UserVO.DoesNotExist:
+        except UserVO.DoesNotExist as error:
             print("no user")
             return JsonResponse(
                 {
