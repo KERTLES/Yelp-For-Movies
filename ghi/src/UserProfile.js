@@ -10,7 +10,7 @@ function UserProfile() {
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [tokenID, setID] = useState('');
-  const [censoring, setCensoring] = useState('')
+  const [censoring, setCensoring] = useState(true)
   const [is_active, setIsActive] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -345,7 +345,7 @@ function UserProfile() {
                   </div>
                 </div>
                 <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">My Reviews</p>
-                <div className="card-columns">
+                <div className="card-columns scroll webkit-scrollbar" style={{overflowY:"scroll", height:"290px"}}>
                   {reviews.map((review) => {
                     return (
                       <div key={review.id} className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">
