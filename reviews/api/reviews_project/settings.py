@@ -42,12 +42,14 @@ ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://yoovies-reviews-api.herokuapp.com",
+    "https://yoovies.gitlab.io",
     "http://localhost:3000",
 ]
 
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://yoovies.gitlab.io",
     os.environ.get("CORS_HOST", "http://localhost:3001")
 ]
 
