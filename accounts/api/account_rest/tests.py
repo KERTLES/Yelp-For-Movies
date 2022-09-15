@@ -25,7 +25,7 @@ class accountsTester(TestCase):
                 self.assertEqual(account['id'], self.account.id)
                 self.assertEqual(account["username"], "pyuisad")
                 self.assertEqual(account['first_name'], 'matthew')
-    
+
     def test_create_account(self): # tests if accounts can be created
         data = Account.objects.create(
         email= "batty@gmail.com",
@@ -44,6 +44,7 @@ class accountsTester(TestCase):
                 self.assertEqual(account['id'], data.id)
                 self.account2 = account['id']
 
+        ## Test getting specific account
         response = self.client.get(f'/api/accounts/{self.account2}')
         content=response.json()
         self.assertEqual(content["username"], 'sticker')
