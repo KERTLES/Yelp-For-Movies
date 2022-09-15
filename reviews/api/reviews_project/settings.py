@@ -41,6 +41,7 @@ DEBUG = True #not os.environ.get("DEBUG")
 ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
+    "https://yoovies-reviews-api.herokuapp.com",
     "http://localhost:3000",
 ]
 
