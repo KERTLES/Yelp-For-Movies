@@ -1,9 +1,9 @@
 from django.test import TestCase
 from .views import api_list_accounts, api_show_account
 from .models import Account
+from django.urls import reverse
 import json
 import os
-
 # Create your tests here.
 
 class accountsTester(TestCase):
@@ -14,54 +14,51 @@ class accountsTester(TestCase):
         last_name = "Oshima", 
         username= "pyuisad",
 	    password = "tatasddasdime")
+        self.account2 = 0
 
     def test_get_list_accounts(self): # tests if a list of accounts can be retrieved
-        response = self.client.get("/api/accounts/")
+        response = self.client.get(reverse('accounts_list'))
         content =response.json()
         self.assertEqual(response.status_code,200)
         for account in content["accounts"]:
             if account["first_name"] == self.account.first_name:
                 self.assertEqual(account['id'], self.account.id)
+                self.assertEqual(account["username"], "pyuisad")
+                self.assertEqual(account['first_name'], 'matthew')
     
     def test_create_account(self): # tests if accounts can be created
-        data ={
-        "email": "batty@gmail.com",
-	    "first_name": "tham",
-	    "last_name": "Oshi",
-	    "username": "sticker",
-	    "password": "slammer"
-        }
-
-        self.assertEqual(data, {
-        "email": "batty@gmail.com",
-	    "first_name": "tham",
-	    "last_name": "Oshi",
-	    "username": "sticker",
-	    "password": "slammer"
-        })
-        response = self.client.post("/api/accounts/", data, content_type = "application/json",)
-        # data.response.json()
-        response2 = self.client.get("/api/accounts/")
-        content=response2.json()
+        data = Account.objects.create(
+        email= "batty@gmail.com",
+	    first_name= "tham",
+	    last_name= "Oshi",
+	    username= "sticker",
+	    password= "slammer"
+        )
+        testPut = self.client.post('/api/accounts/', data)
+        testResponse = testPut.json()
+        self.assertEqual(testResponse.status_code,200)
+        response = self.client.get("/api/accounts/")
+        content = response.json()
         for account in content["accounts"]:
             if account["first_name"] == "tham":
-                self.assertEqual(account['id'], 2)
+                self.assertEqual(account['id'], data.id)
+                self.account2 = account['id']
 
-    def test_get_specific_account(self):
-        response3=self.client.get('/api/accounts/1')
-        content = response3.json()
-        self.assertEqual(content['username'], "pyuisad")
+        response = self.client.get(f'/api/accounts/{self.account2}')
+        content=response.json()
+        self.assertEqual(content["username"], 'sticker')
     
-    def test_update_account(self):
-        data = {
-        "email":"hekitty@gmail.com", 
+    def test_UpdatingTheAccount(self):
+        data = json.dumps({
+        "email": "hekitty@gmail.com", 
         "first_name" : "matthew", 
         "last_name" : "Oshima", 
 	    "password" : "tatasddasdime",
 	    "username": "lucky"
-        }
-        self.client.put('/api/accounts/1',data ,content_type="application/json")
-        response4 = self.client.get('/api/accounts/1')
+        })
+        response = self.client.put("/api/accounts/1", data, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        response4 = self.client.get("/api/accounts/1")
         content = response4.json()
-        self.assertEqual(content['username'], "lucky")
-        self.assertEqual(content['first_name'], "matthew")
+        self.assertEqual(content["username"], "lucky")
+        self.assertEqual(content["first_name"], "matthew")

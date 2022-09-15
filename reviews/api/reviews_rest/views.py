@@ -1,4 +1,3 @@
-import re
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
@@ -34,7 +33,6 @@ class ReviewsEncoder(ModelEncoder):
 @require_http_methods(["GET"])
 def api_list_accountVOs(request):
     if request.method == "GET":
-        # users = UserVO.objects.all()
         users = UserVO.objects.all()
 
         return JsonResponse(users, safe=False, encoder=UserVOEncoder)
@@ -45,7 +43,7 @@ def api_list_accountVOs(request):
 @require_http_methods(["POST", "GET"])
 def api_list_movies(request, imdb_id=None):
     if request.method == "GET":
-        if id is None:
+        if imdb_id is None:
 
             movies = Movie.objects.all()
             print(movies)
@@ -74,12 +72,9 @@ def api_list_movies(request, imdb_id=None):
 def api_list_reviews_by_imdb_id(request, imdb_id=None):
     if request.method == "GET":
         try:
-            # content = json.loads(request.body)
-            # imdb_id = content["imdb_id"]
             movie = Movie.objects.get(imdb_id=imdb_id)
             id = movie.id
         except Movie.DoesNotExist:
-            # return JsonResponse({"message": "movie does not exist in database"})
             return JsonResponse([], safe=False)
         reviews = Review.objects.filter(movie=id)
         return JsonResponse(reviews, ReviewsEncoder, safe=False)
@@ -137,16 +132,6 @@ def api_show_review(request, pk):
     else:  # PUT
         content = json.loads(request.body)
 
-        # try:
-        #     if "movie" in content:
-        #         movie = Movie.objects.get(id=content["movie"])
-        #         content["movie"] = movie
-        # except Movie.DoesNotExist:
-        #     return JsonResponse(
-        #         {"message": "invalid movie"},
-        #         status=400
-        #     )
-
         Review.objects.filter(id=pk).update(**content)
         review = Review.objects.get(id=pk)
         return JsonResponse(
@@ -154,13 +139,3 @@ def api_show_review(request, pk):
             encoder=ReviewsEncoder,
             safe=False,
         )
-
-
-# @require_http_methods(["GET"])
-# def api_list_movies(request):
-#     if request.method == "GET":
-#         movie = Movie.objects.all()
-#         return JsonResponse(
-#             {"movies": movie},
-#             encoder=MovieEncoder
-#         )

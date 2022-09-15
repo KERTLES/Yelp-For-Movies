@@ -1,3 +1,6 @@
+#### Thursday, September 15, 2022
+We're still having issues with creating a review in deployment. We think it may be an issues with the reviews poller. 
+I was able to create and test a unit test (class ReviewTest(TestCase)) which tested the ability to create a movie review. 
 #### Wednesday, September 14, 2022
 I finally finished the Create A Review Form and I was able to use my original star rating component. The review is associated with a username, it's being saved to the database, and it's being rendered on the page. 
 I received some help in setting up the authorization so that a user must be logged in to leave a review, otherwise they are re-routed to the Login/Signup page. 

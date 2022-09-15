@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AiFillStar } from "react-icons/ai";
-import './CreateReviewForm.css';
+import { useToken } from "./token"
+import { useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useToken } from "./token"
-import { useNavigate } from "react-router-dom";
+import './CreateReviewForm.css';
 
 
 function CreateReviewForm(props) {
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const [token, login, logout] = useToken();
     const [auth, setAuth] = useState([]);
     const navigate = useNavigate();
@@ -30,15 +30,13 @@ function CreateReviewForm(props) {
 
     const [userName, setUserName] = useState('');
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const [checkRating, setCheckRating] = useState('');
-    const [clicked, setClicked] = useState(false);
+    
+    const clicked = false
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const [submitForm, setSubmitForm] = useState(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     const [valid, setValid] = useState(false);
-
 
     const handleTitleInputChange = (event) => {
         setTitle(event.target.value);
@@ -71,7 +69,7 @@ function CreateReviewForm(props) {
 
         const reviewUrl = `${process.env.REACT_APP_REVIEWS_HOST}/api/create/review/`;
 
-        if (rating != 0) {
+        if (rating !== 0) {
             setCheckRating(true)
 
             const data = {
@@ -85,13 +83,14 @@ function CreateReviewForm(props) {
             const fetchConfig = {
                 method: 'post',
                 body: JSON.stringify(data),
+                mode: "cors",
                 headers: {
                     'Content-Type': 'application/json',
                 }
             };
             const response = await fetch(reviewUrl, fetchConfig)
             if (response.ok) {
-                // eslint-disable-next-line react-hooks/exhaustive-deps
+                // eslint-disable-next-line
                 const newReview = await response.json()
                 setValid(true)
             }
@@ -104,7 +103,11 @@ function CreateReviewForm(props) {
     useEffect(() => {
         async function getToken() {
             const userTokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`
-            const request = await fetch(userTokenUrl, { method: "delete", credentials: "include" })
+            const request = await fetch(userTokenUrl, { 
+                method: "delete", 
+                credentials: "include", 
+                mode: "cors", 
+            })
 
             if (request.ok) {
                 const responseData = await request.json()
@@ -142,7 +145,7 @@ function CreateReviewForm(props) {
                 setAuth(false)
             }
         } authen();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []
     )
 
@@ -217,7 +220,7 @@ function CreateReviewForm(props) {
                                 Please provide your review.
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button type="submit">Submit form</Button>
+                        <Button type="submit" variant="outline-primary">Submit form</Button>
                     </Form>
                 </Modal.Body>
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import ListReviewForMovie from "./ListReviewForMovie";
-// import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
 import CreateReviewForm from "./CreateReviewForm";
 import { Link } from "react-router-dom";
@@ -47,7 +46,7 @@ function MovieDetail() {
 
     useEffect(() => {
         getImdbID()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const checkIfRatings = (ratings) => {
@@ -64,7 +63,7 @@ function MovieDetail() {
                         return (
                             <div key={index}>
                                 <span>
-                                    <span className="p-2 border bg-dark border-white rounded">
+                                    <span className="p-2 border bg-dark border-white rounded text-white">
                                         {rating.Source}
                                     </span>{' '}
                                     <span className="p-2 text-white border border-white bg-danger rounded">{rating.Value}</span>
@@ -140,7 +139,7 @@ function MovieDetail() {
                             {checkIfRatings(ratings)}
                         </div>
                     </div>
-                    <div className="text-black">
+                    <div>
                         {movie["Title"] ? < ListReviewForMovie movie={movie} /> : null}
                     </div>
                 </div>
