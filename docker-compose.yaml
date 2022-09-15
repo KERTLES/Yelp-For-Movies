@@ -46,6 +46,7 @@ services:
         depends_on:
             - database
         environment:
+            DEBUG: "True"
             DATABASE_URL: postgresql://accounts:password@database:5432/accounts
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
@@ -74,6 +75,7 @@ services:
             - database
             - reviews-api
         environment:
+            DEBUG: "True"
             ACCOUNT_SERVICE_URL: http://account-api:8000
             DATABASE_URL: postgresql://reviews:password@database:5432/reviews
             WAIT_HOSTS: database:5432, reviews-api:8000
