@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0p=3mve68&slozzmupptx(b=+b=9_53p(b64d*x)nrlo67ew2w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False #not os.environ.get("DEBUG")
+DEBUG = True #not os.environ.get("DEBUG")
 
 # ALLOWED_HOSTS = [
 #     ".localhost", 
@@ -41,6 +41,7 @@ DEBUG = False #not os.environ.get("DEBUG")
 ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
+    "https://yoovies-reviews-api.herokuapp.com",
     "http://localhost:3000",
 ]
 
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'reviews_rest.apps.ReviewsRestConfig',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django_crontab',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -68,12 +70,14 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+CRONJOBS = [
+    ('* * * * *', 'reviews_rest.cron.get_users','>> /tmp/reviews_poller.log 2>&1')
+]
 ROOT_URLCONF = 'reviews_project.urls'
 
 TEMPLATES = [

@@ -102,20 +102,20 @@ def api_list_reviews(request, movie_id=None):
             print("no movie")
             return JsonResponse(
                 {"ERROR MESSAGE": "Sorry, this movie doesn't exist in the database"},
-                status=400
+                status=401
             )
         try:
             userVO = UserVO.objects.get(user_name=content["user_name"])
             content["user"] = userVO
             del content["user_name"]
 
-        except UserVO.DoesNotExist:
+        except UserVO.DoesNotExist as error:
             print("no user")
             return JsonResponse(
                 {
                     "message": "invalid username",
                 },
-                status=400
+                status=402
             )
 
         review = Review.objects.create(**content)
