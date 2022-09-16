@@ -4,13 +4,13 @@ import MovieCardBody from "./MovieCardBody"
 
 
 function GenreList(props) {
-    const { genreId }= useParams()
-    const { genreName }= useParams()
-    const [movieColumns, setMovieColumns] = useState([[],[],[],[],[]])
+    const { genreId } = useParams()
+    const { genreName } = useParams()
+    const [movieColumns, setMovieColumns] = useState([[], [], [], [], []])
     const [movies, setMovies] = useState([])
     const apiKey = process.env.REACT_APP_TMDB_API_KEY
     const tmdbURL = process.env.REACT_APP_TMDB_URL
-    
+
     useEffect(() => {
         (async () => {
             const moviesResponse = await fetch(`${tmdbURL}/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${genreId}&with_watch_monetization_types=flatrate`)
@@ -19,12 +19,12 @@ function GenreList(props) {
                 setMovies(moviesData.results)
             }
         })()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    
+
 
     useEffect(() => {
-        const columns = [[],[],[],[],[]]
+        const columns = [[], [], [], [], []]
         let i = 0
         for (const movie of movies) {
             columns[i].push(movie)
@@ -38,21 +38,21 @@ function GenreList(props) {
 
     return (
         <>
-        <div className="px-4 pt-5 pb-3 mt-5 mb-1 text-center">
-            <a href={`${process.env.PUBLIC_URL}/`}>
-                <img src={`${process.env.PUBLIC_URL}/yoovieswhite.png`} alt="logo" width="500" height="auto" />
-            </a>
-        </div>
-        <div className="container">
-            <h2 className="text-capitalize text-white">{`${genreName} Movies`}</h2>
-            <div className="row mt-5 mb-3">
-                {movieColumns.map((column, col_idx) => {
-                    return (
-                        MovieCardBody(column, col_idx)
-                    );
-                })}
+            <div className="px-4 pt-5 pb-3 mt-5 mb-1 text-center">
+                <a href={`${process.env.PUBLIC_URL}/`}>
+                    <img src={`${process.env.PUBLIC_URL}/yoovieswhite.png`} alt="logo" width="500" height="auto" />
+                </a>
             </div>
-        </div>
+            <div className="container">
+                <h2 className="text-capitalize text-white">{`${genreName} Movies`}</h2>
+                <div className="row mt-5 mb-3">
+                    {movieColumns.map((column, col_idx) => {
+                        return (
+                            MovieCardBody(column, col_idx)
+                        );
+                    })}
+                </div>
+            </div>
         </>
     )
 }

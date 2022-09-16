@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {censors, setting} from "./fun"
+import { censors, setting } from "./fun"
 import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
 function UserProfile() {
@@ -130,11 +130,11 @@ function UserProfile() {
       checker()
       setPassword2('')
       setSuccess(false)
-      
+
     }
   }
 
-  async function setSetting(value){
+  async function setSetting(value) {
     setting(value)
     setCensoring(value)
     const data = {
@@ -150,23 +150,21 @@ function UserProfile() {
       mode: "cors",
     };
     const censorResponse = await fetch(censorUrl, fetchSoldConfig);
-    if(censorResponse.ok)
-    {
+    if (censorResponse.ok) {
       console.log("censorship status has been changed")
     }
     console.log(value)
   }
 
-  function switchFunctionality()
-  {
-    if(censoring === true){
-      return(
-        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch" checked/>
+  function switchFunctionality() {
+    if (censoring === true) {
+      return (
+        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch" checked />
       )
     }
-    else{
-      return(
-        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch"/>
+    else {
+      return (
+        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch" />
       )
     }
   }
@@ -345,7 +343,7 @@ function UserProfile() {
                   </div>
                 </div>
                 <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">My Reviews</p>
-                <div className="card-columns scroll webkit-scrollbar" style={{overflowY:"scroll", height:"290px"}}>
+                <div className="card-columns scroll webkit-scrollbar" style={{ overflowY: "scroll", height: "290px" }}>
                   {reviews.map((review) => {
                     return (
                       <div key={review.id} className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">

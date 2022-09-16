@@ -32,7 +32,7 @@ function CreateReviewForm(props) {
 
     // eslint-disable-next-line
     const [checkRating, setCheckRating] = useState('');
-    
+
     const clicked = false
 
     // eslint-disable-next-line
@@ -51,7 +51,7 @@ function CreateReviewForm(props) {
     submitted["imdb_id"] = props.movie.imdbID
     // console.log("MOVIE " + props["movie"]["Title"])
 
-    const showModal = () => { 
+    const showModal = () => {
         if (auth) {
             handleShow()
         } else {
@@ -95,22 +95,22 @@ function CreateReviewForm(props) {
                 console.log(newReview)
                 setValid(true)
             }
-            else{
+            else {
                 console.log(response.json())
             }
         } else {
             setCheckRating(false)
-        }            
+        }
     };
 
     // gets the username
     useEffect(() => {
         async function getToken() {
             const userTokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`
-            const request = await fetch(userTokenUrl, { 
-                method: "delete", 
-                credentials: "include", 
-                mode: "cors", 
+            const request = await fetch(userTokenUrl, {
+                method: "delete",
+                credentials: "include",
+                mode: "cors",
             })
 
             if (request.ok) {
@@ -149,7 +149,7 @@ function CreateReviewForm(props) {
                 setAuth(false)
             }
         } authen();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []
     )
 

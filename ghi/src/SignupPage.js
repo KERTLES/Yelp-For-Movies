@@ -232,14 +232,14 @@ function SignupPage() {
                       </div>
                       {confirmedPassword()}
                       <div className="text-center">
-                      Have an account already? <a href={`${process.env.PUBLIC_URL}/Login`}>Login</a>
-                    </div>
-                    <div className={successful} id="success-message">
-                      Successfully Created Account
-                    </div>
-                    <div className={failure} id="failure-message">
-                      Failed Creating Account
-                    </div>
+                        Have an account already? <a href={`${process.env.PUBLIC_URL}/Login`}>Login</a>
+                      </div>
+                      <div className={successful} id="success-message">
+                        Successfully Created Account
+                      </div>
+                      <div className={failure} id="failure-message">
+                        Failed Creating Account
+                      </div>
                     </form>
                   </div>
 
