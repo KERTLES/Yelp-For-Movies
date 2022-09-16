@@ -6,7 +6,7 @@ import time
 import json
 import requests
 ACCOUNT_SERVICE_URL = os.environ['ACCOUNT_SERVICE_URL']
-sys.path.append("")
+sys.path.append("../api")
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "reviews_project.settings")
 django.setup()
