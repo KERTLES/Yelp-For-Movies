@@ -74,9 +74,9 @@ class ReviewTest(TestCase):  # create a movie review
         self.review = Review.objects.create(
             movie = self.movie,
             user = self.user,
-            title="Absolute Rubbish",
-            post="So bad, should have left this franchise alone...",
-            rating=1,
+            title = "Absolute Rubbish",
+            post = "So bad, should have left this franchise alone...",
+            rating = 1,
         )
     
     def test_create_review(self):
