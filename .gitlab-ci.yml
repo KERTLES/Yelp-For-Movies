@@ -188,8 +188,8 @@ deploy-reviews-poller-image-job:  # RENAME THIS
 
     # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
     # CHANGE /web TO /worker (2 PLACES)
-    - docker pull ${CI_REGISTRY_IMAGE}/reviews_api:latest
-    - docker tag ${CI_REGISTRY_IMAGE}/reviews_api:latest registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
+    - docker pull ${CI_REGISTRY_IMAGE}/reviews_poller:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/reviews_poller:latest registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
     - docker push registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
 
 release-accounts-api-image-job:  # RENAME THIS

@@ -6,6 +6,7 @@ import time
 import json
 import requests
 
+ACCOUNT_SERVICE_URL = os.environ['ACCOUNT_SERVICE_URL']
 sys.path.append("../api")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "reviews_project.settings")
 django.setup()
@@ -13,7 +14,8 @@ from reviews_rest.models import UserVO
 
 
 def get_users():
-    url = f"{os.environ['ACCOUNT_SERVICE_URL']}/api/accounts/"
+    url = f"{ACCOUNT_SERVICE_URL}/api/accounts/"
+
     response = requests.get(url)
     print(url)
     print(response)
