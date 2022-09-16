@@ -84,9 +84,6 @@ function UserProfile() {
       // eslint-disable-next-line
       setID(tokenData.token['id'])
     }
-    else {
-      console.log("error")
-    }
     const fetchSoldConfig = {
       method: "put",
       body: JSON.stringify(data),
@@ -97,7 +94,6 @@ function UserProfile() {
     };
     const Response = await fetch(accountUrl, fetchSoldConfig);
     if (Response.ok) {
-      console.log("got it")
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -126,7 +122,6 @@ function UserProfile() {
       navigate("/")
     }
     else {
-      console.log("error")
       checker()
       setPassword2('')
       setSuccess(false)
@@ -149,11 +144,7 @@ function UserProfile() {
       },
       mode: "cors",
     };
-    const censorResponse = await fetch(censorUrl, fetchSoldConfig);
-    if (censorResponse.ok) {
-      console.log("censorship status has been changed")
-    }
-    console.log(value)
+    await fetch(censorUrl, fetchSoldConfig);
   }
 
   function switchFunctionality() {
