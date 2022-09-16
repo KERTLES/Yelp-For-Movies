@@ -63,7 +63,7 @@ class accountsTester(TestCase):
         self.assertEqual(content['username'], "lucky")
         self.assertEqual(content['first_name'], "matthew")
     
-    def test_account_unique(self):
+    def test_account_unique(self): #Written by Lander Nunez
         account_one = {
         "email": "batty@gmail.com",
 	    "first_name": "tham",
@@ -78,7 +78,7 @@ class accountsTester(TestCase):
 	    "username": "Billybob",
 	    "password": "secretpassword"
         }
-
+        
         account_one_response = self.client.post("/api/accounts/", account_one, content_type = "application/json")
         account_two_response = self.client.post("/api/accounts/", account_two, content_type = "application/json")
 
