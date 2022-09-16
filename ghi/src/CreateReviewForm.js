@@ -51,7 +51,6 @@ function CreateReviewForm(props) {
     submitted["imdb_id"] = props.movie.imdbID
 
     const showModal = () => {
-        console.log(auth)
         if (auth) {
             handleShow()
         } else {
