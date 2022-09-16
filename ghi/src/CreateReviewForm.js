@@ -49,7 +49,6 @@ function CreateReviewForm(props) {
     const submitted = useRef();
     // imdbID is variable from MovieDetail.js
     submitted["imdb_id"] = props.movie.imdbID
-    // console.log("MOVIE " + props["movie"]["Title"])
 
     const showModal = () => {
         if (auth) {
