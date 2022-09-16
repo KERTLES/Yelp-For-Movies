@@ -1,5 +1,10 @@
 {
     "python.analysis.extraPaths": [
         "./reviews/api"
-    ]
+    ],
+    "python.formatting.provider": "black",
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Args": ["--max-line-length=140"],
+    "python.linting.enabled": true,
+    "editor.formatOnSave": true,
 }
