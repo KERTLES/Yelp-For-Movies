@@ -84,9 +84,6 @@ function UserProfile() {
       // eslint-disable-next-line
       setID(tokenData.token['id'])
     }
-    else {
-      console.log("error")
-    }
     const fetchSoldConfig = {
       method: "put",
       body: JSON.stringify(data),
@@ -97,7 +94,6 @@ function UserProfile() {
     };
     const Response = await fetch(accountUrl, fetchSoldConfig);
     if (Response.ok) {
-      console.log("got it")
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -126,7 +122,6 @@ function UserProfile() {
       navigate("/")
     }
     else {
-      console.log("error")
       checker()
       setPassword2('')
       setSuccess(false)
@@ -149,11 +144,7 @@ function UserProfile() {
       },
       mode: "cors",
     };
-    const censorResponse = await fetch(censorUrl, fetchSoldConfig);
-    if (censorResponse.ok) {
-      console.log("censorship status has been changed")
-    }
-    console.log(value)
+    await fetch(censorUrl, fetchSoldConfig);
   }
 
   function switchFunctionality() {
@@ -343,7 +334,7 @@ function UserProfile() {
                   </div>
                 </div>
                 <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">My Reviews</p>
-                <div className="card-columns scroll webkit-scrollbar" style={{ overflowY: "scroll", height: "290px" }}>
+                <div className="card-columns scrollbar" style={{ overflowY: "scroll", height: "290px" }}>
                   {reviews.map((review) => {
                     return (
                       <div key={review.id} className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">

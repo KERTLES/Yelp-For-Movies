@@ -49,7 +49,6 @@ function CreateReviewForm(props) {
     const submitted = useRef();
     // imdbID is variable from MovieDetail.js
     submitted["imdb_id"] = props.movie.imdbID
-    // console.log("MOVIE " + props["movie"]["Title"])
 
     const showModal = () => {
         if (auth) {
@@ -92,18 +91,13 @@ function CreateReviewForm(props) {
             if (response.ok) {
                 // eslint-disable-next-line
                 const newReview = await response.json()
-                console.log(newReview)
                 setValid(true)
-            }
-            else {
-                console.log(response.json())
             }
         } else {
             setCheckRating(false)
         }
     };
 
-    // gets the username
     useEffect(() => {
         async function getToken() {
             const userTokenUrl = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/get/token/`
@@ -116,13 +110,11 @@ function CreateReviewForm(props) {
             if (request.ok) {
                 const responseData = await request.json()
                 setUserName(responseData.token.username)
-                // console.log(responseData.token.username)
             }
         }
         getToken()
     }, [])
 
-    // gets cookies from browser, and compares to token JS
     useEffect(() => {
         async function authen() {
             if (token !== null) {

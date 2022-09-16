@@ -79,7 +79,6 @@ function SignupPage() {
     };
     const Response = await fetch(accountUrl, fetchSoldConfig);
     if (Response.ok) {
-      console.log("got it")
       const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
 
       const form = new FormData();
@@ -108,7 +107,6 @@ function SignupPage() {
       navigate("/")
     }
     else {
-      console.log("error")
       checker()
       setPassword2('')
       setSuccess(false)

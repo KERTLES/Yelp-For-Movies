@@ -32,7 +32,7 @@ export function setting(bul) {
 export function censors(description) // censorship
 {
 
-  const badWords = ["fuck", "shit", 'ass', 'poop', 'fun', 'movie', 'hell', 'butthole', 'adam', 'sandler']
+  const badWords = ["fuck", "shit", 'ass', 'poop', 'hell', 'butthole', 'asscrack', 'fucking', 'dhitting']
   if (cens === true) {
     let description_list = description.split(/[.!,\s]/)
     let new_list = []
