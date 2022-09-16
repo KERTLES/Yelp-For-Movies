@@ -189,8 +189,8 @@ deploy-reviews-poller-image-job:  # RENAME THIS
     # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
     # CHANGE /web TO /worker (2 PLACES)
     - docker pull ${CI_REGISTRY_IMAGE}/reviews_api:latest
-    - docker tag ${CI_REGISTRY_IMAGE}/reviews_api:latest registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
-    - docker push registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/reviews_api:latest registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/web:latest
+    - docker push registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/web:latest
 
 release-accounts-api-image-job:  # RENAME THIS
   stage: deploy
@@ -250,7 +250,7 @@ release-reviews-poller-image-job:  # RENAME THIS
 
     # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
     # CHANGE web TO worker (1 PLACE)
-    - heroku container:release worker --app $HEROKU_REVIEWS_POLLER_APP
+    - heroku container:release web --app $HEROKU_REVIEWS_POLLER_APP
 
 pages:  # THIS STEP MUST BE NAME PAGES
     stage: deploy
