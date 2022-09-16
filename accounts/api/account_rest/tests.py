@@ -69,8 +69,8 @@ class accountsTester(TestCase):
         content = response4.json()
         self.assertEqual(content['username'], "lucky")
         self.assertEqual(content['first_name'], "matthew")
-    
-    def test_account_unique(self): #Written by Lander Nunez
+
+    def test_account_unique(self):  # Written by Lander Nunez
         account_one = {
             "email": "batty@gmail.com",
             "first_name": "tham",
