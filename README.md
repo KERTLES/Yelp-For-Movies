@@ -48,14 +48,43 @@ Our target audience are film lovers and moviegoers who want to (and love to) sha
 You can either use the deployed link or please follow the instructions to open Yoovies on your local machine. 
 
 
-##### Deployed:
+##### Deployed
+We recommend using the deployed version to view & use Yoovies: https://yoovies.gitlab.io/yelp-for-movies/
 
-##### Local Machine: 
-To enjoy this application on your local machine, please follow these steps, you'll need to use your terminal and Docker Desktop. 
+##### Local Machine (for instructors)
+If you would rather download Yoovies to your local machine, please follow these steps, you'll need to use your terminal and Docker Desktop. 
 
 1. Clone the repository down to your local machine
 2. CD into the new project directory (yelp-for-movies)
-3. RUN the command: *docker volume create yovies-data*
-4. RUN the command: *docker compose build*
-5. RUN the command: *docker compose up*
-6. 
+3. You'll need to copy/paste the keys (located in the Settings => CI/CD => Variables) into a .env file using the following format:
+    - REACT_APP_TMDB_API_KEY=key value
+    - REACT_APP_OMDB_API_KEY=key value
+    - DJWTO_SIGNING_KEY=key value
+4. RUN the command: *docker volume create yovies-data*
+5. RUN the command: *docker compose build*
+6. RUN the command: *docker compose up*
+7. Open Docker Desktop, all of your containers should be up and running 
+
+### Navigating Yoovies
+1. In the navigation bar, select User, then Signup for an account.
+    &nbsp; 
+    ![](docs/wireframe/signup-for-account.png)
+    &nbsp;
+    ![](docs/wireframe/signup-page.png)
+&nbsp;
+&nbsp;
+2. Once you've signed up for an account, you can now create movie reviews. You can find movies by genre or by searcing for movies in the search bar. 
+    &nbsp;
+    ![](docs/wireframe/genres.png)
+    &nbsp;
+    ![](docs/wireframe/search-bar.png)
+&nbsp;
+&nbsp;
+3. Select a movie, read the details, then select 'Create a Review'
+    &nbsp;
+    ![](docs/wireframe/movie-detail-page.png)
+&nbsp;
+&nbsp;
+4. Once you complete your review, hit 'Submit form' & find more of your favorite movies to review!
+    &nbsp;
+    ![](docs/wireframe/create-review-form.png)
