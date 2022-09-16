@@ -67,10 +67,10 @@ class accountsTester(TestCase):
         self.assertEqual(response.status_code, 200)
         response4 = self.client.get("/api/accounts/1")
         content = response4.json()
-        self.assertEqual(content["username"], "lucky")
-        self.assertEqual(content["first_name"], "matthew")
-
-    def test_account_unique(self):
+        self.assertEqual(content['username'], "lucky")
+        self.assertEqual(content['first_name'], "matthew")
+    
+    def test_account_unique(self): #Written by Lander Nunez
         account_one = {
             "email": "batty@gmail.com",
             "first_name": "tham",
