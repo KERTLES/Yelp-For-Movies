@@ -1,10 +1,9 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from .models import Review, Movie, UserVO
 import json
 import os
 
 # Create your tests here.
-
 
 class MovieTest(TestCase):
     def setUp(self):
@@ -39,7 +38,6 @@ class MovieTest(TestCase):
         self.assertEqual(content["imdb_id"],self.movie.imdb_id)
 
 
-
 class reviewsTester(TestCase):
     def setUp(self):
         self.movie = Movie.objects.create(imdb_id = "tt1745960", title = "Some Movie")
@@ -60,3 +58,35 @@ class reviewsTester(TestCase):
         for review in content:
             if review["title"] == self.review.title:
                 self.assertEqual(review['id'], self.review.id)
+
+
+class ReviewTest(TestCase):  # create a movie review
+    def setUp(self):
+        self.movie = Movie.objects.create(
+            imdb_id="tt11245972",
+            title="Scream",
+        )
+
+        self.user = UserVO.objects.create(
+            user_name="theGordonRamsay",
+        )
+
+        self.review = Review.objects.create(
+            movie = self.movie,
+            user = self.user,
+            title = "Absolute Rubbish",
+            post = "So bad, should have left this franchise alone...",
+            rating = 1,
+        )
+    
+    def test_create_review(self):
+        data = {
+            "user_name" : "theGordonRamsay",
+            "imdb_id" : "tt11245972",
+            "title" : "Absolute Rubbish",
+            "post" : "So bad, should have left this franchise alone...",
+            "rating" : 1,
+        }
+        client = Client()
+        response = client.post("/api/create/review/", data, content_type="application/json",)
+        self.assertEqual(response.status_code, 200)
