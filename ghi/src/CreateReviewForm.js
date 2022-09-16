@@ -60,7 +60,6 @@ function CreateReviewForm(props) {
 
     const handleSubmit = async (event) => {
         const form = event.currentTarget;
-        event.preventDefault()
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -93,7 +92,6 @@ function CreateReviewForm(props) {
                 // eslint-disable-next-line
                 const newReview = await response.json()
                 setValid(true)
-                window.location.reload(false)
             }
         } else {
             setCheckRating(false)
