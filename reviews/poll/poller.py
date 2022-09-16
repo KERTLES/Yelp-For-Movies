@@ -12,7 +12,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "reviews_project.settings")
 django.setup()
 from reviews_rest.models import UserVO
 
-
 def get_users():
     url = f"{ACCOUNT_SERVICE_URL}/api/accounts/"
 
