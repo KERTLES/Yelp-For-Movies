@@ -27,24 +27,24 @@ function Footer() {
 
           <div className="col-xl-4 mx-auto mb-2">
             <h6 className="fw-bold mb-4">Get connected with us on social networks:</h6>
-            <Stack direction="horizontal" gap={4}>
+            <Stack direction="horizontal" gap={5}>
               <div>
-                <a href="https://facebook.com/yoovies" target="blank_" className="mx-4 text-reset">
-                  <i className="btn btn-dark me-2"><BsFacebook style={{fontSize: "45px", color: "#3b5998"}} /></i>
+                <a href="https://facebook.com/yoovies" target="blank_" className="me-4 text-reset">
+                  <i className="me-2"><BsFacebook style={{fontSize: "45px", color: "#3b5998"}} /></i>
                 </a>
               </div>
               <div>
                 <a href="https://instagram.com/yoovies" target="blank_" className="me-4 text-reset">
-                  <i className="btn btn-dark me-2"><BsInstagram style={{fontSize: "45px", color: "#458eff"}} /></i>
+                  <i className="me-2"><BsInstagram style={{fontSize: "45px", color: "#458eff"}} /></i>
                 </a>
               </div>
               <div>
                 <a href="https://gitlab.com/yoovies/yelp-for-movies" target="blank_" className="me-4 text-reset">
-                  <i className="btn btn-dark me-2"><SiGitlab style={{fontSize: "45px", color: "#FC6D26"}} /></i>
+                  <i className="me-2"><SiGitlab style={{fontSize: "45px", color: "#FC6D26"}} /></i>
                 </a>
               </div>
               <div className="dropdown">
-                <i className="btn btn-dark me-2 dropdown-toggle " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><BsLinkedin style={{fontSize: "45px", color: " #0A66C2"}} /></i>
+                <i className="me-2 dropdown-toggle " type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><BsLinkedin style={{fontSize: "45px", color: " #0A66C2"}} /></i>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li>
                     <a className="dropdown-item" href="https://www.linkedin.com/in/jiang-kelly/" target="blank_">Kelly</a>

@@ -1,5 +1,5 @@
 stages:
-  # - test   # Run tests first
+  - test   # Run tests first
   - build  # Run build after tests
   - deploy # Deploy the services and front-end
 
@@ -10,35 +10,35 @@ variables:
   POSTGRES_PASSWORD: test
   DATABASE_URL: postgresql://postgres:test@postgres:5432/postgres
 
-# accounts-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   script:
-#     - cd accounts/api
-#     - pip install -r requirements.txt
-#     - python manage.py test
+accounts-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd accounts/api
+    - pip install -r requirements.txt
+    - python manage.py test
 
-# reviews-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   script:
-#     - cd reviews/api
-#     - pip install -r requirements.txt
-#     - python manage.py test
+reviews-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd reviews/api
+    - pip install -r requirements.txt
+    - python manage.py test
 
-# reviews-poller-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   script:
-#     - cd reviews/poll
-#     - pip install -r requirements.txt
+reviews-poller-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd reviews/poll
+    - pip install -r requirements.txt
 
-# lint-job:
-#   image: python:3-bullseye
-#   stage: test
-#   script:
-#     - pip install flake8
-#     - flake8 accounts reviews
+lint-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - pip install flake8
+    - flake8 accounts reviews
 
 build-front-end-job:
     stage: build
@@ -188,8 +188,8 @@ deploy-reviews-poller-image-job:  # RENAME THIS
 
     # IF THIS IS FOR A BACKGROUND SERVICE LIKE A POLLER,
     # CHANGE /web TO /worker (2 PLACES)
-    - docker pull ${CI_REGISTRY_IMAGE}/reviews_api:latest
-    - docker tag ${CI_REGISTRY_IMAGE}/reviews_api:latest registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
+    - docker pull ${CI_REGISTRY_IMAGE}/reviews_poller:latest
+    - docker tag ${CI_REGISTRY_IMAGE}/reviews_poller:latest registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
     - docker push registry.heroku.com/$HEROKU_REVIEWS_POLLER_APP/worker:latest
 
 release-accounts-api-image-job:  # RENAME THIS

@@ -79,7 +79,6 @@ function SignupPage() {
     };
     const Response = await fetch(accountUrl, fetchSoldConfig);
     if (Response.ok) {
-      console.log("got it")
       const url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/login/`;
 
       const form = new FormData();
@@ -108,7 +107,6 @@ function SignupPage() {
       navigate("/")
     }
     else {
-      console.log("error")
       checker()
       setPassword2('')
       setSuccess(false)
@@ -232,14 +230,14 @@ function SignupPage() {
                       </div>
                       {confirmedPassword()}
                       <div className="text-center">
-                      Have an account already? <a href={`${process.env.PUBLIC_URL}/Login`}>Login</a>
-                    </div>
-                    <div className={successful} id="success-message">
-                      Successfully Created Account
-                    </div>
-                    <div className={failure} id="failure-message">
-                      Failed Creating Account
-                    </div>
+                        Have an account already? <a href={`${process.env.PUBLIC_URL}/Login`}>Login</a>
+                      </div>
+                      <div className={successful} id="success-message">
+                        Successfully Created Account
+                      </div>
+                      <div className={failure} id="failure-message">
+                        Failed Creating Account
+                      </div>
                     </form>
                   </div>
 

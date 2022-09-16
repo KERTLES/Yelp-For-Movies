@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+!3vzjusw@pf)h9xssbaete35vmb6fp4&b@fj%cz!(h4*b70ar'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False #not os.environ.get("DEBUG")
+DEBUG = os.environ.get("DEBUG", False) == "True"
 
 AUTH_USER_MODEL = "account_rest.Account"
 # Application definition
@@ -76,16 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'account_project.wsgi.application'
-# ALLOWED_HOSTS = [
-#     ".localhost", 
-#     "127.0.0.1", 
-#     "account-api", 
-#     "reviews-api",
-#     "[::1]",
-#     "yoovies-accounts-api.herokuapp.com",
-#     "yoovies-reviews-api.herokuapp.com",
-#     os.environ.get("DEPLOYED_HOST", "localhost"),
-# ]
 
 ALLOWED_HOSTS = ["*"]
 
@@ -99,7 +89,11 @@ CORS_ALLOW_CREDENTIALS = True
 DJWTO_MODE = 'TWO-COOKIES'
 DJWTO_CSRF = False
 DJWTO_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "https://yoovies-accounts-api.herokuapp.com",
+    "https://yoovies.gitlab.io"
+]
 # Your DEBUG value MUST be False in production
 DJWTO_SAME_SITE = "LAX" if DEBUG else "NONE"
 # Database

@@ -20,23 +20,15 @@ function ListReviewForMovie(data) {
         'Content-type': 'application/json',
       },
     }
-    const response = await fetch(url, fetchConfig)
-    if(response.ok){
-      console.log("movie item created")
-    }
-    else{
-      console.log("movie not created")
-    }
+    await fetch(url, fetchConfig)
   }
 
   const getReviews = async () => {
-    const response = await fetch(`${review_api}/api/reviews/${data.movie.imdbID}/`, {mode: "cors"})
+    const response = await fetch(`${review_api}/api/reviews/${data.movie.imdbID}/`, { mode: "cors" })
     if (response.ok) {
       const data = await response.json();
       setReviews(data)
       post_data["reviews"] = data
-    } else {
-      console.log("Still not ok")
     }
   }
 

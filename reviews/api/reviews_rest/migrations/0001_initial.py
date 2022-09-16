@@ -9,35 +9,82 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Movie',
+            name="Movie",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('imdb_id', models.CharField(max_length=200, unique=True)),
-                ('title', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("imdb_id", models.CharField(max_length=200, unique=True)),
+                ("title", models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='UserVO',
+            name="UserVO",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('user_name', models.CharField(max_length=100, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("user_name", models.CharField(max_length=100, unique=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Review',
+            name="Review",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('post', models.TextField(blank=True, null=True)),
-                ('rating', models.PositiveSmallIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)])),
-                ('date', models.DateField(auto_now=True)),
-                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Review', to='reviews_rest.movie')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='Review', to='reviews_rest.uservo')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=200)),
+                ("post", models.TextField(blank=True, null=True)),
+                (
+                    "rating",
+                    models.PositiveSmallIntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[
+                            django.core.validators.MinValueValidator(1),
+                            django.core.validators.MaxValueValidator(5),
+                        ],
+                    ),
+                ),
+                ("date", models.DateField(auto_now=True)),
+                (
+                    "movie",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="Review",
+                        to="reviews_rest.movie",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="Review",
+                        to="reviews_rest.uservo",
+                    ),
+                ),
             ],
         ),
     ]

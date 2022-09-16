@@ -72,11 +72,8 @@ function LogoutButton() {
         navigate("/")
         setAuth(false)
       } catch (e) {
-        console.log('error')
+        console.log(e)
       }
-    }
-    else {
-      console.log("hello")
     }
   }
   return user_visibility()

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {censors, setting} from "./fun"
+import { censors, setting } from "./fun"
 import { useToken } from './token';
 import { useNavigate } from "react-router-dom";
 function UserProfile() {
@@ -84,9 +84,6 @@ function UserProfile() {
       // eslint-disable-next-line
       setID(tokenData.token['id'])
     }
-    else {
-      console.log("error")
-    }
     const fetchSoldConfig = {
       method: "put",
       body: JSON.stringify(data),
@@ -97,7 +94,6 @@ function UserProfile() {
     };
     const Response = await fetch(accountUrl, fetchSoldConfig);
     if (Response.ok) {
-      console.log("got it")
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -126,15 +122,14 @@ function UserProfile() {
       navigate("/")
     }
     else {
-      console.log("error")
       checker()
       setPassword2('')
       setSuccess(false)
-      
+
     }
   }
 
-  async function setSetting(value){
+  async function setSetting(value) {
     setting(value)
     setCensoring(value)
     const data = {
@@ -149,12 +144,7 @@ function UserProfile() {
       },
       mode: "cors",
     };
-    const censorResponse = await fetch(censorUrl, fetchSoldConfig);
-    if(censorResponse.ok)
-    {
-      console.log("censorship status has been changed")
-    }
-    console.log(value)
+    await fetch(censorUrl, fetchSoldConfig);
   }
 
   useEffect(() => {
@@ -170,7 +160,7 @@ function UserProfile() {
       if (request.ok) {
         const tokenData = await request.json()
         const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
-        const autoResponse = await fetch(Url, {mode: "cors"})
+        const autoResponse = await fetch(Url, { mode: "cors" })
         if (autoResponse.ok) {
           const autoData = await autoResponse.json()
           setAccount(autoData)
@@ -306,7 +296,7 @@ function UserProfile() {
                         </label>
                       </div>
                       <div className="form-check form-switch d-flex justify-content-center mb-5">
-                      <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" checked={!! censoring} type="checkbox" id="switch"/>
+                        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" checked={!!censoring} type="checkbox" id="switch" />
                         <label className="form-check-label" htmlFor="switch">
                           change censor settings.
                         </label>
@@ -330,7 +320,7 @@ function UserProfile() {
                   </div>
                 </div>
                 <p className="text-center h3 fw-bold mb-2 mx-1 mx-md-2 mt-4">My Reviews</p>
-                <div className="card-columns scroll webkit-scrollbar" style={{overflowY:"scroll", height:"47vh"}}>
+                <div className="card-columns scrollbar" style={{ overflowY: "scroll", height: "290px" }}>
                   {reviews.map((review) => {
                     return (
                       <div key={review.id} className="card py-2 px-2 mx-2 my-2 text-center text-black border border-dark rounded">

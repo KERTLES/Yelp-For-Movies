@@ -22,15 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0p=3mve68&slozzmupptx(b=+b=9_53p(b64d*x)nrlo67ew2w'
+SECRET_KEY = "django-insecure-0p=3mve68&slozzmupptx(b=+b=9_53p(b64d*x)nrlo67ew2w"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True #not os.environ.get("DEBUG")
+DEBUG = os.environ.get("DEBUG", False) == "True"
 
 # ALLOWED_HOSTS = [
-#     ".localhost", 
-#     "127.0.0.1", 
-#     "account-api", 
+#     ".localhost",
+#     "127.0.0.1",
+#     "account-api",
 #     "reviews-api",
 #     "[::1]",
 #     "yoovies-accounts-api.herokuapp.com",
@@ -42,20 +42,30 @@ ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://yoovies-reviews-api.herokuapp.com",
+<<<<<<< HEAD
         "https://yoovies.gitlab.io",
+=======
+    "https://yoovies.gitlab.io",
+>>>>>>> main
     "http://localhost:3000",
 ]
 
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+<<<<<<< HEAD
         "https://yoovies.gitlab.io",
     os.environ.get("CORS_HOST", "http://localhost:3001")
+=======
+    "https://yoovies.gitlab.io",
+    os.environ.get("CORS_HOST", "http://localhost:3001"),
+>>>>>>> main
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
     'corsheaders',
     'reviews_rest.apps.ReviewsRestConfig',
     'django.contrib.admin',
@@ -65,40 +75,55 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+=======
+    "corsheaders",
+    "reviews_rest.apps.ReviewsRestConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+>>>>>>> main
 ]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    # 'django.middleware.csrf.CsrfViewMiddleware',
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+<<<<<<< HEAD
 CRONJOBS = [
     ('* * * * *', 'reviews_rest.cron.get_users','>> /tmp/reviews_poller.log 2>&1')
 ]
 ROOT_URLCONF = 'reviews_project.urls'
+=======
+
+ROOT_URLCONF = "reviews_project.urls"
+>>>>>>> main
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'reviews_project.wsgi.application'
+WSGI_APPLICATION = "reviews_project.wsgi.application"
 
 
 # Database
@@ -113,16 +138,16 @@ DATABASES["default"] = dj_database_url.config()
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -130,9 +155,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -142,9 +167,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
