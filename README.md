@@ -49,7 +49,7 @@ You can either use the deployed link or please follow the instructions to open Y
 
 
 ##### Deployed
-We recommend using the deployed version to view & use Yoovies: https://yoovies.gitlab.io/yelp-for-movies/
+We recommend using the deployed version to view & use Yoovies, please enable cookies: https://yoovies.gitlab.io/yelp-for-movies/
 
 ##### Local Machine (for instructors)
 If you would rather download Yoovies to your local machine, please follow these steps, you'll need to use your terminal and Docker Desktop. 
@@ -63,7 +63,9 @@ If you would rather download Yoovies to your local machine, please follow these 
 4. RUN the command: *docker volume create yovies-data*
 5. RUN the command: *docker compose build*
 6. RUN the command: *docker compose up*
-7. Open Docker Desktop, all of your containers should be up and running 
+7. Open Docker Desktop, all of your containers should be up and running. 
+8. Select the 'yelp-for-movies-react-1' and select the icon to open in your browser. 
+9. Please enable cookies on the website. 
 
 ### Navigating Yoovies
 __1. In the navigation bar, select User, then Signup for an account.__<br></br>
