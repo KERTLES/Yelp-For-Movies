@@ -66,23 +66,23 @@ If you would rather download Yoovies to your local machine, please follow these 
 7. Open Docker Desktop, all of your containers should be up and running 
 
 ### Navigating Yoovies
-__1. In the navigation bar, select User, then Signup for an account.__<br>
+__1. In the navigation bar, select User, then Signup for an account.__<br></br>
     ![](docs/wireframe/signup-for-account.png)
-<br>
+<br></br>
 
-__2. On the signup page fill in your details, accept the Terms of Service, then select 'Register'.__<br>
+__2. On the signup page fill in your details, accept the Terms of Service, then select 'Register'.__<br></br>
     ![](docs/wireframe/signup-page.png)
-<br>
+<br></br>
 
-__3. Once you've signed up for an account, you can now create movie reviews. You can find movies by genre or by searcing for movies in the search bar.__<br>
+__3. Once you've signed up for an account, you can now create movie reviews. You can find movies by genre or by searcing for movies in the search bar.__<br></br>
     ![](docs/wireframe/genres.png)
-<br>
+<br></br>
     ![](docs/wireframe/search-bar.png)
-<br>
+<br></br>
 
-__4. Select a movie, read the details, then select 'Create a Review'.__<br>
+__4. Select a movie, read the details, then select 'Create a Review'.__<br></br>
     ![](docs/wireframe/movie-detail-page.png)
-<br>
+<br></br>
 
-__5. Once you complete your review, hit 'Submit form' & find more of your favorite movies to review!__<br>
+__5. Once you complete your review, hit 'Submit form' & find more of your favorite movies to review!__<br></br>
     ![](docs/wireframe/create-review-form.png)
