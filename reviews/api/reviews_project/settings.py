@@ -42,40 +42,20 @@ ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://yoovies-reviews-api.herokuapp.com",
-<<<<<<< HEAD
-        "https://yoovies.gitlab.io",
-=======
     "https://yoovies.gitlab.io",
->>>>>>> main
     "http://localhost:3000",
 ]
 
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-<<<<<<< HEAD
-        "https://yoovies.gitlab.io",
-    os.environ.get("CORS_HOST", "http://localhost:3001")
-=======
     "https://yoovies.gitlab.io",
     os.environ.get("CORS_HOST", "http://localhost:3001"),
->>>>>>> main
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-    'corsheaders',
-    'reviews_rest.apps.ReviewsRestConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django_crontab',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-=======
     "corsheaders",
     "reviews_rest.apps.ReviewsRestConfig",
     "django.contrib.admin",
@@ -84,7 +64,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
->>>>>>> main
 ]
 
 MIDDLEWARE = [
@@ -97,15 +76,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-<<<<<<< HEAD
-CRONJOBS = [
-    ('* * * * *', 'reviews_rest.cron.get_users','>> /tmp/reviews_poller.log 2>&1')
-]
-ROOT_URLCONF = 'reviews_project.urls'
-=======
 
 ROOT_URLCONF = "reviews_project.urls"
->>>>>>> main
 
 TEMPLATES = [
     {
