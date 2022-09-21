@@ -50,24 +50,28 @@
 ## August 31, 2022
     Today, we adjusted the token verification system so that it actually checks if the user is authorized rather than just checking if a token is available or not.
     This was mostly done as it seemed like the previous method most likely would have been a huge security risk if our project would be publicly deployed.
-    Also fixed some errors where the user profile updating would update the password in a way that wouldn't input it in the proper format.
-    I also began work figuring out how to implement  React side tests. Finally, we managed to merge my branch into the main branch.
+    Also fixed some errors where the user profile updating would update the password in a way that wouldn't input it in the proper format. I also began work figuring out how to implement React side tests.
+    Finally, we managed to merge my branch into the main branch.
 
 ## September 01, 2022
-    Today, I fixed some more errors with the log in system that the rest of my team noticed now that it has been pushed to the main branch.
-    I also began further experimentations with react testing and managed to get two pyTests working on the Django side.
+    Today, I fixed some more errors with the log in system that the rest of my team noticed now that it has been pushed to the main branch. I also began further experimentations with react testing and managed to get two pyTests working on the Django side.
     Those two tests see if a list of accounts can be retrieved and if a new account can be created.
     It took a bit to figure out the formatting of the pytests, but I should now be able to create more relatively quickly.
 
+## September 02, 2022
+    Today, I added some more tests, testing the ability for our project to create an account, get a specifc account, and to update an account. I had to do a bit of work to figure out how to format everything, but all the tests seem to work.
+    We also planned out the we would begin deployment next week, deploying whatever we had at the time.
+
 ## September 06, 2022 
-    Today, we started deployment, but came across a situation where we can't continue with Gitlab until we give credit card credentials.
-    I started working on a rudimentary poller, but I may not use it. I also fixed some formatting issues going on with the frontend.
+    Today, we started deployment, but came across a situation where we can't continue with Gitlab until we give credit card credentials. I started working on a rudimentary poller, but I may not use it.
+    I also fixed some formatting issues going on with the frontend.
 
 ## September 07, 2022
     Today, we continued to try to get our site deployed.
     So far, we managed to get the homepage and some of the login pages to show up on gitlab, though we are getting CORS Header errors.
     I also added the ability for a user to view their reviews by going to the profile page.
-    With this, I ended up scrapping the idea of using a poller all together. I will need to work on formatting it to look better.
+    With this, I ended up scrapping the idea of using a poller all together.
+    I will need to work on formatting it to look better.
     I also helped a little with getting the review creation functionality to work.
 
 ## September 08, 2022
@@ -101,7 +105,10 @@
     We looked through a variety of different variables within gitlab and Heroku, making modifications as needed. with Daniels help, we were able to isolate that the errors were coming from the fact that the review creation method wasn't finding any userVO objects, indicating that the poller wasn't doing it's job.
     So, we tried to replace the poller method we currently have with a Cron. Going to continue work on this tomorrow. 
 ## September 15, 2022
-    Today, We continued work on poller. After discussing with Daniel again, we ultimately decided not to utilize cron and instead go back to the previous method that we were using.
-    We were able to further isolate the problem by noticing that there was no bash console log popping up for the heroku for poller. Daniel deduced that the poller heroku wasn't receiving the poller function for whatever reason.
-    After some careful searching, I ultimately discovered that some names in Gitlab.ci.yml were misnamed and thus corrected them. Unfortunately, Heroku is down and the images can't be rebuilt at the moment.
+    Today, We continued work on poller. 
+    After discussing with Daniel again, we ultimately decided not to utilize cron and instead go back to the previous method that we were using.
+    We were able to further isolate the problem by noticing that there was no bash console log popping up for the heroku for poller.
+    Daniel deduced that the poller heroku wasn't receiving the poller function for whatever reason.
+    After some careful searching, I ultimately discovered that some names in Gitlab.ci.yml were misnamed and thus corrected them.
+    Unfortunately, Heroku is down and the images can't be rebuilt at the moment.
     At around 11:00, tried to do pipeline again, this time it successfully deployed. 

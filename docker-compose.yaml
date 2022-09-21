@@ -61,6 +61,7 @@ services:
         depends_on:
             - database
         environment:
+            ACCOUNT_SERVICE_URL: http://account-api:8000
             DEBUG: "True"
             DATABASE_URL: postgresql://reviews:password@database:5432/reviews
             WAIT_HOSTS: database:5432

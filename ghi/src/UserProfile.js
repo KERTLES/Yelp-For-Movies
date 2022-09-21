@@ -10,7 +10,7 @@ function UserProfile() {
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [tokenID, setID] = useState('');
-  const [censoring, setCensoring] = useState(true)
+  const [censoring, setCensoring] = useState('')
   const [is_active, setIsActive] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -147,19 +147,6 @@ function UserProfile() {
     await fetch(censorUrl, fetchSoldConfig);
   }
 
-  function switchFunctionality() {
-    if (censoring === true) {
-      return (
-        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch" checked />
-      )
-    }
-    else {
-      return (
-        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" type="checkbox" id="switch" />
-      )
-    }
-  }
-
   useEffect(() => {
     async function getAccount() {
 
@@ -173,8 +160,7 @@ function UserProfile() {
       if (request.ok) {
         const tokenData = await request.json()
         const Url = `${process.env.REACT_APP_ACCOUNTS_HOST}/api/accounts/${tokenData.token['id']}`;
-        const autoResponse = await fetch(Url)
-
+        const autoResponse = await fetch(Url, { mode: "cors" })
         if (autoResponse.ok) {
           const autoData = await autoResponse.json()
           setAccount(autoData)
@@ -310,7 +296,7 @@ function UserProfile() {
                         </label>
                       </div>
                       <div className="form-check form-switch d-flex justify-content-center mb-5">
-                        {switchFunctionality()}
+                        <input onChange={e => setSetting(e.target.checked)} value={censoring} role="switch" className="form-check-input me-2" checked={!!censoring} type="checkbox" id="switch" />
                         <label className="form-check-label" htmlFor="switch">
                           change censor settings.
                         </label>

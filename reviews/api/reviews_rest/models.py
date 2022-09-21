@@ -19,16 +19,15 @@ class Movie(models.Model):
 
 
 class Review(models.Model):
-    title = models.CharField(max_length=200)
-    post = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=250, blank = False, null=False)
+    post = models.TextField(null=False, blank=False)
     movie = models.ForeignKey(
         "Movie",
         related_name="Review",
         on_delete=models.CASCADE
     )
     rating = models.PositiveSmallIntegerField(
-        blank=True,
-        null=True,
+        null=False,
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
     date = models.DateField(auto_now=True)
