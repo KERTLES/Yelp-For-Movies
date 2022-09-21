@@ -102,25 +102,23 @@ def api_list_reviews(request, movie_id=None):
             )
         try:
             review = Review.objects.create(**content)
-            if(content['title'] != '' and content['post'] != ''):
+            if content['title'] != '' and content['post'] != '':
                 return JsonResponse(review, encoder=ReviewsEncoder, safe=False)
             else:
                 return JsonResponse(
                     {
                         "message": "not all info filled"
                     },
-                    status = 404
+                    status=404
                 )
         except Exception as response:
             response = JsonResponse(
                 {
                     "message": "not all information filled."
-                } 
+                }
             )
             response.status_code = 404
             return response
-
-
 
 
 @require_http_methods(["DELETE", "PUT"])
