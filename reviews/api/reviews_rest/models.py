@@ -19,7 +19,7 @@ class Movie(models.Model):
 
 
 class Review(models.Model):
-    title = models.CharField(max_length=250, blank = False, null=False)
+    title = models.CharField(max_length=250, blank=False, null=False)
     post = models.TextField(null=False, blank=False)
     movie = models.ForeignKey(
         "Movie",
