@@ -47,6 +47,7 @@ services:
             - database
         environment:
             DEBUG: "True"
+            SECRET_KEY_ACCOUNTS: ${SECRET_KEY_ACCOUNTS}
             DATABASE_URL: postgresql://accounts:password@database:5432/accounts
             WAIT_HOSTS: database:5432
             DJWTO_SIGNING_KEY: ${DJWTO_SIGNING_KEY}
@@ -62,6 +63,7 @@ services:
             - database
         environment:
             ACCOUNT_SERVICE_URL: http://account-api:8000
+            SECRET_KEY_REVIEWS: ${SECRET_KEY_REVIEWS}
             DEBUG: "True"
             DATABASE_URL: postgresql://reviews:password@database:5432/reviews
             WAIT_HOSTS: database:5432
